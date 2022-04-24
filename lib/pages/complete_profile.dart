@@ -2,19 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:my_khairat/styles/app_color.dart';
 import 'package:my_khairat/styles/custom_text_field.dart';
 
-class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+class CompleteProfile extends StatefulWidget {
+  const CompleteProfile({Key? key}) : super(key: key);
 
   @override
-  State<Login> createState() => _LoginState();
+  State<CompleteProfile> createState() => _CompleteProfileState();
 }
 
-class _LoginState extends State<Login> {
+class _CompleteProfileState extends State<CompleteProfile> {
   final TextEditingController _icController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _occupationController = TextEditingController();
 
   final FocusNode _icFocus = FocusNode();
-  final FocusNode _passwordFocus = FocusNode();
+  final FocusNode _nameFocus = FocusNode();
+  final FocusNode _addressFocus = FocusNode();
+  final FocusNode _phoneFocus = FocusNode();
+  final FocusNode _occupationFocus = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -53,10 +59,27 @@ class _LoginState extends State<Login> {
               ),
               const SizedBox(height: 10),
               CustomTextFormField(
-                hintText: 'Kata Laluan',
-                focusNode: _passwordFocus,
-                controller: _passwordController,
-                isObscured: true,
+                hintText: 'Nama',
+                focusNode: _nameFocus,
+                controller: _nameController,
+              ),
+              const SizedBox(height: 10),
+              CustomTextFormField(
+                hintText: 'Alamat',
+                focusNode: _addressFocus,
+                controller: _addressController,
+              ),
+              const SizedBox(height: 10),
+              CustomTextFormField(
+                hintText: 'No Telefon',
+                focusNode: _phoneFocus,
+                controller: _phoneController,
+              ),
+              const SizedBox(height: 10),
+              CustomTextFormField(
+                hintText: 'Pekerjaan',
+                focusNode: _occupationFocus,
+                controller: _occupationController,
               ),
               const SizedBox(height: 15),
               TextButton(
@@ -72,7 +95,7 @@ class _LoginState extends State<Login> {
                 ),
                 onPressed: () {},
                 child: Text(
-                  'Log Masuk',
+                  'Selesai',
                   style: TextStyle(color: Colors.white),
                 ),
               ),

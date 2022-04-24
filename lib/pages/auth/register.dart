@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:my_khairat/pages/nav.dart';
 import 'package:my_khairat/styles/app_color.dart';
 import 'package:my_khairat/styles/custom_text_field.dart';
 
-class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+class Register extends StatefulWidget {
+  const Register({Key? key}) : super(key: key);
 
   @override
-  State<Login> createState() => _LoginState();
+  State<Register> createState() => _RegisterState();
 }
 
-class _LoginState extends State<Login> {
-  final TextEditingController _icController = TextEditingController();
+class _RegisterState extends State<Register> {
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
 
-  final FocusNode _icFocus = FocusNode();
+  final FocusNode _emailFocus = FocusNode();
   final FocusNode _passwordFocus = FocusNode();
+  final FocusNode _confirmPasswordFocus = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -47,15 +51,22 @@ class _LoginState extends State<Login> {
               ),
               const SizedBox(height: 20),
               CustomTextFormField(
-                hintText: 'Kad Pengenalan',
-                focusNode: _icFocus,
-                controller: _icController,
+                hintText: 'E-mel',
+                focusNode: _emailFocus,
+                controller: _emailController,
               ),
               const SizedBox(height: 10),
               CustomTextFormField(
                 hintText: 'Kata Laluan',
                 focusNode: _passwordFocus,
                 controller: _passwordController,
+                isObscured: true,
+              ),
+              const SizedBox(height: 10),
+              CustomTextFormField(
+                hintText: 'Pengesahan Kata Laluan',
+                focusNode: _confirmPasswordFocus,
+                controller: _confirmPasswordController,
                 isObscured: true,
               ),
               const SizedBox(height: 15),
@@ -70,9 +81,12 @@ class _LoginState extends State<Login> {
                     borderRadius: BorderRadius.circular(20),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushReplacement(
+                      context, MaterialPageRoute(builder: (context) => Nav()));
+                },
                 child: Text(
-                  'Log Masuk',
+                  'Daftar',
                   style: TextStyle(color: Colors.white),
                 ),
               ),
