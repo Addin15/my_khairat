@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_khairat/pages/auth/login.dart';
 import 'package:my_khairat/pages/auth/register.dart';
+import 'package:my_khairat/pages/complete_profile.dart';
 
 import 'pages/nav.dart';
 
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         textTheme: GoogleFonts.robotoTextTheme(Theme.of(context).textTheme),
       ),
-      home: const Register(),
+      home: const Nav(),
     );
   }
 }

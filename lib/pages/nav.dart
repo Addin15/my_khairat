@@ -20,11 +20,11 @@ class _NavState extends State<Nav> {
         selectedItemColor: AppColor.primary,
         items: [
           BottomNavigationBarItem(
-              icon: Icon(Icons.person_outline), label: 'Home'),
+              icon: Icon(Icons.payment_outlined), label: 'Pembayaran'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.person_outline), label: 'Home'),
+              icon: Icon(Icons.person_outline), label: 'Tanggungan'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.person_outline), label: 'Home'),
+              icon: Icon(Icons.settings_outlined), label: 'Tetapan'),
         ],
       ),
     );
