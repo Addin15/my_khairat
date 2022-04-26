@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:my_khairat/pages/dependent/dependent.dart';
+import 'package:my_khairat/pages/payment/payment.dart';
+import 'package:my_khairat/pages/setting/setting.dart';
 import 'package:my_khairat/styles/app_color.dart';
 
 class Nav extends StatefulWidget {
@@ -14,10 +17,22 @@ class _NavState extends State<Nav> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(),
+      body: IndexedStack(
+        index: indexPage,
+        children: const [
+          Payment(),
+          Dependent(),
+          Setting(),
+        ],
+      ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: indexPage,
         selectedItemColor: AppColor.primary,
+        onTap: (index) {
+          setState(() {
+            indexPage = index;
+          });
+        },
         items: [
           BottomNavigationBarItem(
               icon: Icon(Icons.payment_outlined), label: 'Pembayaran'),
