@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        textTheme: GoogleFonts.robotoTextTheme(Theme.of(context).textTheme),
+        textTheme: GoogleFonts.ubuntuTextTheme(Theme.of(context).textTheme),
       ),
       home: const Nav(),
     );

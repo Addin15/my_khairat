@@ -17,6 +17,15 @@ class _NavState extends State<Nav> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0.0,
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        title: Text(
+          'MyKhairat',
+          style: TextStyle(color: AppColor.primary),
+        ),
+      ),
       body: IndexedStack(
         index: indexPage,
         children: const [
@@ -33,7 +42,7 @@ class _NavState extends State<Nav> {
             indexPage = index;
           });
         },
-        items: [
+        items: const [
           BottomNavigationBarItem(
               icon: Icon(Icons.payment_outlined), label: 'Pembayaran'),
           BottomNavigationBarItem(
