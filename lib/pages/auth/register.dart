@@ -11,14 +11,26 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-  final TextEditingController _emailController = TextEditingController();
+
+
+//refer google drive mykhairat for registration form
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _icController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _occupationController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
-      TextEditingController();
+  TextEditingController();
 
-  final FocusNode _emailFocus = FocusNode();
+  final FocusNode _icFocus = FocusNode();
+  final FocusNode _nameFocus = FocusNode();
+  final FocusNode _addressFocus = FocusNode();
+  final FocusNode _phoneFocus = FocusNode();
+  final FocusNode _occupationFocus = FocusNode();
   final FocusNode _passwordFocus = FocusNode();
   final FocusNode _confirmPasswordFocus = FocusNode();
+
 
   @override
   Widget build(BuildContext context) {
@@ -38,62 +50,85 @@ class _RegisterState extends State<Register> {
             color: Colors.white54,
           ),
           padding: const EdgeInsets.symmetric(horizontal: 30),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'MyKhairat',
-                style: TextStyle(
-                  color: AppColor.primary,
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 20),
-              CustomTextFormField(
-                hintText: 'E-mel',
-                focusNode: _emailFocus,
-                controller: _emailController,
-              ),
-              const SizedBox(height: 10),
-              CustomTextFormField(
-                hintText: 'Kata Laluan',
-                focusNode: _passwordFocus,
-                controller: _passwordController,
-                isObscured: true,
-              ),
-              const SizedBox(height: 10),
-              CustomTextFormField(
-                hintText: 'Pengesahan Kata Laluan',
-                focusNode: _confirmPasswordFocus,
-                controller: _confirmPasswordController,
-                isObscured: true,
-              ),
-              const SizedBox(height: 15),
-              TextButton(
-                style: TextButton.styleFrom(
-                  backgroundColor: AppColor.primary,
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 15,
-                    horizontal: 20,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Pendaftaran MyKhairat',
+                  style: TextStyle(
+                    color: AppColor.primary,
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-                onPressed: () {
-                  Navigator.pushReplacement(
-                      context, MaterialPageRoute(builder: (context) => Nav()));
-                },
-                child: Text(
-                  'Daftar',
-                  style: TextStyle(color: Colors.white),
+                const SizedBox(height: 20),
+                CustomTextFormField(
+                  hintText: 'Kad Pengenalan',
+                  focusNode: _icFocus,
+                  controller: _icController,
                 ),
-              ),
-            ],
+                const SizedBox(height: 10),
+                CustomTextFormField(
+                  hintText: 'Nama',
+                  focusNode: _nameFocus,
+                  controller: _nameController,
+                ),
+                const SizedBox(height: 10),
+                CustomTextFormField(
+                  hintText: 'Alamat',
+                  focusNode: _addressFocus,
+                  controller: _addressController,
+                ),
+                const SizedBox(height: 10),
+                CustomTextFormField(
+                  hintText: 'No Telefon',
+                  focusNode: _phoneFocus,
+                  controller: _phoneController,
+                ),
+                const SizedBox(height: 10),
+                CustomTextFormField(
+                  hintText: 'Pekerjaan',
+                  focusNode: _occupationFocus,
+                  controller: _occupationController,
+                ),
+                const SizedBox(height: 10),
+                CustomTextFormField(
+                  hintText: 'Kata Laluan',
+                  focusNode: _passwordFocus,
+                  controller: _passwordController,
+                  isObscured: true,
+                ),
+                const SizedBox(height: 10),
+                CustomTextFormField(
+                  hintText: 'Pengesahan Kata Laluan',
+                  focusNode: _confirmPasswordFocus,
+                  controller: _confirmPasswordController,
+                  isObscured: true,
+                ),
+                const SizedBox(height: 15),
+                TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: AppColor.primary,
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 15,
+                      horizontal: 20,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                  onPressed: () {},
+                  child: Text(
+                    'Daftar',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
-  }
-}
+  }}
+
