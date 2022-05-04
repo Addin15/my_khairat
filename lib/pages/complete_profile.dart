@@ -28,7 +28,7 @@ class _CompleteProfileState extends State<CompleteProfile> {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         body: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             // gradient: LinearGradient(
             //   begin: Alignment.topLeft,
             //   end: Alignment.bottomCenter,
@@ -94,7 +94,7 @@ class _CompleteProfileState extends State<CompleteProfile> {
                   ),
                 ),
                 onPressed: () {},
-                child: Text(
+                child: const Text(
                   'Selesai',
                   style: TextStyle(color: Colors.white),
                 ),
