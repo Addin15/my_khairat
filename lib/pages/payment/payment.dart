@@ -1,6 +1,10 @@
 import 'dart:developer';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:my_khairat/pages/payment/create_payment.dart';
+import 'package:my_khairat/pages/payment/money_claim.dart';
+import 'package:my_khairat/pages/payment/payment_history.dart';
 import 'package:my_khairat/styles/app_color.dart';
 
 class Payment extends StatefulWidget {
@@ -55,6 +59,11 @@ class _PaymentState extends State<Payment> {
                               label: 'Buat\nPembayaran',
                               onTap: () {
                                 log('bayar');
+                                Navigator.push(
+                                    context,
+                                    CupertinoPageRoute(
+                                        builder: (context) =>
+                                            const CreatePayment()));
                               },
                             ),
                             ShowBox(
@@ -62,6 +71,11 @@ class _PaymentState extends State<Payment> {
                               label: 'Sejarah\nPembayaran',
                               onTap: () {
                                 log('sejarah');
+                                Navigator.push(
+                                    context,
+                                    CupertinoPageRoute(
+                                        builder: (context) =>
+                                            const PaymentHistory()));
                               },
                             ),
                             ShowBox(
@@ -69,6 +83,11 @@ class _PaymentState extends State<Payment> {
                               label: 'Tuntutan\nWang',
                               onTap: () {
                                 log('tuntut');
+                                Navigator.push(
+                                    context,
+                                    CupertinoPageRoute(
+                                        builder: (context) =>
+                                            const MoneyClaim()));
                               },
                             ),
                           ],
@@ -191,7 +210,7 @@ class ShowBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: onTap,
       child: Card(
         shape: RoundedRectangleBorder(
