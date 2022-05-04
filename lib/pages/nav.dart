@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:my_khairat/pages/dependent/dependent.dart';
 import 'package:my_khairat/pages/home/home.dart';
-import 'package:my_khairat/pages/setting/setting.dart';
+import 'package:my_khairat/pages/setting/profile.dart';
 import 'package:my_khairat/styles/app_color.dart';
 
 class Nav extends StatefulWidget {
@@ -32,7 +32,7 @@ class _NavState extends State<Nav> {
         children: const [
           Home(),
           Dependent(),
-          Setting(),
+          Profile(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -53,9 +53,9 @@ class _NavState extends State<Nav> {
               icon: Icon(Ionicons.people_outline),
               label: 'Tanggungan'),
           BottomNavigationBarItem(
-              activeIcon: Icon(Ionicons.cog),
-              icon: Icon(Ionicons.cog_outline),
-              label: 'Tetapan'),
+              activeIcon: Icon(Ionicons.person),
+              icon: Icon(Ionicons.person_outline),
+              label: 'Profile'),
         ],
       ),
     );
