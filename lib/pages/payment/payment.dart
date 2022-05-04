@@ -1,10 +1,11 @@
 import 'dart:developer';
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:my_khairat/pages/payment/create_payment.dart';
-import 'package:my_khairat/pages/payment/money_claim.dart';
-import 'package:my_khairat/pages/payment/payment_history.dart';
+import 'package:my_khairat/pages/home/create_payment.dart';
+import 'package:my_khairat/pages/home/money_claim.dart';
+import 'package:my_khairat/pages/home/payment_history.dart';
 import 'package:my_khairat/styles/app_color.dart';
 
 class Payment extends StatefulWidget {
@@ -108,13 +109,46 @@ class _PaymentState extends State<Payment> {
                                 ),
                               ),
                               const SizedBox(height: 10),
-                              Container(
-                                height: 200,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey,
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                              ),
+                              CarouselSlider(
+                                  items: [
+                                    Container(
+                                      height: 200,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey,
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                    ),
+                                    Container(
+                                      height: 200,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey,
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                    ),
+                                    Container(
+                                      height: 200,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey,
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                    ),
+                                    Container(
+                                      height: 200,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey,
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                    ),
+                                  ],
+                                  options: CarouselOptions(
+                                      scrollDirection: Axis.horizontal)),
+                              // Container(
+                              //   height: 200,
+                              //   decoration: BoxDecoration(
+                              //     color: Colors.grey,
+                              //     borderRadius: BorderRadius.circular(15),
+                              //   ),
+                              // ),
                             ],
                           ),
                         ),
