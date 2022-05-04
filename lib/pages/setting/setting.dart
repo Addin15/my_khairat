@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_khairat/pages/setting/edit_profile.dart';
 import 'package:my_khairat/styles/app_color.dart';
+import 'package:page_transition/page_transition.dart';
 
 class Setting extends StatefulWidget {
   const Setting({Key? key}) : super(key: key);
@@ -31,15 +32,18 @@ class _SettingState extends State<Setting> {
                 child: TextButton(
                   onPressed: () {
                     Navigator.push(
+                      //   context,
+                      //   PageRouteBuilder(
+                      //     pageBuilder: (context, animation1, animation2) =>
+                      //         const EditProfile(),
+                      //     transitionDuration: Duration.zero,
+                      //     reverseTransitionDuration: Duration.zero,
+                      //   ),
+                      // );
                       context,
-                      // MaterialPageRoute(
-                      //     builder: (context) => const EditProfile()),
-                      PageRouteBuilder(
-                        pageBuilder: (context, animation1, animation2) =>
-                            const EditProfile(),
-                        transitionDuration: Duration.zero,
-                        reverseTransitionDuration: Duration.zero,
-                      ),
+                      PageTransition(
+                          type: PageTransitionType.rightToLeft,
+                          child: const EditProfile()),
                     );
                   },
                   child: Column(
