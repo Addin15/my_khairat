@@ -11,8 +11,9 @@ class Setting extends StatefulWidget {
 }
 
 class _SettingState extends State<Setting> {
-  @override
   int index = 0;
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
