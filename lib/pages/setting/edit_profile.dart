@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:my_khairat/styles/app_color.dart';
 import 'package:my_khairat/styles/custom_text_field.dart';
 
@@ -27,6 +28,20 @@ class _EditProfileState extends State<EditProfile> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text(
+            'Sunting profil',
+            style: TextStyle(color: AppColor.primary),
+          ),
+          elevation: 0.0,
+          backgroundColor: Colors.white,
+          leading: IconButton(
+            icon: const Icon(Ionicons.chevron_back),
+            color: AppColor.primary,
+            onPressed: () => Navigator.pop(context),
+          ),
+        ),
         body: Container(
           decoration: const BoxDecoration(
             // gradient: LinearGradient(

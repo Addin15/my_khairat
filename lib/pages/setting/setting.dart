@@ -1,7 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_khairat/pages/setting/edit_profile.dart';
 import 'package:my_khairat/styles/app_color.dart';
-import 'package:page_transition/page_transition.dart';
 
 class Setting extends StatefulWidget {
   const Setting({Key? key}) : super(key: key);
@@ -16,88 +16,46 @@ class _SettingState extends State<Setting> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              width: 200,
-              height: 80,
-              child: Card(
-                color: AppColor.primary,
-                shadowColor: Colors.black,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      //   context,
-                      //   PageRouteBuilder(
-                      //     pageBuilder: (context, animation1, animation2) =>
-                      //         const EditProfile(),
-                      //     transitionDuration: Duration.zero,
-                      //     reverseTransitionDuration: Duration.zero,
-                      //   ),
-                      // );
-                      context,
-                      PageTransition(
-                          type: PageTransitionType.rightToLeft,
-                          child: const EditProfile()),
-                    );
-                  },
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: const [
-                      Icon(
-                        Icons.person,
-                        color: Colors.white,
-                      ),
-                      Text("Profil", style: TextStyle(color: Colors.white)),
-                    ],
-                  ),
-                ),
+      body: ListView(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(color: AppColor.primary, width: 3),
               ),
             ),
-            const SizedBox(height: 20),
-            SizedBox(
-              width: 200,
-              height: 80,
-              child: Card(
-                color: Colors.redAccent,
-                shadowColor: Colors.black,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const EditProfile()),
-                    );
-                  },
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: const [
-                      Icon(
-                        Icons.logout,
-                        color: Colors.white,
-                      ),
-                      Text(
-                        "Keluar",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ],
+            child: TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  CupertinoPageRoute(
+                    builder: (context) => const EditProfile(),
                   ),
-                ),
+                );
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.only(right: 20.0),
+                    child: const Icon(
+                      Icons.person,
+                      color: Colors.black,
+                    ),
+                  ),
+                  Container(
+                    constraints: BoxConstraints(minWidth: 100, maxWidth: 200),
+                    child: const Text(
+                      "Profil",
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
