@@ -55,6 +55,43 @@ class _SettingState extends State<Setting> {
               ),
             ),
           ),
+          Container(
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(color: AppColor.primary, width: 3),
+              ),
+            ),
+            child: TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  CupertinoPageRoute(
+                    builder: (context) => const EditProfile(),
+                  ),
+                );
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.only(right: 20.0),
+                    child: const Icon(
+                      Icons.help,
+                      color: Colors.black,
+                    ),
+                  ),
+                  Container(
+                    constraints: BoxConstraints(minWidth: 100, maxWidth: 200),
+                    child: const Text(
+                      "Bantuan",
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );
