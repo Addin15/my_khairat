@@ -5,10 +5,12 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:my_khairat/models/user.dart';
 import 'package:my_khairat/pages/home/create_payment.dart';
 import 'package:my_khairat/pages/home/money_claim.dart';
 import 'package:my_khairat/pages/home/payment_history.dart';
 import 'package:my_khairat/styles/app_color.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -43,7 +45,13 @@ class _HomeState extends State<Home> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    User user = Provider.of<User>(context);
     return Scaffold(
       body: ListView(
         //physics: const RangeMaintainingScrollPhysics(),
