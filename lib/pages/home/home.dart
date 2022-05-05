@@ -1,5 +1,7 @@
 import 'dart:developer';
 
+import 'package:carousel_slider/carousel_options.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_khairat/pages/home/create_payment.dart';
@@ -148,13 +150,36 @@ class _HomeState extends State<Home> {
           const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Container(
-              height: 200,
-              decoration: BoxDecoration(
-                color: Colors.grey,
-                borderRadius: BorderRadius.circular(15),
+            child: CarouselSlider(items: [
+              Container(
+                height: 200,
+                decoration: BoxDecoration(
+                  color: Colors.grey,
+                  borderRadius: BorderRadius.circular(15),
+                ),
               ),
-            ),
+              Container(
+                height: 200,
+                decoration: BoxDecoration(
+                  color: Colors.grey,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+              ),
+              Container(
+                height: 200,
+                decoration: BoxDecoration(
+                  color: Colors.grey,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+              ),
+              Container(
+                height: 200,
+                decoration: BoxDecoration(
+                  color: Colors.grey,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+              ),
+            ], options: CarouselOptions(scrollDirection: Axis.horizontal)),
           ),
           const SizedBox(height: 30),
         ],
