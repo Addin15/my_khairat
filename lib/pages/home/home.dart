@@ -17,6 +17,40 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  // Announcement Carousel
+  final CarouselController _carouselController = CarouselController();
+  int selectedAnnouncement = 0;
+  List<Widget> announcements = [
+    Container(
+      height: 200,
+      decoration: BoxDecoration(
+        color: Colors.grey,
+        borderRadius: BorderRadius.circular(15),
+      ),
+    ),
+    Container(
+      height: 200,
+      decoration: BoxDecoration(
+        color: Colors.grey,
+        borderRadius: BorderRadius.circular(15),
+      ),
+    ),
+    Container(
+      height: 200,
+      decoration: BoxDecoration(
+        color: Colors.grey,
+        borderRadius: BorderRadius.circular(15),
+      ),
+    ),
+    Container(
+      height: 200,
+      decoration: BoxDecoration(
+        color: Colors.grey,
+        borderRadius: BorderRadius.circular(15),
+      ),
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -150,36 +184,35 @@ class _HomeState extends State<Home> {
           const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: CarouselSlider(items: [
-              Container(
-                height: 200,
+            child: CarouselSlider(
+              carouselController: _carouselController,
+              items: announcements,
+              options: CarouselOptions(
+                  scrollDirection: Axis.horizontal,
+                  enlargeCenterPage: true,
+                  onPageChanged: (index, reason) {
+                    setState(() {
+                      selectedAnnouncement = index;
+                    });
+                  }),
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: announcements.map((url) {
+              int index = announcements.indexOf(url);
+              return Container(
+                width: 8.0,
+                height: 8.0,
+                margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
                 decoration: BoxDecoration(
-                  color: Colors.grey,
-                  borderRadius: BorderRadius.circular(15),
+                  shape: BoxShape.circle,
+                  color: selectedAnnouncement == index
+                      ? Color.fromRGBO(0, 0, 0, 0.9)
+                      : Color.fromRGBO(0, 0, 0, 0.4),
                 ),
-              ),
-              Container(
-                height: 200,
-                decoration: BoxDecoration(
-                  color: Colors.grey,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-              ),
-              Container(
-                height: 200,
-                decoration: BoxDecoration(
-                  color: Colors.grey,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-              ),
-              Container(
-                height: 200,
-                decoration: BoxDecoration(
-                  color: Colors.grey,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-              ),
-            ], options: CarouselOptions(scrollDirection: Axis.horizontal)),
+              );
+            }).toList(),
           ),
           const SizedBox(height: 30),
         ],
