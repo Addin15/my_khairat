@@ -4,6 +4,7 @@ import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:my_khairat/pages/home/create_payment.dart';
 import 'package:my_khairat/pages/home/money_claim.dart';
 import 'package:my_khairat/pages/home/payment_history.dart';
@@ -21,33 +22,23 @@ class _HomeState extends State<Home> {
   final CarouselController _carouselController = CarouselController();
   int selectedAnnouncement = 0;
   List<Widget> announcements = [
-    Container(
-      height: 200,
-      decoration: BoxDecoration(
-        color: Colors.grey,
-        borderRadius: BorderRadius.circular(15),
-      ),
+    AnnouncementBox(
+      title: 'Title 1',
+      announcement:
+          'Announcement 1\nAnnouncement 1\nAnnouncement 1\nAnnouncement 1\nAnnouncement 1\nAnnouncement 1\nAnnouncement 1\nAnnouncement 1\nAnnouncement 1\nAnnouncement 1\n',
+      date: DateTime.now(),
     ),
-    Container(
-      height: 200,
-      decoration: BoxDecoration(
-        color: Colors.grey,
-        borderRadius: BorderRadius.circular(15),
-      ),
+    AnnouncementBox(
+      title: 'Title 2',
+      announcement: 'Announcement 2',
+      imgUrl:
+          'https://zamzam-blog.s3.eu-west-1.amazonaws.com/wp-content/uploads/2022/02/MicrosoftTeams-image-3-1.png',
+      date: DateTime.now(),
     ),
-    Container(
-      height: 200,
-      decoration: BoxDecoration(
-        color: Colors.grey,
-        borderRadius: BorderRadius.circular(15),
-      ),
-    ),
-    Container(
-      height: 200,
-      decoration: BoxDecoration(
-        color: Colors.grey,
-        borderRadius: BorderRadius.circular(15),
-      ),
+    AnnouncementBox(
+      title: 'Title 3',
+      announcement: 'Announcement 3',
+      date: DateTime.now(),
     ),
   ];
 
@@ -136,7 +127,7 @@ class _HomeState extends State<Home> {
                 crossAxisSpacing: 15,
               ),
               children: [
-                ShowBox(
+                MenuBox(
                   icon: 'assets/icons/bayar.png',
                   label: 'Buat\nPembayaran',
                   onTap: () {
@@ -147,7 +138,7 @@ class _HomeState extends State<Home> {
                             builder: (context) => const CreatePayment()));
                   },
                 ),
-                ShowBox(
+                MenuBox(
                   icon: 'assets/icons/resit.png',
                   label: 'Sejarah\nPembayaran',
                   onTap: () {
@@ -158,7 +149,7 @@ class _HomeState extends State<Home> {
                             builder: (context) => const PaymentHistory()));
                   },
                 ),
-                ShowBox(
+                MenuBox(
                   icon: 'assets/icons/tuntutan.png',
                   label: 'Tuntutan\nWang',
                   onTap: () {
@@ -172,29 +163,52 @@ class _HomeState extends State<Home> {
               ],
             ),
           ),
-          const SizedBox(height: 20),
-          const Text(
-            'Pengumuman',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
+          const SizedBox(height: 15),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Pengumuman',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    'See All',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontWeight: FontWeight.normal,
+                      fontSize: 18,
+                      color: Colors.blue.shade800,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
           const SizedBox(height: 10),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: CarouselSlider(
-              carouselController: _carouselController,
-              items: announcements,
-              options: CarouselOptions(
-                  scrollDirection: Axis.horizontal,
-                  enlargeCenterPage: true,
-                  onPageChanged: (index, reason) {
-                    setState(() {
-                      selectedAnnouncement = index;
-                    });
-                  }),
+          GestureDetector(
+            onTap: () {},
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: CarouselSlider(
+                carouselController: _carouselController,
+                items: announcements,
+                options: CarouselOptions(
+                    scrollDirection: Axis.horizontal,
+                    enlargeCenterPage: true,
+                    onPageChanged: (index, reason) {
+                      setState(() {
+                        selectedAnnouncement = index;
+                      });
+                    }),
+              ),
             ),
           ),
           Row(
@@ -204,12 +218,13 @@ class _HomeState extends State<Home> {
               return Container(
                 width: 8.0,
                 height: 8.0,
-                margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+                margin:
+                    const EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: selectedAnnouncement == index
-                      ? Color.fromRGBO(0, 0, 0, 0.9)
-                      : Color.fromRGBO(0, 0, 0, 0.4),
+                      ? const Color.fromRGBO(0, 0, 0, 0.9)
+                      : const Color.fromRGBO(0, 0, 0, 0.4),
                 ),
               );
             }).toList(),
@@ -221,8 +236,8 @@ class _HomeState extends State<Home> {
   }
 }
 
-class ShowBox extends StatelessWidget {
-  const ShowBox({
+class MenuBox extends StatelessWidget {
+  const MenuBox({
     required this.icon,
     required this.label,
     required this.onTap,
@@ -271,6 +286,138 @@ class ShowBox extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class AnnouncementBox extends StatelessWidget {
+  const AnnouncementBox({
+    this.title,
+    this.imgUrl,
+    this.announcement,
+    this.date,
+    Key? key,
+  }) : super(key: key);
+
+  final String? title;
+  final String? imgUrl;
+  final String? announcement;
+  final DateTime? date;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.maxFinite,
+      decoration: BoxDecoration(
+        color: const Color(0xF1DDDDDD),
+        border: Border.all(
+          color: const Color(0xF1C1C1C1),
+          width: 1,
+        ),
+        borderRadius: BorderRadius.circular(15),
+      ),
+      height: 200,
+      child: Stack(
+        alignment: Alignment.topLeft,
+        fit: StackFit.expand,
+        children: [
+          imgUrl == null || imgUrl!.isEmpty
+              ? Container(
+                  alignment: Alignment.centerLeft,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  padding:
+                      const EdgeInsets.only(left: 10, right: 10, bottom: 5),
+                  child: Text(
+                    announcement!,
+                    maxLines: 7,
+                    textAlign: TextAlign.start,
+                    style: const TextStyle(
+                      fontSize: 16,
+                    ),
+                  ),
+                )
+              : ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: Image.network(
+                    imgUrl!,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: Container(
+              decoration: const BoxDecoration(
+                backgroundBlendMode: BlendMode.overlay,
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.white,
+                    Colors.white24,
+                  ],
+                ),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(15),
+                  topRight: Radius.circular(15),
+                ),
+              ),
+              alignment: Alignment.topCenter,
+              child: Text(
+                title!,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  color: Colors.black87,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: Container(
+              alignment: Alignment.bottomCenter,
+              decoration: const BoxDecoration(
+                backgroundBlendMode: BlendMode.overlay,
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.white24,
+                    Colors.white,
+                  ],
+                ),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(15),
+                  bottomRight: Radius.circular(15),
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.only(left: 13, bottom: 5),
+                    child: Text(DateFormat('dd-MM-yyyy').format(date!)),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.only(right: 13, bottom: 5),
+                    child: Text(
+                      'Baca Lagi...',
+                      style: TextStyle(color: Colors.blue.shade800),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
