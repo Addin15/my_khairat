@@ -46,7 +46,7 @@ class _HomeState extends State<Home> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: const [
                     Text(
-                      'Masjid A',
+                      'Masjid Setapak',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,
