@@ -10,16 +10,16 @@ class Person {
   factory Person.fromMap(Map<String, dynamic> map) => Person(
         name: map['name'],
         ic: map['ic'],
-        address: map['address'],
-        phone: map['phone'],
-        occupation: map['occupation'],
+        address: map['address'] ?? '',
+        phone: map['phone'] ?? '',
+        occupation: map['occupation'] ?? '',
       );
 
   Map<String, dynamic> toMap() => {
         'name': name,
         'ic': ic,
-        'address': address,
-        'phone': phone,
-        'occupation': occupation,
+        'address': address ?? '',
+        'phone': phone ?? '',
+        'occupation': occupation ?? '',
       };
 }

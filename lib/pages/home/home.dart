@@ -54,7 +54,7 @@ class _HomeState extends State<Home> {
     User user = Provider.of<User>(context);
     return Scaffold(
       body: ListView(
-        //physics: const RangeMaintainingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         children: [
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -126,50 +126,48 @@ class _HomeState extends State<Home> {
             ),
           ),
           const SizedBox(height: 20),
-          SizedBox(
-            height: 130,
-            child: GridView(
-              physics: const BouncingScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                crossAxisSpacing: 15,
-              ),
-              children: [
-                MenuBox(
-                  icon: 'assets/icons/bayar.png',
-                  label: 'Buat\nPembayaran',
-                  onTap: () {
-                    log('bayar');
-                    Navigator.push(
-                        context,
-                        CupertinoPageRoute(
-                            builder: (context) => const CreatePayment()));
-                  },
-                ),
-                MenuBox(
-                  icon: 'assets/icons/resit.png',
-                  label: 'Sejarah\nPembayaran',
-                  onTap: () {
-                    log('sejarah');
-                    Navigator.push(
-                        context,
-                        CupertinoPageRoute(
-                            builder: (context) => const PaymentHistory()));
-                  },
-                ),
-                MenuBox(
-                  icon: 'assets/icons/tuntutan.png',
-                  label: 'Tuntutan\nWang',
-                  onTap: () {
-                    log('tuntut');
-                    Navigator.push(
-                        context,
-                        CupertinoPageRoute(
-                            builder: (context) => const MoneyClaim()));
-                  },
-                ),
-              ],
+          GridView(
+            shrinkWrap: true,
+            physics: const BouncingScrollPhysics(),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              crossAxisSpacing: 15,
             ),
+            children: [
+              MenuBox(
+                icon: 'assets/icons/bayar.png',
+                label: 'Buat\nPembayaran',
+                onTap: () {
+                  log('bayar');
+                  Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                          builder: (context) => const CreatePayment()));
+                },
+              ),
+              MenuBox(
+                icon: 'assets/icons/resit.png',
+                label: 'Sejarah\nPembayaran',
+                onTap: () {
+                  log('sejarah');
+                  Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                          builder: (context) => const PaymentHistory()));
+                },
+              ),
+              MenuBox(
+                icon: 'assets/icons/tuntutan.png',
+                label: 'Tuntutan\nWang',
+                onTap: () {
+                  log('tuntut');
+                  Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                          builder: (context) => const MoneyClaim()));
+                },
+              ),
+            ],
           ),
           const SizedBox(height: 15),
           Padding(
