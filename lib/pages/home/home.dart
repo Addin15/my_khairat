@@ -11,6 +11,7 @@ import 'package:my_khairat/pages/home/money_claim.dart';
 import 'package:my_khairat/pages/home/payment_history.dart';
 import 'package:my_khairat/styles/app_color.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -79,44 +80,45 @@ class _HomeState extends State<Home> {
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children: [
                     Text(
                       'Masjid Setapak',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 18,
+                        fontSize: 5.w,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+                    SizedBox(height: 1.w),
                     Text(
                       'Kampung B',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 16,
+                        fontSize: 4.w,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 8),
+                    SizedBox(height: 2.w),
                     Divider(
                       color: Colors.white,
                       thickness: 1,
                       height: 1,
                     ),
-                    SizedBox(height: 8),
+                    SizedBox(height: 2.w),
                     Text(
                       'Yuran Tertunggak',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 18,
+                        fontSize: 5.w,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 2),
+                    SizedBox(height: 2.w),
                     Text(
                       'RM30.00',
                       style: TextStyle(
                         color: Colors.red,
-                        fontSize: 24,
+                        fontSize: 8.w,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -125,7 +127,7 @@ class _HomeState extends State<Home> {
               ),
             ),
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: 8.w),
           GridView(
             shrinkWrap: true,
             physics: const BouncingScrollPhysics(),
@@ -169,18 +171,18 @@ class _HomeState extends State<Home> {
               ),
             ],
           ),
-          const SizedBox(height: 15),
+          SizedBox(height: 7.w),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
+                Text(
                   'Pengumuman',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 18,
+                    fontSize: 4.w,
                   ),
                 ),
                 TextButton(
@@ -190,7 +192,7 @@ class _HomeState extends State<Home> {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontWeight: FontWeight.normal,
-                      fontSize: 18,
+                      fontSize: 4.w,
                       color: Colors.blue.shade800,
                     ),
                   ),
@@ -275,8 +277,8 @@ class MenuBox extends StatelessWidget {
                 child: Image.asset(
                   icon,
                   color: AppColor.primary,
-                  width: 50,
-                  height: 50,
+                  width: 10.w,
+                  height: 10.w,
                 ),
               ),
               Padding(
@@ -285,6 +287,7 @@ class MenuBox extends StatelessWidget {
                   label,
                   textAlign: TextAlign.center,
                   style: TextStyle(
+                    fontSize: 3.5.w,
                     color: AppColor.primary,
                   ),
                 ),
@@ -323,7 +326,6 @@ class AnnouncementBox extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(15),
       ),
-      height: 200,
       child: Stack(
         alignment: Alignment.topLeft,
         fit: StackFit.expand,
@@ -340,8 +342,8 @@ class AnnouncementBox extends StatelessWidget {
                     announcement!,
                     maxLines: 7,
                     textAlign: TextAlign.start,
-                    style: const TextStyle(
-                      fontSize: 16,
+                    style: TextStyle(
+                      fontSize: 4.w,
                     ),
                   ),
                 )
@@ -376,9 +378,9 @@ class AnnouncementBox extends StatelessWidget {
               child: Text(
                 title!,
                 textAlign: TextAlign.center,
-                style: const TextStyle(
+                style: TextStyle(
                   color: Colors.black87,
-                  fontSize: 18,
+                  fontSize: 5.w,
                   fontWeight: FontWeight.bold,
                 ),
               ),

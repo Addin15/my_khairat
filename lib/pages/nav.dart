@@ -7,6 +7,7 @@ import 'package:my_khairat/pages/home/home.dart';
 import 'package:my_khairat/pages/setting/profile.dart';
 import 'package:my_khairat/styles/app_color.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 class Nav extends StatefulWidget {
   const Nav({Key? key}) : super(key: key);
@@ -93,6 +94,9 @@ class _NavState extends State<Nav> {
             ),
             bottomNavigationBar: BottomNavigationBar(
               currentIndex: indexPage,
+              selectedFontSize: 3.w,
+              unselectedFontSize: 3.w,
+              iconSize: 6.w,
               selectedItemColor: AppColor.primary,
               onTap: (index) {
                 setState(() {
