@@ -52,7 +52,6 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    User user = Provider.of<User>(context);
     return Scaffold(
       body: ListView(
         physics: const BouncingScrollPhysics(),

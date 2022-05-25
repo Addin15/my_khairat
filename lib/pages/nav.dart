@@ -1,7 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:my_khairat/DAO/user_dao.dart';
 import 'package:my_khairat/models/person.dart';
 import 'package:my_khairat/models/user.dart';
+import 'package:my_khairat/pages/auth/login.dart';
+import 'package:my_khairat/pages/complete_profile.dart';
 import 'package:my_khairat/pages/dependent/dependent.dart';
 import 'package:my_khairat/pages/home/home.dart';
 import 'package:my_khairat/pages/setting/profile.dart';
@@ -17,108 +22,91 @@ class Nav extends StatefulWidget {
 }
 
 class _NavState extends State<Nav> {
-  late final User user;
   int indexPage = 0;
-
-  getUserDummy() {
-    List<Person> dependents = [
-      Person(
-        name: 'Dependent 1',
-        ic: '0062691209',
-        address: 'A',
-        phone: '0126253424',
-        occupation: 'Pelajar',
-      ),
-      Person(
-        name: 'Dependent 2',
-        ic: '0062691209',
-        address: 'A',
-        phone: '0126253424',
-        occupation: 'Pelajar',
-      ),
-      Person(
-        name: 'Dependent 3',
-        ic: '0062691209',
-        address: 'A',
-        phone: '0126253424',
-        occupation: 'Pelajar',
-      ),
-    ];
-
-    Map<String, dynamic> userMap = {
-      'name': 'TestUser',
-      'ic': '000713100567',
-      'address': 'KL',
-      'phone': '0123456789',
-      'occupation': 'Lecturer',
-      'id': '1',
-      'email': 'test@gmail.com',
-    };
-
-    User dummyUser = User.fromMap(userMap);
-    dummyUser.dependents = dependents;
-
-    setState(() {
-      user = dummyUser;
-    });
-  }
 
   @override
   void initState() {
-    getUserDummy();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Provider<User>.value(
-        value: user,
-        builder: (context, child) {
-          return Scaffold(
-            appBar: AppBar(
-              elevation: 0.0,
-              centerTitle: true,
-              backgroundColor: Colors.white,
-              title: Text(
-                'MyKhairat',
-                style: TextStyle(color: AppColor.primary),
-              ),
+    return ChangeNotifierProvider<UserDAO>(
+      create: (context) => UserDAO(),
+      child: Consumer<UserDAO>(builder: (context, userDAO, child) {
+        User? user = userDAO.user;
+
+        if (user == null) {
+          log('not login');
+        } else {
+          log('log in');
+        }
+
+        return Scaffold(
+          appBar: AppBar(
+            elevation: 0.0,
+            centerTitle: true,
+            backgroundColor: Colors.white,
+            title: Text(
+              'MyKhairat',
+              style: TextStyle(color: AppColor.primary),
             ),
-            body: IndexedStack(
-              index: indexPage,
-              children: const [
-                Home(),
-                Dependent(),
-                Profile(),
-              ],
-            ),
-            bottomNavigationBar: BottomNavigationBar(
-              currentIndex: indexPage,
-              selectedFontSize: 3.w,
-              unselectedFontSize: 3.w,
-              iconSize: 6.w,
-              selectedItemColor: AppColor.primary,
-              onTap: (index) {
+          ),
+          body: IndexedStack(
+            index: indexPage,
+            children: const [
+              Home(),
+              Dependent(),
+              Profile(),
+            ],
+          ),
+          bottomNavigationBar: BottomNavigationBar(
+            currentIndex: indexPage,
+            selectedFontSize: 3.w,
+            unselectedFontSize: 3.w,
+            iconSize: 6.w,
+            selectedItemColor: AppColor.primary,
+            onTap: (index) {
+              if (index != 0) {
+                if (user == null) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Login(userDAO: userDAO)));
+                } else if (user.name == null || user.name!.isEmpty) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              CompleteProfile(userDAO: userDAO)));
+                } else {
+                  setState(() {
+                    indexPage = index;
+                  });
+                }
+              } else {
                 setState(() {
                   indexPage = index;
                 });
-              },
-              items: const [
-                BottomNavigationBarItem(
-                    activeIcon: Icon(Ionicons.grid),
-                    icon: Icon(Ionicons.grid_outline),
-                    label: 'Halaman Utama'),
-                BottomNavigationBarItem(
-                    activeIcon: Icon(Ionicons.people),
-                    icon: Icon(Ionicons.people_outline),
-                    label: 'Tanggungan'),
-                BottomNavigationBarItem(
-                    activeIcon: Icon(Ionicons.person),
-                    icon: Icon(Ionicons.person_outline),
-                    label: 'Profile'),
-              ],
-            ),
-          );
-        });
+              }
+            },
+            items: const [
+              BottomNavigationBarItem(
+                  activeIcon: Icon(Ionicons.grid),
+                  icon: Icon(Ionicons.grid_outline),
+                  label: 'Halaman Utama'),
+              BottomNavigationBarItem(
+                  activeIcon: Icon(Ionicons.people),
+                  icon: Icon(Ionicons.people_outline),
+                  label: 'Tanggungan'),
+              BottomNavigationBarItem(
+                  activeIcon: Icon(Ionicons.person),
+                  icon: Icon(Ionicons.person_outline),
+                  label: 'Profile'),
+            ],
+          ),
+        );
+      }),
+    );
   }
 }
