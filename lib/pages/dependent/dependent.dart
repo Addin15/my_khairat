@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:my_khairat/DAO/user_dao.dart';
 
 class Dependent extends StatefulWidget {
-  const Dependent({Key? key}) : super(key: key);
+  const Dependent({required this.userDAO, Key? key}) : super(key: key);
+
+  final UserDAO userDAO;
 
   @override
   State<Dependent> createState() => _DependentState();

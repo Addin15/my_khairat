@@ -24,6 +24,12 @@ class Nav extends StatefulWidget {
 class _NavState extends State<Nav> {
   int indexPage = 0;
 
+  backtoHome() {
+    setState(() {
+      indexPage = 0;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -35,12 +41,6 @@ class _NavState extends State<Nav> {
       create: (context) => UserDAO(),
       child: Consumer<UserDAO>(builder: (context, userDAO, child) {
         User? user = userDAO.user;
-
-        if (user == null) {
-          log('not login');
-        } else {
-          log('log in');
-        }
 
         return Scaffold(
           appBar: AppBar(
@@ -54,10 +54,10 @@ class _NavState extends State<Nav> {
           ),
           body: IndexedStack(
             index: indexPage,
-            children: const [
-              Home(),
-              Dependent(),
-              Profile(),
+            children: [
+              Home(userDAO: userDAO),
+              Dependent(userDAO: userDAO),
+              Profile(userDAO: userDAO, backToHome: backtoHome),
             ],
           ),
           bottomNavigationBar: BottomNavigationBar(

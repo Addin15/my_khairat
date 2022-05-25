@@ -16,6 +16,7 @@ class UserDAO extends ChangeNotifier {
 
   get user => _user;
 
+  // GET DATA FROM CACHE FIRST IF ANY
   initData() async {
     SecureStorage _secureStorage = SecureStorage();
     String? _token = await _secureStorage.read('token');
@@ -24,9 +25,24 @@ class UserDAO extends ChangeNotifier {
       _user = _userBox.get(_token);
 
       notifyListeners();
+      getLatestData(_token, _user!.id!);
     }
   }
 
+  // OVERWRITE WITH NEW DATA
+  getLatestData(String token, String userID) async {
+    dynamic data = await AuthController.getProfile(userID);
+
+    if (data != null) {
+      Box _userBox = await Hive.openBox('user');
+      _userBox.put(token, User.fromMap(data));
+
+      _user = User.fromMap(data);
+      notifyListeners();
+    }
+  }
+
+  // LOGIN
   login(String email, String password) async {
     dynamic data = await AuthController.login(email: email, password: password);
 
@@ -42,6 +58,7 @@ class UserDAO extends ChangeNotifier {
     }
   }
 
+  // REGISTER
   register(String email, String ic, String password) async {
     dynamic data =
         await AuthController.register(email: email, ic: ic, password: password);
@@ -58,6 +75,7 @@ class UserDAO extends ChangeNotifier {
     }
   }
 
+  // COMPLETE
   complete(String userID, Map<String, dynamic> data) async {
     bool res = await AuthController.complete(data: data);
 
@@ -88,6 +106,7 @@ class UserDAO extends ChangeNotifier {
     }
   }
 
+  // LOGOUT
   logout() async {
     SecureStorage _secureStorage = SecureStorage();
     _secureStorage.deleteAll();

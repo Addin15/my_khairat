@@ -62,7 +62,7 @@ class User extends HiveObject {
         phone: map['person']['person_phone'] ?? '',
         occupation: map['person']['person_occupation'] ?? '',
         status: map['person']['person_status'] ?? '',
-        mosqueID: map['person']['mosque_id'] ?? '',
-        villageID: map['person']['village_id'] ?? '',
+        mosqueID: map['person']['mosque_id'].toString(),
+        villageID: map['person']['village_id'].toString(),
       );
 }

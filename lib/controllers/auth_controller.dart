@@ -93,6 +93,33 @@ class AuthController {
     }
   }
 
+  static Future<dynamic> getProfile(String userID) async {
+    try {
+      SecureStorage _secureStorage = SecureStorage();
+      String _token = await _secureStorage.read('token');
+      String url = '${Config.hostName}/user';
+
+      var response = await post(
+        Uri.parse(url),
+        body: jsonEncode({
+          'id': userID,
+        }),
+        headers: headerswithToken(_token),
+      );
+
+      log(response.body);
+
+      if (response.statusCode == 200) {
+        Map<String, dynamic> data = jsonDecode(response.body);
+        return data;
+      }
+
+      return null;
+    } catch (e) {
+      return null;
+    }
+  }
+
   // Log out
   static Future<bool> logout() async {
     try {

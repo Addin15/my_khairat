@@ -5,7 +5,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:my_khairat/DAO/user_dao.dart';
 import 'package:my_khairat/models/user.dart';
+import 'package:my_khairat/pages/auth/login.dart';
 import 'package:my_khairat/pages/home/create_payment.dart';
 import 'package:my_khairat/pages/home/money_claim.dart';
 import 'package:my_khairat/pages/home/payment_history.dart';
@@ -13,8 +15,12 @@ import 'package:my_khairat/styles/app_color.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
+import '../complete_profile.dart';
+
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+  const Home({required this.userDAO, Key? key}) : super(key: key);
+
+  final UserDAO userDAO;
 
   @override
   State<Home> createState() => _HomeState();
@@ -52,10 +58,58 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    User? user = widget.userDAO.user;
+
     return Scaffold(
       body: ListView(
         physics: const BouncingScrollPhysics(),
         children: [
+          widget.userDAO.user != null && widget.userDAO.user.name.isNotEmpty
+              ? Container(
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.symmetric(vertical: 1.h),
+                  margin: EdgeInsets.symmetric(horizontal: 5.w),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Row(
+                          children: [
+                            Text(
+                              'Selamat Datang, ',
+                              style: TextStyle(
+                                fontSize: 12.sp,
+                                color: Colors.black87,
+                              ),
+                            ),
+                            Text(
+                              widget.userDAO.user.name,
+                              style: TextStyle(
+                                fontSize: 14.sp,
+                                color: Colors.black87,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 3.w, vertical: 1.h),
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(12.sp),
+                        ),
+                        child: Text(
+                          'Tidak Aktif',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              : const SizedBox.shrink(),
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 20),
             child: Card(
@@ -140,32 +194,72 @@ class _HomeState extends State<Home> {
                 label: 'Buat\nPembayaran',
                 onTap: () {
                   log('bayar');
-                  Navigator.push(
-                      context,
-                      CupertinoPageRoute(
-                          builder: (context) => const CreatePayment()));
+                  if (user == null) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                Login(userDAO: widget.userDAO)));
+                  } else if (user.name == null || user.name!.isEmpty) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                CompleteProfile(userDAO: widget.userDAO)));
+                  } else {
+                    Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                            builder: (context) => const CreatePayment()));
+                  }
                 },
               ),
               MenuBox(
                 icon: 'assets/icons/resit.png',
                 label: 'Sejarah\nPembayaran',
                 onTap: () {
-                  log('sejarah');
-                  Navigator.push(
-                      context,
-                      CupertinoPageRoute(
-                          builder: (context) => const PaymentHistory()));
+                  if (user == null) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                Login(userDAO: widget.userDAO)));
+                  } else if (user.name == null || user.name!.isEmpty) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                CompleteProfile(userDAO: widget.userDAO)));
+                  } else {
+                    Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                            builder: (context) => const PaymentHistory()));
+                  }
                 },
               ),
               MenuBox(
                 icon: 'assets/icons/tuntutan.png',
                 label: 'Tuntutan\nWang',
                 onTap: () {
-                  log('tuntut');
-                  Navigator.push(
-                      context,
-                      CupertinoPageRoute(
-                          builder: (context) => const MoneyClaim()));
+                  if (user == null) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                Login(userDAO: widget.userDAO)));
+                  } else if (user.name == null || user.name!.isEmpty) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                CompleteProfile(userDAO: widget.userDAO)));
+                  } else {
+                    Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                            builder: (context) => const MoneyClaim()));
+                  }
                 },
               ),
             ],
