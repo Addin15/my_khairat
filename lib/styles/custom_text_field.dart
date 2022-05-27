@@ -8,6 +8,7 @@ class CustomTextFormField extends StatelessWidget {
       this.focusNode,
       this.isObscured = false,
       this.validator,
+      this.isReadOnly = false,
       Key? key})
       : super(key: key);
 
@@ -15,12 +16,14 @@ class CustomTextFormField extends StatelessWidget {
   final TextEditingController? controller;
   final FocusNode? focusNode;
   final bool isObscured;
+  final bool isReadOnly;
   final String? Function(String? value)? validator;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
+      readOnly: isReadOnly,
       focusNode: focusNode,
       obscureText: isObscured,
       validator: validator,

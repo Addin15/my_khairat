@@ -42,7 +42,13 @@ class _CompleteProfileState extends State<CompleteProfile> {
   String selectedVillageID = '';
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    _icController.text = (widget.userDAO.user as User).ic!;
     return ChangeNotifierProvider<MosqueDAO>(
       create: (context) => MosqueDAO(),
       child: Consumer<MosqueDAO>(builder: (context, mosqueDAO, child) {
@@ -85,6 +91,7 @@ class _CompleteProfileState extends State<CompleteProfile> {
                       hintText: 'Kad Pengenalan',
                       focusNode: _icFocus,
                       controller: _icController,
+                      isReadOnly: true,
                     ),
                     const SizedBox(height: 10),
                     CustomTextFormField(
