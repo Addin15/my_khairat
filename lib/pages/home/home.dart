@@ -8,7 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:my_khairat/DAO/user_dao.dart';
 import 'package:my_khairat/models/user.dart';
 import 'package:my_khairat/pages/auth/login.dart';
-import 'package:my_khairat/pages/home/create_payment.dart';
+import 'package:my_khairat/pages/home/Payment/create_payment.dart';
 import 'package:my_khairat/pages/home/money_claim.dart';
 import 'package:my_khairat/pages/home/payment_history.dart';
 import 'package:my_khairat/styles/app_color.dart';
