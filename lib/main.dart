@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:my_khairat/models/person.dart';
 import 'package:my_khairat/models/user.dart';
+import 'package:my_khairat/pages/home/payment_history.dart';
 import 'package:sizer/sizer.dart';
 
 import 'pages/nav.dart';
