@@ -56,7 +56,7 @@ class _NavState extends State<Nav> {
             index: indexPage,
             children: [
               Home(userDAO: userDAO),
-              Dependent(userDAO: userDAO),
+              user?.personID != null ? Dependent(userDAO: userDAO) : Text(""),
               Profile(userDAO: userDAO, backToHome: backtoHome),
             ],
           ),

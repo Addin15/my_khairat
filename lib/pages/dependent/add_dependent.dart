@@ -1,30 +1,53 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_khairat/styles/app_color.dart';
+import 'package:ionicons/ionicons.dart';
+import 'package:my_khairat/DAO/dependent_dao.dart';
+import 'package:my_khairat/models/dependent.dart';
+import 'package:sizer/sizer.dart';
 
-class AddDependent extends StatelessWidget {
+class AddDependent extends StatefulWidget {
+  const AddDependent(
+      {required this.userID, required this.dependentDAO, Key? key})
+      : super(key: key);
+
+  final String userID;
+  final DependentDAO dependentDAO;
+
   @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: PageView(
-        children: [
-          _Tanggungan(),
-        ],
-      ),
-    );
-  }
+  _AddDependentState createState() => _AddDependentState();
 }
 
-class _Tanggungan extends StatefulWidget {
-  @override
-  _TanggunganState createState() => _TanggunganState();
-}
-
-class _TanggunganState extends State<_Tanggungan> {
+class _AddDependentState extends State<AddDependent> {
   List<TextEditingController> _nameControllers = [];
   List<TextField> _nameFields = [];
   List<TextEditingController> _relationshipControllers = [];
   List<TextField> _relationshipFields = [];
+  List<TextEditingController> _icControllers = [];
+  List<TextField> _icFields = [];
+  bool _validate = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    final name = TextEditingController();
+    final relationship = TextEditingController();
+    final ic = TextEditingController();
+
+    final nameField = _generateTextField(name, "Nama Tanggungan");
+    final relationshipField = _generateTextField(relationship, "Hubungan");
+    final icField = _generateTextField(ic, "No. Kad Pengenalan");
+
+    setState(() {
+      _nameControllers.add(name);
+      _relationshipControllers.add(relationship);
+      _icControllers.add(ic);
+      _nameFields.add(nameField);
+      _relationshipFields.add(relationshipField);
+      _icFields.add(icField);
+    });
+  }
 
   @override
   void dispose() {
@@ -32,6 +55,9 @@ class _TanggunganState extends State<_Tanggungan> {
       controller.dispose();
     }
     for (final controller in _relationshipControllers) {
+      controller.dispose();
+    }
+    for (final controller in _icControllers) {
       controller.dispose();
     }
 
@@ -42,20 +68,27 @@ class _TanggunganState extends State<_Tanggungan> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: AppColor.primary,
-          ),
-          body: Column(
-            children: [
-              SizedBox(height: 10,),
-              Expanded(child: _listView()),
-              Row(children: [Expanded(child: _addTile()), Expanded(child: _removeTile()),]),
-              _okButton(context),
-
-
-            ],
-          )),
+      child: PageView(
+        children: [
+          Scaffold(
+              appBar: AppBar(
+                backgroundColor: AppColor.primary,
+              ),
+              body: Column(
+                children: [
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Expanded(child: _listView()),
+                  Row(children: [
+                    Expanded(child: _addTile()),
+                    Expanded(child: _removeTile()),
+                  ]),
+                  _okButton(context),
+                ],
+              ))
+        ],
+      ),
     );
   }
 
@@ -66,15 +99,19 @@ class _TanggunganState extends State<_Tanggungan> {
       onTap: () {
         final name = TextEditingController();
         final relationship = TextEditingController();
+        final ic = TextEditingController();
 
         final nameField = _generateTextField(name, "Nama Tanggungan");
         final relationshipField = _generateTextField(relationship, "Hubungan");
+        final icField = _generateTextField(ic, "No. Kad Pengenalan");
 
         setState(() {
           _nameControllers.add(name);
           _relationshipControllers.add(relationship);
+          _icControllers.add(ic);
           _nameFields.add(nameField);
           _relationshipFields.add(relationshipField);
+          _icFields.add(icField);
         });
       },
     );
@@ -85,20 +122,16 @@ class _TanggunganState extends State<_Tanggungan> {
       title: Icon(Icons.remove),
       tileColor: Colors.red[200],
       onTap: () {
-        final name = TextEditingController();
-        final relationship = TextEditingController();
-
-        final nameField = _generateTextField(name, "Nama Tanggungan");
-        final relationshipField = _generateTextField(relationship, "Hubungan");
-
-        if (_nameControllers.length>0){
-        setState(() {
-          _nameControllers.removeLast();
-          _relationshipControllers.removeLast();
-          _nameFields.removeLast();
-          _relationshipFields.removeLast();
+        if (_nameControllers.length > 1) {
+          setState(() {
+            _nameControllers.removeLast();
+            _relationshipControllers.removeLast();
+            _icControllers.removeLast();
+            _nameFields.removeLast();
+            _relationshipFields.removeLast();
+            _icFields.removeLast();
+          });
         }
-        );}
       },
     );
   }
@@ -123,10 +156,11 @@ class _TanggunganState extends State<_Tanggungan> {
               children: [
                 _nameFields[i],
                 _relationshipFields[i],
+                _icFields[i],
               ],
             ),
             decoration: InputDecoration(
-              labelText: (i+1).toString(),
+              labelText: (i + 1).toString(),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10.0),
               ),
@@ -143,38 +177,54 @@ class _TanggunganState extends State<_Tanggungan> {
 
   final _okController = TextEditingController();
   Widget _okButton(BuildContext context) {
-
-
     final button = ElevatedButton(
       style: ElevatedButton.styleFrom(
-          primary: AppColor.primary,),
+        primary: AppColor.primary,
+      ),
       onPressed: () async {
+        _validate = false;
         String text = '';
         //final index = int.parse(_okController.text);
         for (var index = 0; index < _nameControllers.length; index++) {
-         text = text + (index+1).toString() +".\nNama: ${_nameControllers[index].text}\n" +
-              "Hubungan: ${_relationshipControllers[index].text}\n\n";
+          if (_nameControllers[index].text.length == 0 ||
+              _relationshipControllers[index].text.length == 0 ||
+              _icControllers[index].text.length == 0) {
+            _validate = true;
+          }
         }
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: new Text("Senarai Tanggungan"),
-              content: new Text(text),
-              actions: <Widget>[
-                new FlatButton(
-                  child: new Text("OK"),
-                  color: AppColor.primary,
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
-            );
-          },
-        );
-      },
 
+        if (_validate == true) {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: new Text("Isi Semua Ruangan Kosong"),
+                actions: <Widget>[
+                  new FlatButton(
+                    child: new Text("OK"),
+                    color: AppColor.primary,
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+        } else {
+          dynamic res;
+          for (var index = 0; index < _nameControllers.length; index++) {
+            res = await widget.dependentDAO.addDependent(
+                widget.userID,
+                DependentModel(
+                  dependent_name: _nameControllers[index].text,
+                  dependent_relation: _relationshipControllers[index].text,
+                  dependent_ic: _icControllers[index].text,
+                ));
+          }
+          Navigator.pop(context, res);
+        }
+      },
       child: Text("Selesai"),
     );
 
@@ -185,14 +235,5 @@ class _TanggunganState extends State<_Tanggungan> {
         button,
       ],
     );
-  }
-}
-
-class _GroupControllers {
-  TextEditingController name = TextEditingController();
-  TextEditingController relationship = TextEditingController();
-  void dispose() {
-    name.dispose();
-    relationship.dispose();
   }
 }
