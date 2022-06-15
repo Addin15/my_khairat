@@ -27,6 +27,13 @@ class _AddDependentState extends State<AddDependent> {
   List<TextField> _icFields = [];
   bool _validate = false;
 
+  bool isNumeric(String s) {
+    if (s == null) {
+      return false;
+    }
+    return double.tryParse(s) != null;
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -37,7 +44,7 @@ class _AddDependentState extends State<AddDependent> {
 
     final nameField = _generateTextField(name, "Nama Tanggungan");
     final relationshipField = _generateTextField(relationship, "Hubungan");
-    final icField = _generateTextField(ic, "No. Kad Pengenalan");
+    final icField = _generateTextField(ic, "No. Kad Pengenalan (tanpa '-')");
 
     setState(() {
       _nameControllers.add(name);
@@ -103,7 +110,7 @@ class _AddDependentState extends State<AddDependent> {
 
         final nameField = _generateTextField(name, "Nama Tanggungan");
         final relationshipField = _generateTextField(relationship, "Hubungan");
-        final icField = _generateTextField(ic, "No. Kad Pengenalan");
+        final icField = _generateTextField(ic, "No. Kad Pengenalan (tanpa '-')");
 
         setState(() {
           _nameControllers.add(name);
@@ -188,7 +195,9 @@ class _AddDependentState extends State<AddDependent> {
         for (var index = 0; index < _nameControllers.length; index++) {
           if (_nameControllers[index].text.length == 0 ||
               _relationshipControllers[index].text.length == 0 ||
-              _icControllers[index].text.length == 0) {
+              _icControllers[index].text.length == 0 ||
+              isNumeric(_icControllers[index].text)==false||
+              _icControllers[index].text.length != 12 ) {
             _validate = true;
           }
         }
@@ -198,7 +207,10 @@ class _AddDependentState extends State<AddDependent> {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                title: new Text("Isi Semua Ruangan Kosong"),
+                //no kad pengenalan or ic number must be 12 digit
+                title: new Text("Isi Maklumat Dengan Betul"),
+                content: new Text("1. Tiada ruangan dibiarkan kosong \n\n"
+                    "2. No. Kad Pengenalan diisi dengan betul (tanpa '-')"),
                 actions: <Widget>[
                   new FlatButton(
                     child: new Text("OK"),

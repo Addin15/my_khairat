@@ -27,11 +27,11 @@ class DependentModel {
     dependent_name: map['dependent_name'],
     dependent_relation: map['dependent_relation'],
     dependent_ic: map['dependent_ic'],
-    dependent_phone: map['dependent_phone'],
-    dependent_occupation: map['dependent_occupation'],
-    dependent_address: map['dependent_address'],
-    death_status: map['death_status'],
-    death_date: map['death_date'],
+    dependent_phone: map['dependent_phone'] ?? '',
+    dependent_occupation: map['dependent_occupation'] ?? '',
+    dependent_address: map['dependent_address'] ?? '',
+    death_status: map['death_status'] ?? '',
+    death_date: map['death_date'] ?? '',
   );
 
   Map<String, dynamic> toMap() => {

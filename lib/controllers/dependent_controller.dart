@@ -8,7 +8,7 @@ import 'package:my_khairat/constants/headers.dart';
 import 'package:my_khairat/models/dependent.dart';
 
 class DependentController {
-  // Get all dependent
+  // Get all dependents
   static Future<List<DependentModel>> getDependents(String userID) async {
     try {
       SecureStorage _secureStorage = SecureStorage();
@@ -26,11 +26,14 @@ class DependentController {
         headers: headerswithToken(_token),
       );
 
+      log(response.body);
+
       if (response.statusCode == 200) {
         List dependents = jsonDecode(response.body);
 
         return dependents
-            .map((dependent) => DependentModel.fromMap(dependent as Map<String, dynamic>))
+            .map((dependent) =>
+                DependentModel.fromMap(dependent as Map<String, dynamic>))
             .toList();
       }
 
@@ -42,7 +45,8 @@ class DependentController {
   }
 
   // Add dependent
-  static Future<dynamic> addDependent(String userID, DependentModel dependent) async {
+  static Future<dynamic> addDependent(
+      String userID, DependentModel dependent) async {
     try {
       SecureStorage _secureStorage = SecureStorage();
       String _token = await _secureStorage.read('token');
@@ -74,6 +78,7 @@ class DependentController {
         body: jsonEncode(data),
         headers: headerswithToken(_token),
       );
+
 
       log(response.body);
 

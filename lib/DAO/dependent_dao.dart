@@ -12,11 +12,12 @@ class DependentDAO extends ChangeNotifier {
   get dependents => _dependents;
 
   initData(String userID) async {
-    List<DependentModel> dependents = await DependentController.getDependents(userID);
+    List<DependentModel> dependents =
+        await DependentController.getDependents(userID);
 
     // TODO Cache with hive
 
-    _dependents = _dependents;
+    _dependents = dependents;
     notifyListeners();
   }
 
