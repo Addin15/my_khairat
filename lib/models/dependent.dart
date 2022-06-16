@@ -1,4 +1,5 @@
 class DependentModel {
+  String? id;
   String? user_id;
   String? dependent_name;
   String? dependent_relation;
@@ -11,6 +12,7 @@ class DependentModel {
 
 
   DependentModel({
+    this.id,
     this.user_id,
     this.dependent_name,
     this.dependent_relation,
@@ -23,18 +25,20 @@ class DependentModel {
   });
 
   factory DependentModel.fromMap(Map<String, dynamic> map) => DependentModel(
+    id: map['id'].toString(),
     user_id: map['user_id'].toString(),
     dependent_name: map['dependent_name'],
     dependent_relation: map['dependent_relation'],
     dependent_ic: map['dependent_ic'],
-    dependent_phone: map['dependent_phone'] ?? '',
-    dependent_occupation: map['dependent_occupation'] ?? '',
-    dependent_address: map['dependent_address'] ?? '',
-    death_status: map['death_status'] ?? '',
-    death_date: map['death_date'] ?? '',
+    dependent_phone: map['dependent_phone'],
+    dependent_occupation: map['dependent_occupation'],
+    dependent_address: map['dependent_address'],
+    death_status: map['death_status'],
+    death_date: map['death_date'],
   );
 
   Map<String, dynamic> toMap() => {
+    'id': id,
     'user_id': user_id,
     'dependent_name': dependent_name,
     'dependent_relation': dependent_relation,
