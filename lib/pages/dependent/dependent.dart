@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:my_khairat/DAO/dependent_dao.dart';
 import 'package:my_khairat/DAO/user_dao.dart';
 import 'package:my_khairat/models/dependent.dart';
+import 'package:my_khairat/pages/dependent/view_dead_dependent.dart';
 import 'package:my_khairat/pages/dependent/view_dependent.dart';
 import 'package:my_khairat/styles/app_color.dart';
 import 'package:provider/provider.dart';
@@ -60,14 +61,16 @@ class _DependentState extends State<Dependent> {
                         height: 70,
                         child: GestureDetector(
                           onTap: () {
-                            Navigator.push(
+                            dependents[index].death_status==null ? Navigator.push(
                             context,
                             CupertinoPageRoute(
-                             builder: (context) => ViewDependent(dependentDAO: dependentDAO, dependent: dependents[index],),
+                             builder: (context) => ViewDependent(dependentDAO: dependentDAO, dependent: dependents[index],))) : 
+                             Navigator.push(context,
+                            CupertinoPageRoute(
+                             builder: (context) => ViewDeadDependent(),
                             ));
 },
                           child: Card(
-                            
                             color: dependents[index].death_status==null ? Colors.white : Colors.grey,
                             elevation: 5,
                             margin: EdgeInsets.symmetric(horizontal: 3.w),
