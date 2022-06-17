@@ -6,6 +6,7 @@ import 'package:my_khairat/models/dependent.dart';
 import 'package:my_khairat/models/user.dart';
 import 'package:my_khairat/pages/dependent/dependent.dart';
 import 'package:my_khairat/pages/dependent/update_dependent.dart';
+import 'package:my_khairat/pages/dependent/view_dead_dependent.dart';
 import 'package:my_khairat/styles/app_color.dart';
 import 'package:my_khairat/DAO/user_dao.dart';
 import 'package:my_khairat/styles/custom_text_button.dart';
@@ -181,7 +182,7 @@ class _ViewDependentState extends State<ViewDependent> {
                             height: 1.h,
                           ),
                           Text(
-                            widget.dependent.death_status ?? "N/A",
+                            widget.dependent.death_status ?? "Masih Hidup",
                             style: TextStyle(color: Colors.black),
                           ),
                           Divider(
@@ -251,7 +252,11 @@ class _ViewDependentState extends State<ViewDependent> {
                                 height:45, //height of button
                                 width:double.infinity, 
                                 child: ElevatedButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) => ViewDeadDependent(),
+                                     ));
+                                  },
                                   child: Text("Lapor Kematian"),
                                   style: ButtonStyle(
                                     backgroundColor:
