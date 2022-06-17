@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:my_khairat/DAO/dependent_dao.dart';
+import 'package:my_khairat/models/dependent.dart';
 import 'package:my_khairat/models/user.dart';
+import 'package:my_khairat/pages/dependent/dependent.dart';
+import 'package:my_khairat/pages/dependent/update_dependent.dart';
 import 'package:my_khairat/styles/app_color.dart';
 import 'package:my_khairat/DAO/user_dao.dart';
 import 'package:my_khairat/styles/custom_text_button.dart';
 import 'package:sizer/sizer.dart';
 
 class ViewDependent extends StatefulWidget {
-  const ViewDependent({Key? key}) : super(key: key);
+  const ViewDependent({Key? key, required this.dependentDAO, required this.dependent}) : super(key: key);
 
-  
+  final DependentDAO dependentDAO;
+  final DependentModel dependent;
 
   @override
   State<ViewDependent> createState() => _ViewDependentState();
@@ -19,6 +24,8 @@ class ViewDependent extends StatefulWidget {
 class _ViewDependentState extends State<ViewDependent> {
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
       appBar: customAppBar(
         context: context,
@@ -52,15 +59,15 @@ class _ViewDependentState extends State<ViewDependent> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Nama seperti IC",
+                            "Nama seperti Kad Pengenalan",
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, color: Colors.grey),
+                                fontWeight: FontWeight.bold, color: Colors.black),
                           ),
                           SizedBox(
                             height: 1.h,
                           ),
                           Text(
-                            "Ahmad Najmi Bin Abdul Halim",
+                            widget.dependent.dependent_name!,
                             style: TextStyle(color: Colors.grey),
                           ),
                           Divider(
@@ -73,13 +80,13 @@ class _ViewDependentState extends State<ViewDependent> {
                           Text(
                             "Hubungan",
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, color: Colors.grey),
+                                fontWeight: FontWeight.bold, color: Colors.black),
                           ),
                           SizedBox(
                             height: 1.h,
                           ),
                           Text(
-                            "Anak",
+                            widget.dependent.dependent_relation!,
                             style: TextStyle(color: Colors.grey),
                           ),
                           Divider(
@@ -90,15 +97,15 @@ class _ViewDependentState extends State<ViewDependent> {
                             height: 1.h,
                           ),
                           Text(
-                            "NO IC",
+                            "No. Kad Pengenalan",
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, color: Colors.grey),
+                                fontWeight: FontWeight.bold, color: Colors.black),
                           ),
                           SizedBox(
                             height: 1.h,
                           ),
                           Text(
-                            "001123-12-1211",
+                            widget.dependent.dependent_ic!,
                             style: TextStyle(color: Colors.grey),
                           ),
                           Divider(
@@ -109,16 +116,16 @@ class _ViewDependentState extends State<ViewDependent> {
                             height: 2.h,
                           ),
                           Text(
-                            "No Telefon",
+                            "No. Telefon",
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, color: Colors.grey),
+                                fontWeight: FontWeight.bold, color: Colors.black),
                           ),
                           SizedBox(
                             height: 1.h,
                           ),
                           Text(
-                            "0179035651",
-                            style: TextStyle(color: Colors.grey),
+                            widget.dependent.dependent_phone ?? "N/A",
+                            style: TextStyle(color: Colors.black),
                           ),
                           Divider(
                             color: Colors.grey,
@@ -130,14 +137,14 @@ class _ViewDependentState extends State<ViewDependent> {
                           Text(
                             "Pekerjaan",
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, color: Colors.grey),
+                                fontWeight: FontWeight.bold, color: Colors.black),
                           ),
                           SizedBox(
                             height: 1.h,
                           ),
                           Text(
-                            "Pelajar",
-                            style: TextStyle(color: Colors.grey),
+                            widget.dependent.dependent_occupation ?? "N/A",
+                            style: TextStyle(color: Colors.black),
                           ),
                           Divider(
                             color: Colors.grey,
@@ -149,14 +156,14 @@ class _ViewDependentState extends State<ViewDependent> {
                           Text(
                             "Alamat",
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, color: Colors.grey),
+                                fontWeight: FontWeight.bold, color: Colors.black),
                           ),
                           SizedBox(
                             height: 1.h,
                           ),
                           Text(
-                            "Dungun, Terengganu",
-                            style: TextStyle(color: Colors.grey),
+                            widget.dependent.dependent_address ?? "N/A",
+                            style: TextStyle(color: Colors.black),
                           ),
                           Divider(
                             color: Colors.grey,
@@ -168,14 +175,14 @@ class _ViewDependentState extends State<ViewDependent> {
                           Text(
                             "Status Kematian",
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, color: Colors.grey),
+                                fontWeight: FontWeight.bold, color: Colors.black),
                           ),
                           SizedBox(
                             height: 1.h,
                           ),
                           Text(
-                            "N/A",
-                            style: TextStyle(color: Colors.grey),
+                            widget.dependent.death_status ?? "N/A",
+                            style: TextStyle(color: Colors.black),
                           ),
                           Divider(
                             color: Colors.grey,
@@ -187,17 +194,6 @@ class _ViewDependentState extends State<ViewDependent> {
                           SizedBox(
                             height: 1.h,
                           ),
-                          /*GestureDetector(
-                            onTap: () async {
-                              await showDialog(
-                                  context: context, builder: (_) => ImageDialog());
-                            },
-                            child: Image.network(
-                              'https://i.pinimg.com/236x/f7/2c/7e/f72c7e5e75ae1737feff8ef29d34cc73.jpg',
-                              height: 30.h,
-                              fit: BoxFit.fill,
-                            ),
-                          ),*/
                           SizedBox(
                             height: 2.h,
                           ),
@@ -206,10 +202,13 @@ class _ViewDependentState extends State<ViewDependent> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               SizedBox(
-                                height:45, //height of button
-                                width:130, 
+                                height:5.5.h, //height of button
+                                width:20.h, 
                                 child: ElevatedButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) => UpdateDependent(),
+                                     ));},
                                   child: Text("Kemaskini"),
                                   style: ButtonStyle(
                                     backgroundColor:
@@ -222,8 +221,11 @@ class _ViewDependentState extends State<ViewDependent> {
                                 ),
                               ),
                               SizedBox(
-                                height:45, //height of button
-                                width:130, //width of button
+                                height: 1.5.h,
+                              ),
+                              SizedBox(
+                                height:5.5.h, //height of button
+                                width:20.h, //width of button
                                 child: ElevatedButton(
                                   onPressed: () {},
                                   child: Text("Padam"),

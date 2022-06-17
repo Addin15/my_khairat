@@ -62,8 +62,8 @@ class _DependentState extends State<Dependent> {
                           onTap: () {
                             Navigator.push(
                             context,
-                            MaterialPageRoute(
-                             builder: (context) => ViewDependent(),
+                            CupertinoPageRoute(
+                             builder: (context) => ViewDependent(dependentDAO: dependentDAO, dependent: dependents[index],),
                             ));
 },
                           child: Card(
