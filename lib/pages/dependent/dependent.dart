@@ -67,7 +67,7 @@ class _DependentState extends State<Dependent> {
                              builder: (context) => ViewDependent(dependentDAO: dependentDAO, dependent: dependents[index],))) : 
                              Navigator.push(context,
                             CupertinoPageRoute(
-                             builder: (context) => ViewDeadDependent(),
+                             builder: (context) => ViewDeadDependent(dependentDAO: dependentDAO, dependent: dependents[index],),
                             ));
 },
                           child: Card(

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:my_khairat/DAO/dependent_dao.dart';
+import 'package:my_khairat/models/dependent.dart';
 import 'package:my_khairat/models/user.dart';
 import 'package:my_khairat/styles/app_color.dart';
 import 'package:my_khairat/DAO/user_dao.dart';
@@ -8,7 +10,10 @@ import 'package:my_khairat/styles/custom_text_button.dart';
 import 'package:sizer/sizer.dart';
 
 class ViewDeadDependent extends StatefulWidget {
-  const ViewDeadDependent({Key? key}) : super(key: key);
+  const ViewDeadDependent({Key? key, required this.dependentDAO, required this.dependent}) : super(key: key);
+
+  final DependentDAO dependentDAO;
+  final DependentModel dependent;
 
   @override
   State<ViewDeadDependent> createState() => _ViewDeadDependent();
@@ -58,7 +63,7 @@ class _ViewDeadDependent extends State<ViewDeadDependent> {
                             height: 1.h,
                           ),
                           Text(
-                            "Ahmad Najmi Bin Abdul Halim",
+                            widget.dependent.dependent_name!,
                             style: TextStyle(color: Colors.grey),
                           ),
                           Divider(
@@ -77,7 +82,7 @@ class _ViewDeadDependent extends State<ViewDeadDependent> {
                             height: 1.h,
                           ),
                           Text(
-                            "Anak",
+                            widget.dependent.dependent_relation!,
                             style: TextStyle(color: Colors.grey),
                           ),
                           Divider(
@@ -96,7 +101,7 @@ class _ViewDeadDependent extends State<ViewDeadDependent> {
                             height: 1.h,
                           ),
                           Text(
-                            "001123-12-1211",
+                            widget.dependent.dependent_ic!,
                             style: TextStyle(color: Colors.grey),
                           ),
                           Divider(
@@ -115,7 +120,7 @@ class _ViewDeadDependent extends State<ViewDeadDependent> {
                             height: 1.h,
                           ),
                           Text(
-                            "0179035651",
+                            widget.dependent.dependent_phone!,
                             style: TextStyle(color: Colors.black),
                           ),
                           Divider(
@@ -134,7 +139,7 @@ class _ViewDeadDependent extends State<ViewDeadDependent> {
                             height: 1.h,
                           ),
                           Text(
-                            "Pelajar",
+                            widget.dependent.dependent_occupation!,
                             style: TextStyle(color: Colors.black),
                           ),
                           Divider(
@@ -153,7 +158,7 @@ class _ViewDeadDependent extends State<ViewDeadDependent> {
                             height: 1.h,
                           ),
                           Text(
-                            "Dungun, Terengganu",
+                            widget.dependent.dependent_address!,
                             style: TextStyle(color: Colors.black),
                           ),
                           Divider(
@@ -172,7 +177,7 @@ class _ViewDeadDependent extends State<ViewDeadDependent> {
                             height: 1.h,
                           ),
                           Text(
-                            "Meninggal dunia",
+                            widget.dependent.death_status!,
                             style: TextStyle(color: Colors.black),
                           ),
                           Divider(
@@ -191,7 +196,7 @@ class _ViewDeadDependent extends State<ViewDeadDependent> {
                             height: 1.h,
                           ),
                           Text(
-                            "13 Jun 2005",
+                            widget.dependent.death_date!,
                             style: TextStyle(color: Colors.black),
                           ),
                           Divider(

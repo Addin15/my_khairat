@@ -253,9 +253,6 @@ class _ViewDependentState extends State<ViewDependent> {
                                 width:double.infinity, 
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) => ViewDeadDependent(),
-                                     ));
                                   },
                                   child: Text("Lapor Kematian"),
                                   style: ButtonStyle(
