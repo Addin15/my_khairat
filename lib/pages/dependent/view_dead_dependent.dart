@@ -120,7 +120,7 @@ class _ViewDeadDependent extends State<ViewDeadDependent> {
                             height: 1.h,
                           ),
                           Text(
-                            widget.dependent.dependent_phone!,
+                            widget.dependent.dependent_phone ?? "N/A",
                             style: TextStyle(color: Colors.black),
                           ),
                           Divider(
@@ -139,7 +139,7 @@ class _ViewDeadDependent extends State<ViewDeadDependent> {
                             height: 1.h,
                           ),
                           Text(
-                            widget.dependent.dependent_occupation!,
+                            widget.dependent.dependent_occupation ?? "N/A",
                             style: TextStyle(color: Colors.black),
                           ),
                           Divider(
@@ -158,7 +158,7 @@ class _ViewDeadDependent extends State<ViewDeadDependent> {
                             height: 1.h,
                           ),
                           Text(
-                            widget.dependent.dependent_address!,
+                            widget.dependent.dependent_address ?? "N/A",
                             style: TextStyle(color: Colors.black),
                           ),
                           Divider(
@@ -196,7 +196,7 @@ class _ViewDeadDependent extends State<ViewDeadDependent> {
                             height: 1.h,
                           ),
                           Text(
-                            widget.dependent.death_date!,
+                            widget.dependent.death_date ?? "N/A",
                             style: TextStyle(color: Colors.black),
                           ),
                           Divider(

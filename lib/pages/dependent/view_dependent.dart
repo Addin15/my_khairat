@@ -9,10 +9,12 @@ import 'package:my_khairat/pages/dependent/dependent.dart';
 import 'package:my_khairat/pages/dependent/report_death.dart';
 import 'package:my_khairat/pages/dependent/update_dependent.dart';
 import 'package:my_khairat/pages/dependent/view_dead_dependent.dart';
+import 'package:my_khairat/pages/nav2.dart';
 import 'package:my_khairat/styles/app_color.dart';
 import 'package:my_khairat/DAO/user_dao.dart';
 import 'package:my_khairat/styles/custom_text_button.dart';
 import 'package:sizer/sizer.dart';
+import 'package:ionicons/ionicons.dart';
 
 class ViewDependent extends StatefulWidget {
   const ViewDependent(
@@ -26,11 +28,65 @@ class ViewDependent extends StatefulWidget {
   State<ViewDependent> createState() => _ViewDependentState();
 }
 
+confirmDeletePopup({
+  required BuildContext context,
+  required String title,
+  required Widget content,
+}) {
+  return AlertDialog(
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(15.sp),
+    ),
+    alignment: Alignment.center,
+    title: Text(
+      title,
+      textAlign: TextAlign.center,
+    ),
+    content: content,
+    actionsAlignment: MainAxisAlignment.center,
+    actions: [
+      customTextButton(
+        label: 'Batal',
+        labelColor: AppColor.primary,
+        backgroundColor: Colors.white,
+        onPressed: () => Navigator.pop(context, false),
+      ),
+      customTextButton(
+        label: 'Buang',
+        backgroundColor: Colors.red,
+        borderColor: Colors.red,
+        onPressed: () => Navigator.pop(context, true),
+      ),
+    ],
+  );
+}
+
+// Custom app bar
+customAppBar2({
+  required BuildContext context,
+  required Widget title,
+}) =>
+    AppBar(
+      leading: IconButton(
+        icon: Icon(
+          Ionicons.chevron_back,
+          color: AppColor.primary,
+        ),
+        onPressed: () => Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => Nav2())),
+      ),
+      title: title,
+      elevation: 0.0,
+      backgroundColor: Colors.white,
+      centerTitle: true,
+    );
+
+
 class _ViewDependentState extends State<ViewDependent> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(
+      appBar: customAppBar2(
         context: context,
         title: Text(
           'Rekod Tanggungan',
@@ -220,7 +276,9 @@ class _ViewDependentState extends State<ViewDependent> {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              UpdateDependent(),
+                                              UpdateDependent(
+                                                  dependentDAO: widget.dependentDAO,
+                                                  dependent: widget.dependent),
                                         ));
                                   },
                                   child: Text("Kemaskini"),
@@ -230,7 +288,7 @@ class _ViewDependentState extends State<ViewDependent> {
                                     shape: MaterialStateProperty.all(
                                       RoundedRectangleBorder(
                                           borderRadius:
-                                              BorderRadius.circular(1.h)),
+                                          BorderRadius.circular(1.h)),
                                     ),
                                   ),
                                 ),
@@ -242,7 +300,27 @@ class _ViewDependentState extends State<ViewDependent> {
                                 height: 5.5.h, //height of button
                                 width: 20.h, //width of button
                                 child: ElevatedButton(
-                                  onPressed: () {},
+                                  onPressed: () async {
+                                    dynamic res = await showDialog(
+                                      context: context,
+                                      builder: (context) => confirmDeletePopup(
+                                        context: context,
+                                        title: 'Anda pasti untuk buang tanggungan ini dari senarai?',
+                                        content: Text(
+                                          widget.dependent.dependent_name!,
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    );
+
+                                    if (res != null) {
+                                      if (res) {
+                                        await widget.dependentDAO.deleteDependent(widget.dependent);
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(builder: (context) => Nav2()));
+                                      }
+                                    }
+                                  },
                                   child: Text("Padam"),
                                   style: ButtonStyle(
                                     backgroundColor: MaterialStateProperty.all(
@@ -250,7 +328,7 @@ class _ViewDependentState extends State<ViewDependent> {
                                     shape: MaterialStateProperty.all(
                                       RoundedRectangleBorder(
                                           borderRadius:
-                                              BorderRadius.circular(1.h)),
+                                          BorderRadius.circular(1.h)),
                                     ),
                                   ),
                                 ),
