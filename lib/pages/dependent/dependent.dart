@@ -14,7 +14,6 @@ import '../../models/user.dart';
 import '../../styles/custom_text_button.dart';
 import 'add_dependent.dart';
 
-
 class Dependent extends StatefulWidget {
   const Dependent({required this.userDAO, Key? key}) : super(key: key);
 
@@ -23,7 +22,6 @@ class Dependent extends StatefulWidget {
   @override
   State<Dependent> createState() => _DependentState();
 }
-
 
 class _DependentState extends State<Dependent> {
   @override
@@ -49,8 +47,6 @@ class _DependentState extends State<Dependent> {
                   ),
                 ),
                 SizedBox(height: 2.h),
-
-
                 Expanded(
                   child: ListView.separated(
                     physics: const BouncingScrollPhysics(),
@@ -61,24 +57,32 @@ class _DependentState extends State<Dependent> {
                         height: 70,
                         child: GestureDetector(
                           onTap: () {
-                            dependents[index].death_status==null ? Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                             builder: (context) => ViewDependent(dependentDAO: dependentDAO, dependent: dependents[index],))) : 
-                             Navigator.push(context,
-                            CupertinoPageRoute(
-                             builder: (context) => ViewDeadDependent(dependentDAO: dependentDAO, dependent: dependents[index],),
-                            ));
-},
+                            dependents[index].death_status == null
+                                ? Navigator.push(
+                                    context,
+                                    CupertinoPageRoute(
+                                        builder: (context) => ViewDependent(
+                                              dependentDAO: dependentDAO,
+                                              dependent: dependents[index],
+                                            )))
+                                : Navigator.push(
+                                    context,
+                                    CupertinoPageRoute(
+                                      builder: (context) => ViewDeadDependent(
+                                        dependentDAO: dependentDAO,
+                                        dependent: dependents[index],
+                                      ),
+                                    ));
+                          },
                           child: Card(
-                            color: dependents[index].death_status==null ? Colors.white : Colors.grey,
+                            color: dependents[index].death_status == null
+                                ? Colors.white
+                                : Colors.grey,
                             elevation: 5,
                             margin: EdgeInsets.symmetric(horizontal: 3.w),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12.sp),
-                              
                             ),
-                            
                             child: Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(12.sp),
@@ -99,17 +103,24 @@ class _DependentState extends State<Dependent> {
                                       ),
                                     ),
                                   ),
-                                  (dependents[index].dependent_address == null||dependents[index].dependent_occupation == null||dependents[index].dependent_phone == null) ? new Text(
-                                "*Data Tidak Lengkap",
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.red,
-                        
-                                    fontStyle: FontStyle.italic
-                                ),
-                              ) : new Text(''),
-                                  SizedBox(width: 30,),
-                        
+                                  (dependents[index].dependent_address ==
+                                              null ||
+                                          dependents[index]
+                                                  .dependent_occupation ==
+                                              null ||
+                                          dependents[index].dependent_phone ==
+                                              null)
+                                      ? new Text(
+                                          "*Data Tidak Lengkap",
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              color: Colors.red,
+                                              fontStyle: FontStyle.italic),
+                                        )
+                                      : new Text(''),
+                                  SizedBox(
+                                    width: 30,
+                                  ),
                                 ],
                               ),
                             ),
@@ -138,7 +149,5 @@ class _DependentState extends State<Dependent> {
         );
       }),
     );
-
-
   }
 }

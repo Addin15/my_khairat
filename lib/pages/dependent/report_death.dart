@@ -11,26 +11,19 @@ import 'package:my_khairat/styles/app_color.dart';
 //the UI for now
 class ReportDeath extends StatefulWidget {
   const ReportDeath({
-    // required this.userID,
     required this.dependentDAO,
     required this.dependentid,
-    // required this.deathDAO,
-    // required this.death,
     Key? key,
   }) : super(key: key);
 
-  // final String userID;
   final DependentDAO dependentDAO;
   final DependentModel dependentid;
-  // final DeathDAO deathDAO;
-  // final Death death;
 
   @override
   State<ReportDeath> createState() => _ReportDeathState();
 }
 
 class _ReportDeathState extends State<ReportDeath> {
-  // DependentModel user = widget.dependentDAO.user;
   final TextEditingController _nameCtrl = TextEditingController();
   final TextEditingController _icCtrl = TextEditingController();
   final TextEditingController _relationCtrl = TextEditingController();
@@ -56,9 +49,7 @@ class _ReportDeathState extends State<ReportDeath> {
 
   @override
   Widget build(BuildContext context) {
-    // List<DependentModel> dependent = widget.dependentDAO;
     DateTime? date;
-    // final initialDate = DateTime.now();
 
     //to count whitespace
     int nameWS() {
@@ -73,45 +64,11 @@ class _ReportDeathState extends State<ReportDeath> {
       }
     }
 
-    // Future pickDate(BuildContext context) async {
-    //   final initialDate = DateTime.now();
-
-    //   String getText() {
-    //     if (date == null) {
-    //       return 'pilih tarikh';
-    //     } else {
-    //       String deathdate = '${date!.day}/${date!.month}/${date!.year}';
-    //       // _deathdateCtrl = deathdate;
-    //       return deathdate;
-    //     }
-    //   }
-
-    //   DateTime input() {
-    //     if (date == null) {
-    //       return initialDate;
-    //     } else {
-    //       return date!;
-    //     }
-    //   }
-
-    //   final newDate = await showDatePicker(
-    //     context: context,
-    //     initialDate: input(),
-    //     firstDate: DateTime(DateTime.now().year - 5),
-    //     lastDate: DateTime(DateTime.now().year + 5),
-    //   );
-
-    //   if (newDate == null) return;
-    //   setState(() {
-    //     date = newDate;
-    //     getText();
-    //   });
-    // }
-
     return ChangeNotifierProvider<DeathDAO>(
       create: (context) => DeathDAO(widget.dependentid.user_id!),
       child: Consumer<DeathDAO>(builder: (context, deathDAO, child) {
         List<Death> deaths = deathDAO.deaths;
+        DependentDAO dependent = DependentDAO(widget.dependentid.user_id!);
         return Scaffold(
             appBar: AppBar(
               centerTitle: true,
@@ -127,12 +84,7 @@ class _ReportDeathState extends State<ReportDeath> {
                 onPressed: () => Navigator.pop(context),
               ),
             ),
-            body:
-                //  PageView.builder(
-                //   // itemCount: dependent.length,
-                //   itemBuilder: (context, index) {
-                //     return
-                SingleChildScrollView(
+            body: SingleChildScrollView(
               child: Container(
                 padding: EdgeInsets.all(1.h),
                 width: double.infinity,
@@ -168,11 +120,9 @@ class _ReportDeathState extends State<ReportDeath> {
                               children: [
                                 const Text('Nama'),
                                 Row(
-                                  // mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     SizedBox(
                                       width: 160,
-                                      // child: Expanded(
                                       child: TextFormField(
                                         controller: _nameCtrl,
                                         enabled: false,
@@ -180,21 +130,10 @@ class _ReportDeathState extends State<ReportDeath> {
                                         style:
                                             const TextStyle(color: Colors.grey),
                                         decoration: const InputDecoration(
-                                            // hintText:
-                                            //     '${dependent[index].dependent_name}',
-
                                             border: InputBorder.none),
                                         cursorColor: Colors.black,
                                       ),
-                                      // ),
                                     ),
-                                    // Text(
-                                    //   'Nurul Aina binti Ariffin',
-                                    //   maxLines: 1,
-                                    //   softWrap: false,
-                                    //   overflow: TextOverflow.visible,
-                                    //   style: TextStyle(color: Colors.grey),
-                                    // ),
                                     const Icon(
                                       Ionicons.lock_closed_outline,
                                       color: Colors.grey,
@@ -211,7 +150,6 @@ class _ReportDeathState extends State<ReportDeath> {
                                   'No. Kad \nPengenalan',
                                 ),
                                 Row(
-                                  // mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     SizedBox(
                                       width: 160,
@@ -264,7 +202,6 @@ class _ReportDeathState extends State<ReportDeath> {
                                 ),
                                 SizedBox(
                                   width: 180,
-                                  // child: Expanded(
                                   child: TextFormField(
                                     controller: _phoneNoCtrl,
                                     validator: (value) => value!.isEmpty
@@ -277,13 +214,7 @@ class _ReportDeathState extends State<ReportDeath> {
                                     ),
                                     cursorColor: Colors.black,
                                     keyboardType: TextInputType.phone,
-                                    // onChanged: (value) {
-                                    //   setState(() {
-                                    //     phoneNo.text = value.toString();
-                                    //   });
-                                    // },
                                   ),
-                                  // ),
                                 ),
                               ],
                             ),
@@ -296,7 +227,6 @@ class _ReportDeathState extends State<ReportDeath> {
                                 ),
                                 SizedBox(
                                   width: 180,
-                                  // child: Expanded(
                                   child: TextFormField(
                                     controller: _addressCtrl,
                                     maxLines: null,
@@ -310,13 +240,7 @@ class _ReportDeathState extends State<ReportDeath> {
                                     ),
                                     cursorColor: Colors.black,
                                     keyboardType: TextInputType.text,
-                                    // onChanged: (value) {
-                                    //   setState(() {
-                                    //     phoneNo.text = value.toString();
-                                    //   });
-                                    // },
                                   ),
-                                  // ),
                                 ),
                               ],
                             ),
@@ -327,14 +251,9 @@ class _ReportDeathState extends State<ReportDeath> {
                                 const Text(
                                   'Tarikh \nMeninggal',
                                 ),
-                                // Text('+60190001100'),
                                 SizedBox(
                                   width: 180,
-                                  // child: Expanded(
-                                  child:
-
-                                      // DatePickerWidget()
-                                      TextFormField(
+                                  child: TextFormField(
                                     controller: _deathdateCtrl,
                                     validator: (value) => value!.isEmpty
                                         ? 'Sila isi tarikh meninggal tanggungan'
@@ -375,11 +294,6 @@ class _ReportDeathState extends State<ReportDeath> {
                                             '${date!.day}/${date!.month}/${date!.year}';
                                       });
                                     },
-                                    // onChanged: (value) {
-                                    //   setState(() {
-                                    //     phoneNo.text = value.toString();
-                                    //   });
-                                    // },
                                   ),
                                 ),
                               ],
@@ -407,11 +321,6 @@ class _ReportDeathState extends State<ReportDeath> {
                                     ),
                                     cursorColor: Colors.black,
                                     keyboardType: TextInputType.text,
-                                    // onChanged: (value) {
-                                    //   setState(() {
-                                    //     phoneNo.text = value.toString();
-                                    //   });
-                                    // },
                                   ),
                                 ),
                               ],
@@ -439,11 +348,6 @@ class _ReportDeathState extends State<ReportDeath> {
                                     ),
                                     cursorColor: Colors.black,
                                     keyboardType: TextInputType.text,
-                                    // onChanged: (value) {
-                                    //   setState(() {
-                                    //     phoneNo.text = value.toString();
-                                    //   });
-                                    // },
                                   ),
                                 ),
                               ],
@@ -456,12 +360,15 @@ class _ReportDeathState extends State<ReportDeath> {
                           width: 150,
                           child: FloatingActionButton.extended(
                             onPressed: () async {
-                              //add the changes to dependent table
-                              // print(DatePickerWidget().toString());
+                              //update changes to dependent table
                               widget.dependentid.death_date =
                                   _deathdateCtrl.text;
                               widget.dependentid.death_status =
                                   'Meninggal dunia';
+                              await widget.dependentDAO
+                                  .editDependent(widget.dependentid);
+
+                              //add new death report
                               dynamic res = await deathDAO.addDeath(
                                   widget.dependentid.id!,
                                   Death(
@@ -476,6 +383,9 @@ class _ReportDeathState extends State<ReportDeath> {
                                     location: _locationCtrl.text,
                                     causes: _causesCtrl.text,
                                   ));
+
+                              // to pop until dependent list
+                              Navigator.pop(context, res);
                               Navigator.pop(context, res);
                             },
                             label: const Text('Lapor'),
@@ -489,10 +399,7 @@ class _ReportDeathState extends State<ReportDeath> {
                   ),
                 ),
               ),
-            )
-            //   },
-            // ),
-            );
+            ));
       }),
     );
   }
