@@ -125,7 +125,7 @@ class _MoneyClaimState extends State<MoneyClaim> {
                         Card(
                           margin: EdgeInsetsDirectional.all(10),
                           child: (imageFile == null)
-                              ? Text("Choose Image")
+                              ? Text("")
                               : Image.file(imageFile!),
                         ),
                         ElevatedButton.icon(
@@ -137,7 +137,7 @@ class _MoneyClaimState extends State<MoneyClaim> {
                           onPressed: () {
                             _showChoiceDialog(context);
                           },
-                          label: Text("UPLOAD IMAGE"),
+                          label: Text("MUAT NAIK GAMBAR"),
                         ),
                         SizedBox(
                           height: 2.h,
