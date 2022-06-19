@@ -10,6 +10,7 @@ import 'package:sizer/sizer.dart';
 
 import '../../DAO/dependent_dao.dart';
 import '../../models/dependent.dart';
+import 'view_dependent.dart';
 
 class UpdateDependent extends StatefulWidget {
   const UpdateDependent({required this.dependentDAO, required this.dependent,  Key? key})
@@ -226,7 +227,7 @@ class _UpdateDependentState extends State<UpdateDependent> {
                                   await widget.dependentDAO.editDependent(widget.dependent);
 
                                   Navigator.of(context).push(
-                                      MaterialPageRoute(builder: (context) => Nav2()));
+                                      MaterialPageRoute(builder: (context) => ViewDependent(dependentDAO: widget.dependentDAO, dependent: widget.dependent,)));
 
                                 },
                                 child: Text("Kemaskini"),
