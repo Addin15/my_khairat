@@ -258,7 +258,9 @@ class _HomeState extends State<Home> {
                     Navigator.push(
                         context,
                         CupertinoPageRoute(
-                            builder: (context) => const MoneyClaim()));
+                            builder: (context) => MoneyClaim(
+                                  userDAO: widget.userDAO,
+                                )));
                   }
                 },
               ),

@@ -8,20 +8,55 @@ import 'package:my_khairat/constants/headers.dart';
 import 'package:my_khairat/models/claim.dart';
 
 class ClaimController {
-  // Add dependent
-  static Future<dynamic> addClaim(String claim_id, Claim claim) async {
+// Get all dependents
+  static Future<List<Claim>> getClaim(String claimId) async {
     try {
       SecureStorage _secureStorage = SecureStorage();
       String _token = await _secureStorage.read('token');
 
-      String url = '${Config.hostName}/claim/add';
+      String url = '${Config.hostName}/claims/get';
 
       Map<String, dynamic> data = {
-        'claim_id': claim_id,
-        'claimer_name': claim.claimer_name,
-        'claimer_ic': claim.claimer_ic,
-        'claimer_village': claim.claimer_village,
-        'claimer_url': claim.claimer_url,
+        'claim_id': claimId,
+      };
+
+      var response = await post(
+        Uri.parse(url),
+        body: jsonEncode(data),
+        headers: headerswithToken(_token),
+      );
+
+      log(response.body);
+
+      if (response.statusCode == 200) {
+        List claims = jsonDecode(response.body);
+
+        return claims
+            .map((claim) => Claim.fromMap(claim as Map<String, dynamic>))
+            .toList();
+      }
+
+      return [];
+    } catch (e) {
+      log(e.toString());
+      return [];
+    }
+  }
+
+  // Add claim
+  static Future<dynamic> addClaim(String claimID,String mousqueID, Claim claim) async {
+    try {
+      SecureStorage _secureStorage = SecureStorage();
+      String _token = await _secureStorage.read('token');
+
+      String url = '${Config.hostName}/claims/add';
+      log(claimID);
+      Map<String, dynamic> data = {
+        'claim_id':claimID,
+        'mosque_id':mousqueID,
+        'claimer_name': claim.claimername,
+        'claimer_ic': claim.claimeric,
+        'claimer_url': claim.claimerurl,
         'status': claim.status,
       };
 
@@ -45,4 +80,6 @@ class ClaimController {
       return null;
     }
   }
+
+ 
 }
