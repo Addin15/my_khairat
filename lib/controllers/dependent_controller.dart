@@ -63,6 +63,7 @@ class DependentController {
         'dependent_address': dependent.dependent_address,
         'death_status': dependent.death_status,
         'death_date': dependent.death_date,
+        'verify': dependent.verify,
       };
 
 /*  this.dependent_relation,

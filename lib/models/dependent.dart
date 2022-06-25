@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 class DependentModel {
   String? id;
   String? user_id;
@@ -9,6 +11,7 @@ class DependentModel {
   String? dependent_address;
   String? death_status;
   String? death_date;
+  String? verify;
 
 
   DependentModel({
@@ -22,6 +25,7 @@ class DependentModel {
     this.dependent_address,
     this.death_status,
     this.death_date,
+    this.verify,
   });
 
   factory DependentModel.fromMap(Map<String, dynamic> map) => DependentModel(
@@ -35,6 +39,7 @@ class DependentModel {
     dependent_address: map['dependent_address'],
     death_status: map['death_status'],
     death_date: map['death_date'],
+    verify: map['verify'],
   );
 
   Map<String, dynamic> toMap() => {
@@ -48,5 +53,6 @@ class DependentModel {
     'dependent_address': dependent_address,
     'death_status': death_status,
     'death_date': death_date,
+    'verify': verify,
   };
 }

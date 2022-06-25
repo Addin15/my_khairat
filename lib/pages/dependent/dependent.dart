@@ -109,8 +109,10 @@ class _DependentState extends State<Dependent> {
                                         fontStyle: FontStyle.italic
                                     ),
                                   ) : new Text(''),
+                                  SizedBox(width: 10,),
 
-                                  SizedBox(width: 30,),
+                                  dependents[index].verify=='true' ? Icon(Icons.check_circle_outline, color: AppColor.primary,): SizedBox(width: 25,),
+                                  SizedBox(width: 15,),
 
                                 ],
                               ),
