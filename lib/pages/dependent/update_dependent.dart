@@ -13,12 +13,12 @@ import '../../models/dependent.dart';
 import 'view_dependent.dart';
 
 class UpdateDependent extends StatefulWidget {
-  const UpdateDependent({required this.dependentDAO, required this.dependent,  Key? key})
+  const UpdateDependent(
+      {required this.dependentDAO, required this.dependent, Key? key})
       : super(key: key);
 
   final DependentDAO dependentDAO;
   final DependentModel dependent;
-
 
   @override
   State<UpdateDependent> createState() => _UpdateDependentState();
@@ -59,8 +59,8 @@ class _UpdateDependentState extends State<UpdateDependent> {
                 elevation: 2,
                 color: Colors.white,
                 shadowColor: Colors.black,
-                shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,7 +74,8 @@ class _UpdateDependentState extends State<UpdateDependent> {
                             Text(
                               "Nama seperti Kad Pengenalan",
                               style: TextStyle(
-                                  fontWeight: FontWeight.bold, color: Colors.black),
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
                             ),
                             SizedBox(
                               height: 1.h,
@@ -93,7 +94,8 @@ class _UpdateDependentState extends State<UpdateDependent> {
                             Text(
                               "Hubungan",
                               style: TextStyle(
-                                  fontWeight: FontWeight.bold, color: Colors.black),
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
                             ),
                             SizedBox(
                               height: 1.h,
@@ -112,7 +114,8 @@ class _UpdateDependentState extends State<UpdateDependent> {
                             Text(
                               "No. Kad Pengenalan",
                               style: TextStyle(
-                                  fontWeight: FontWeight.bold, color: Colors.black),
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
                             ),
                             SizedBox(
                               height: 1.h,
@@ -131,7 +134,8 @@ class _UpdateDependentState extends State<UpdateDependent> {
                             Text(
                               "No. Telefon",
                               style: TextStyle(
-                                  fontWeight: FontWeight.bold, color: Colors.black),
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
                             ),
                             SizedBox(
                               height: 1.h,
@@ -139,12 +143,11 @@ class _UpdateDependentState extends State<UpdateDependent> {
                             TextField(
                               controller: _phoneController,
                               decoration: InputDecoration(
-                                border: OutlineInputBorder(),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Color(0xFF0EAD69))),
                               ),
-                            ),
-                            Divider(
-                              color: Colors.grey,
-                              thickness: 0.5,
+                              cursorColor: Colors.black,
                             ),
                             SizedBox(
                               height: 2.h,
@@ -152,7 +155,8 @@ class _UpdateDependentState extends State<UpdateDependent> {
                             Text(
                               "Pekerjaan",
                               style: TextStyle(
-                                  fontWeight: FontWeight.bold, color: Colors.black),
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
                             ),
                             SizedBox(
                               height: 1.h,
@@ -160,20 +164,20 @@ class _UpdateDependentState extends State<UpdateDependent> {
                             TextField(
                               controller: _occupationController,
                               decoration: InputDecoration(
-                                border: OutlineInputBorder(),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Color(0xFF0EAD69))),
                               ),
-                            ),
-                            Divider(
-                              color: Colors.grey,
-                              thickness: 0.5,
+                              cursorColor: Colors.black,
                             ),
                             SizedBox(
-                              height: 1.h,
+                              height: 2.h,
                             ),
                             Text(
                               "Alamat",
                               style: TextStyle(
-                                  fontWeight: FontWeight.bold, color: Colors.black),
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
                             ),
                             SizedBox(
                               height: 1.h,
@@ -181,34 +185,11 @@ class _UpdateDependentState extends State<UpdateDependent> {
                             TextField(
                               controller: _addressController,
                               decoration: InputDecoration(
-                                border: OutlineInputBorder(),
+                                focusedBorder: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Color(0xFF0EAD69))),
                               ),
-                            ),
-                            Divider(
-                              color: Colors.grey,
-                              thickness: 0.5,
-                            ),
-                            SizedBox(
-                              height: 1.h,
-                            ),
-                            Text(
-                              "Status Kematian",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, color: Colors.black),
-                            ),
-                            SizedBox(
-                              height: 1.h,
-                            ),
-                            Text(
-                              "N/A",
-                              style: TextStyle(color: Colors.black),
-                            ),
-                            Divider(
-                              color: Colors.grey,
-                              thickness: 0.5,
-                            ),
-                            SizedBox(
-                              height: 1.h,
+                              cursorColor: Colors.black,
                             ),
                             SizedBox(
                               height: 1.h,
@@ -217,26 +198,33 @@ class _UpdateDependentState extends State<UpdateDependent> {
                               height: 2.h,
                             ),
                             SizedBox(
-                              height:5.5.h, //height of button
-                              width:double.infinity,
+                              height: 5.5.h, //height of button
+                              width: double.infinity,
                               child: ElevatedButton(
                                 onPressed: () async {
-                                  widget.dependent.dependent_phone = _phoneController.text;
-                                  widget.dependent.dependent_occupation = _occupationController.text;
-                                  widget.dependent.dependent_address = _addressController.text;
-                                  await widget.dependentDAO.editDependent(widget.dependent);
+                                  widget.dependent.dependent_phone =
+                                      _phoneController.text;
+                                  widget.dependent.dependent_occupation =
+                                      _occupationController.text;
+                                  widget.dependent.dependent_address =
+                                      _addressController.text;
+                                  await widget.dependentDAO
+                                      .editDependent(widget.dependent);
 
-                                  Navigator.of(context).push(
-                                      MaterialPageRoute(builder: (context) => ViewDependent(dependentDAO: widget.dependentDAO, dependent: widget.dependent,)));
-
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => ViewDependent(
+                                            dependentDAO: widget.dependentDAO,
+                                            dependent: widget.dependent,
+                                          )));
                                 },
                                 child: Text("Kemaskini"),
                                 style: ButtonStyle(
-                                  backgroundColor:
-                                  MaterialStateProperty.all(AppColor.primary),
+                                  backgroundColor: MaterialStateProperty.all(
+                                      AppColor.primary),
                                   shape: MaterialStateProperty.all(
                                     RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(1.h)),
+                                        borderRadius:
+                                            BorderRadius.circular(1.h)),
                                   ),
                                 ),
                               ),
