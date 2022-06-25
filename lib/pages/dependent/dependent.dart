@@ -111,7 +111,7 @@ class _DependentState extends State<Dependent> {
                                   ) : new Text(''),
                                   SizedBox(width: 10,),
 
-                                  dependents[index].verify=='true' ? Icon(Icons.check_circle_outline, color: AppColor.primary,): SizedBox(width: 25,),
+                                  dependents[index].verify==1 ? Icon(Icons.check_circle_outline, color: AppColor.primary,): SizedBox(width: 25,),
                                   SizedBox(width: 15,),
 
                                 ],

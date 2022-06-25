@@ -11,7 +11,7 @@ class DependentModel {
   String? dependent_address;
   String? death_status;
   String? death_date;
-  String? verify;
+  int? verify;
 
 
   DependentModel({

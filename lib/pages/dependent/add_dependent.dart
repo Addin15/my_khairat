@@ -232,7 +232,7 @@ class _AddDependentState extends State<AddDependent> {
                   dependent_name: _nameControllers[index].text,
                   dependent_relation: _relationshipControllers[index].text,
                   dependent_ic: _icControllers[index].text,
-                  verify: 'false',
+                  verify: 0,
                 ));
           }
           Navigator.pop(context, res);
