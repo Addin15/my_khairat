@@ -331,7 +331,7 @@ class _ViewDependentState extends State<ViewDependent> {
                                                 color: Color(0xFF0EAD69)),
                                           ),
                                           content: Text(
-                                              '1. Jika kematian berlaku di dalam kawasan kariah masjid, sila hubungi pihak masjid \n\n2. Jika kematian berlaku di luar kawasan, sila ke Halaman Utama untuk Tuntutan Wang. Sediakan: \n\n\t\t\t\t\t\ta. Surat Kematian'),
+                                              '1. Jika pengebumian berlaku di dalam kawasan kariah masjid, sila hubungi pihak masjid \n\n2. Jika pengebumian berlaku di luar kawasan, sila ke Halaman Utama untuk Tuntutan Wang. Sediakan: \n\n\t\t\t\t\t\ta. Surat Kematian'),
                                           actions: [
                                             TextButton(
                                                 onPressed: () =>
