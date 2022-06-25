@@ -6,7 +6,6 @@ import 'package:my_khairat/DAO/dependent_dao.dart';
 import 'package:my_khairat/models/dependent.dart';
 import 'package:my_khairat/models/user.dart';
 import 'package:my_khairat/pages/dependent/dependent.dart';
-import 'package:my_khairat/pages/dependent/report_death.dart';
 import 'package:my_khairat/pages/dependent/update_dependent.dart';
 import 'package:my_khairat/pages/dependent/view_dead_dependent.dart';
 import 'package:my_khairat/pages/nav2.dart';
@@ -72,15 +71,14 @@ customAppBar2({
           Ionicons.chevron_back,
           color: AppColor.primary,
         ),
-        onPressed: () => Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => Nav2())),
+        onPressed: () => Navigator.of(context)
+            .pushReplacement(MaterialPageRoute(builder: (context) => Nav2())),
       ),
       title: title,
       elevation: 0.0,
       backgroundColor: Colors.white,
       centerTitle: true,
     );
-
 
 class _ViewDependentState extends State<ViewDependent> {
   @override
@@ -128,7 +126,6 @@ class _ViewDependentState extends State<ViewDependent> {
                           ),
                           Text(
                             widget.dependent.dependent_name!,
-                            style: TextStyle(color: Colors.grey),
                           ),
                           Divider(
                             color: Colors.grey,
@@ -148,7 +145,6 @@ class _ViewDependentState extends State<ViewDependent> {
                           ),
                           Text(
                             widget.dependent.dependent_relation!,
-                            style: TextStyle(color: Colors.grey),
                           ),
                           Divider(
                             color: Colors.grey,
@@ -168,7 +164,6 @@ class _ViewDependentState extends State<ViewDependent> {
                           ),
                           Text(
                             widget.dependent.dependent_ic!,
-                            style: TextStyle(color: Colors.grey),
                           ),
                           Divider(
                             color: Colors.grey,
@@ -237,26 +232,6 @@ class _ViewDependentState extends State<ViewDependent> {
                           SizedBox(
                             height: 1.h,
                           ),
-                          Text(
-                            "Status Kematian",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black),
-                          ),
-                          SizedBox(
-                            height: 1.h,
-                          ),
-                          Text(
-                            widget.dependent.death_status ?? "Masih Hidup",
-                            style: TextStyle(color: Colors.black),
-                          ),
-                          Divider(
-                            color: Colors.grey,
-                            thickness: 0.5,
-                          ),
-                          SizedBox(
-                            height: 1.h,
-                          ),
                           SizedBox(
                             height: 1.h,
                           ),
@@ -275,10 +250,9 @@ class _ViewDependentState extends State<ViewDependent> {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) =>
-                                              UpdateDependent(
-                                                  dependentDAO: widget.dependentDAO,
-                                                  dependent: widget.dependent),
+                                          builder: (context) => UpdateDependent(
+                                              dependentDAO: widget.dependentDAO,
+                                              dependent: widget.dependent),
                                         ));
                                   },
                                   child: Text("Kemaskini"),
@@ -288,7 +262,7 @@ class _ViewDependentState extends State<ViewDependent> {
                                     shape: MaterialStateProperty.all(
                                       RoundedRectangleBorder(
                                           borderRadius:
-                                          BorderRadius.circular(1.h)),
+                                              BorderRadius.circular(1.h)),
                                     ),
                                   ),
                                 ),
@@ -305,7 +279,8 @@ class _ViewDependentState extends State<ViewDependent> {
                                       context: context,
                                       builder: (context) => confirmDeletePopup(
                                         context: context,
-                                        title: 'Anda pasti untuk buang tanggungan ini dari senarai?',
+                                        title:
+                                            'Anda pasti untuk buang tanggungan ini dari senarai?',
                                         content: Text(
                                           widget.dependent.dependent_name!,
                                           textAlign: TextAlign.center,
@@ -315,9 +290,11 @@ class _ViewDependentState extends State<ViewDependent> {
 
                                     if (res != null) {
                                       if (res) {
-                                        await widget.dependentDAO.deleteDependent(widget.dependent);
+                                        await widget.dependentDAO
+                                            .deleteDependent(widget.dependent);
                                         Navigator.of(context).push(
-                                            MaterialPageRoute(builder: (context) => Nav2()));
+                                            MaterialPageRoute(
+                                                builder: (context) => Nav2()));
                                       }
                                     }
                                   },
@@ -328,7 +305,7 @@ class _ViewDependentState extends State<ViewDependent> {
                                     shape: MaterialStateProperty.all(
                                       RoundedRectangleBorder(
                                           borderRadius:
-                                          BorderRadius.circular(1.h)),
+                                              BorderRadius.circular(1.h)),
                                     ),
                                   ),
                                 ),
@@ -344,13 +321,28 @@ class _ViewDependentState extends State<ViewDependent> {
                             width: double.infinity,
                             child: ElevatedButton(
                               onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    CupertinoPageRoute(
-                                      builder: (context) => ReportDeath(
-                                          dependentDAO: widget.dependentDAO,
-                                          dependentid: widget.dependent),
-                                    ));
+                                showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                          title: Text(
+                                            'Lapor Kematian',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                color: Color(0xFF0EAD69)),
+                                          ),
+                                          content: Text(
+                                              '1. Jika kematian berlaku di dalam kawasan kariah masjid, sila hubungi pihak masjid \n\n2. Jika kematian berlaku di luar kawasan, sila ke Halaman Utama untuk Tuntutan Wang. Sediakan: \n\n\t\t\t\t\t\ta. Surat Kematian'),
+                                          actions: [
+                                            TextButton(
+                                                onPressed: () =>
+                                                    Navigator.pop(context),
+                                                child: Text(
+                                                  'OK',
+                                                  style: TextStyle(
+                                                      color: Color(0xFF0EAD69)),
+                                                ))
+                                          ],
+                                        ));
                               },
                               child: Text("Lapor Kematian"),
                               style: ButtonStyle(
