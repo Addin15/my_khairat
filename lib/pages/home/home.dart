@@ -8,6 +8,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
 import 'package:my_khairat/DAO/announcement_dao.dart';
 import 'package:my_khairat/DAO/mosque_dao.dart';
+import 'package:my_khairat/DAO/payment_dao.dart';
 import 'package:my_khairat/DAO/user_dao.dart';
 import 'package:my_khairat/models/announcement.dart';
 import 'package:my_khairat/models/mosque.dart';
@@ -109,237 +110,256 @@ class _HomeState extends State<Home> {
                   color: AppColor.primary,
                 ),
               )
-            : Scaffold(
-                body: SizedBox(
-                  width: 100.w,
-                  child: ListView(
-                    physics: const BouncingScrollPhysics(),
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Card(
-                          elevation: 2,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 20),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              gradient: LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                                colors: [
-                                  AppColor.primary,
-                                  AppColor.secondary,
-                                ],
-                              ),
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  mosque!.name!,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 5.w,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                SizedBox(height: 1.w),
-                                Text(
-                                  village!.name!,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 4.w,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                SizedBox(height: 2.w),
-                                const Divider(
-                                  color: Colors.white,
-                                  thickness: 1,
-                                  height: 1,
-                                ),
-                                SizedBox(height: 2.w),
-                                Text(
-                                  'Yuran Tertunggak',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 5.w,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                SizedBox(height: 2.w),
-                                Text(
-                                  'RM30.00',
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                    fontSize: 8.w,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 8.w),
-                      GridView(
-                        shrinkWrap: true,
+            : ChangeNotifierProvider(
+                create: (context) => PaymentDAO(user.id!),
+                child:
+                    Consumer<PaymentDAO>(builder: (context, paymentDAO, child) {
+                  return Scaffold(
+                    body: SizedBox(
+                      width: 100.w,
+                      child: ListView(
                         physics: const BouncingScrollPhysics(),
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                          crossAxisSpacing: 15,
-                        ),
                         children: [
-                          MenuBox(
-                            icon: 'assets/icons/bayar.png',
-                            label: 'Buat\nPembayaran',
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                CupertinoPageRoute(
-                                  builder: (context) => CreatePayment(
-                                    mosque: mosque!,
+                          Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Card(
+                              elevation: 2,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 20),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  gradient: LinearGradient(
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                    colors: [
+                                      AppColor.primary,
+                                      AppColor.secondary,
+                                    ],
                                   ),
                                 ),
-                              );
-                            },
-                          ),
-                          MenuBox(
-                            icon: 'assets/icons/resit.png',
-                            label: 'Sejarah\nPembayaran',
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  CupertinoPageRoute(
-                                      builder: (context) =>
-                                          const PaymentHistory()));
-                            },
-                          ),
-                          MenuBox(
-                            icon: 'assets/icons/tuntutan.png',
-                            label: 'Tuntutan\nWang',
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  CupertinoPageRoute(
-                                      builder: (context) => MoneyClaim(
-                                            userDAO: widget.userDAO,
-                                          )));
-                            },
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 2.h),
-                      ChangeNotifierProvider(
-                          create: (context) => AnnouncementDAO(user.mosqueID!),
-                          builder: (context, child) {
-                            return Consumer<AnnouncementDAO>(
-                                builder: (context, announcementDAO, child) {
-                              List<Announcement> announcements =
-                                  announcementDAO.announcements;
-
-                              if (announcements.isEmpty) {
-                                return const SizedBox.shrink();
-                              }
-                              return Column(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'Pengumuman',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 4.w,
-                                          ),
-                                        ),
-                                        TextButton(
-                                          onPressed: () {},
-                                          child: Text(
-                                            'See All',
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.normal,
-                                              fontSize: 4.w,
-                                              color: Colors.blue.shade800,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(height: 1.h),
-                                  GestureDetector(
-                                    onTap: () {},
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 10),
-                                      child: CarouselSlider(
-                                        carouselController: _carouselController,
-                                        items: List.generate(
-                                          announcements.length < 3
-                                              ? announcements.length
-                                              : 3,
-                                          (index) {
-                                            return AnnouncementBox(
-                                              title: announcements[index].title,
-                                              announcement:
-                                                  announcements[index].content,
-                                              date: DateTime.parse(
-                                                  announcements[index].date!),
-                                            );
-                                          },
-                                        ),
-                                        options: CarouselOptions(
-                                            enableInfiniteScroll: false,
-                                            scrollDirection: Axis.horizontal,
-                                            enlargeCenterPage: true,
-                                            onPageChanged: (index, reason) {
-                                              setState(() {
-                                                selectedAnnouncement = index;
-                                              });
-                                            }),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      mosque!.name!,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 5.w,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: announcements.map((url) {
-                                      int index = announcements.indexOf(url);
-                                      return Container(
-                                        width: 8.0,
-                                        height: 8.0,
-                                        margin: const EdgeInsets.symmetric(
-                                            vertical: 10.0, horizontal: 2.0),
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: selectedAnnouncement == index
-                                              ? const Color.fromRGBO(
-                                                  0, 0, 0, 0.9)
-                                              : const Color.fromRGBO(
-                                                  0, 0, 0, 0.4),
+                                    SizedBox(height: 1.w),
+                                    Text(
+                                      village!.name!,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 4.w,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    SizedBox(height: 2.w),
+                                    const Divider(
+                                      color: Colors.white,
+                                      thickness: 1,
+                                      height: 1,
+                                    ),
+                                    SizedBox(height: 2.w),
+                                    Text(
+                                      'Yuran Tertunggak',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 5.w,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    SizedBox(height: 2.w),
+                                    Text(
+                                      'RM30.00',
+                                      style: TextStyle(
+                                        color: Colors.red,
+                                        fontSize: 8.w,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 8.w),
+                          GridView(
+                            shrinkWrap: true,
+                            physics: const BouncingScrollPhysics(),
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3,
+                              crossAxisSpacing: 15,
+                            ),
+                            children: [
+                              MenuBox(
+                                icon: 'assets/icons/bayar.png',
+                                label: 'Buat\nPembayaran',
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    CupertinoPageRoute(
+                                      builder: (context) => CreatePayment(
+                                        userID: user.id!,
+                                        paymentDAO: paymentDAO,
+                                        mosque: mosque!,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                              MenuBox(
+                                icon: 'assets/icons/resit.png',
+                                label: 'Sejarah\nPembayaran',
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      CupertinoPageRoute(
+                                          builder: (context) =>
+                                              const PaymentHistory()));
+                                },
+                              ),
+                              MenuBox(
+                                icon: 'assets/icons/tuntutan.png',
+                                label: 'Tuntutan\nWang',
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      CupertinoPageRoute(
+                                          builder: (context) => MoneyClaim(
+                                                userDAO: widget.userDAO,
+                                              )));
+                                },
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 2.h),
+                          ChangeNotifierProvider(
+                              create: (context) =>
+                                  AnnouncementDAO(user.mosqueID!),
+                              builder: (context, child) {
+                                return Consumer<AnnouncementDAO>(
+                                    builder: (context, announcementDAO, child) {
+                                  List<Announcement> announcements =
+                                      announcementDAO.announcements;
+
+                                  if (announcements.isEmpty) {
+                                    return const SizedBox.shrink();
+                                  }
+                                  return Column(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 20),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              'Pengumuman',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 4.w,
+                                              ),
+                                            ),
+                                            TextButton(
+                                              onPressed: () {},
+                                              child: Text(
+                                                'See All',
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.normal,
+                                                  fontSize: 4.w,
+                                                  color: Colors.blue.shade800,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                      );
-                                    }).toList(),
-                                  ),
-                                ],
-                              );
-                            });
-                          }),
-                      SizedBox(height: 3.h),
-                    ],
-                  ),
-                ),
+                                      ),
+                                      SizedBox(height: 1.h),
+                                      GestureDetector(
+                                        onTap: () {},
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 10),
+                                          child: CarouselSlider(
+                                            carouselController:
+                                                _carouselController,
+                                            items: List.generate(
+                                              announcements.length < 3
+                                                  ? announcements.length
+                                                  : 3,
+                                              (index) {
+                                                return AnnouncementBox(
+                                                  title: announcements[index]
+                                                      .title,
+                                                  announcement:
+                                                      announcements[index]
+                                                          .content,
+                                                  date: DateTime.parse(
+                                                      announcements[index]
+                                                          .date!),
+                                                );
+                                              },
+                                            ),
+                                            options: CarouselOptions(
+                                                enableInfiniteScroll: false,
+                                                scrollDirection:
+                                                    Axis.horizontal,
+                                                enlargeCenterPage: true,
+                                                onPageChanged: (index, reason) {
+                                                  setState(() {
+                                                    selectedAnnouncement =
+                                                        index;
+                                                  });
+                                                }),
+                                          ),
+                                        ),
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: announcements.map((url) {
+                                          int index =
+                                              announcements.indexOf(url);
+                                          return Container(
+                                            width: 8.0,
+                                            height: 8.0,
+                                            margin: const EdgeInsets.symmetric(
+                                                vertical: 10.0,
+                                                horizontal: 2.0),
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color:
+                                                  selectedAnnouncement == index
+                                                      ? const Color.fromRGBO(
+                                                          0, 0, 0, 0.9)
+                                                      : const Color.fromRGBO(
+                                                          0, 0, 0, 0.4),
+                                            ),
+                                          );
+                                        }).toList(),
+                                      ),
+                                    ],
+                                  );
+                                });
+                              }),
+                          SizedBox(height: 3.h),
+                        ],
+                      ),
+                    ),
+                  );
+                }),
               );
       },
     );

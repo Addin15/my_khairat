@@ -101,11 +101,8 @@ class _PaymentReceivedState extends State<PaymentReceived> {
                     customTextButton(
                         label: 'Ke Halaman Utama',
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => PaymentReceived()),
-                          );
+                          Navigator.pop(context);
+                          Navigator.pop(context);
                         }),
                   ],
                 ),
