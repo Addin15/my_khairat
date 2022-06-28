@@ -67,7 +67,7 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                         ),
                         DropdownButton(
                           isExpanded: true,
-                          items: [
+                          items: const [
                             DropdownMenuItem(
                               child: Text(
                                 'Januari',
