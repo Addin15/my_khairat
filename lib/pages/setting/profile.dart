@@ -33,8 +33,8 @@ class _ProfileState extends State<Profile> {
             color: AppColor.primary,
           ));
     } else {
-      DateTime expiry = DateTime(user.expireYear!, user.expireMonth!);
-      DateTime registerDate = DateTime.parse(user.registerDate!);
+      DateTime expiry = DateTime(user.expireYear ?? 0, user.expireMonth ?? 0);
+      DateTime registerDate = DateTime.parse(user.registerDate ?? '2022-01-01');
 
       return Scaffold(
         body: SizedBox(

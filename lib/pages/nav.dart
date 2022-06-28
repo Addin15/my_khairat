@@ -96,8 +96,10 @@ class _NavState extends State<Nav> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) =>
-                                CompleteProfile(userDAO: userDAO)));
+                            builder: (context) => CompleteProfile(
+                                  userDAO: userDAO,
+                                  isRejected: true,
+                                )));
                   } else if (user.status == 'pending') {
                     Navigator.push(
                         context,

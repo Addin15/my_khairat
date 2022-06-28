@@ -102,6 +102,7 @@ class _CompleteProfileState extends State<CompleteProfile> {
                                     children: [
                                       Text(
                                         'Maklumat anda telah ditolak. Sila isi maklumat yang baharu',
+                                        textAlign: TextAlign.center,
                                         style: TextStyle(
                                           color: Colors.red,
                                           fontSize: 12.sp,
