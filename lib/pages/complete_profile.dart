@@ -18,9 +18,12 @@ import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 class CompleteProfile extends StatefulWidget {
-  const CompleteProfile({required this.userDAO, Key? key}) : super(key: key);
+  const CompleteProfile(
+      {required this.userDAO, this.isRejected = false, Key? key})
+      : super(key: key);
 
   final UserDAO userDAO;
+  final bool isRejected;
 
   @override
   State<CompleteProfile> createState() => _CompleteProfileState();
@@ -93,6 +96,20 @@ class _CompleteProfileState extends State<CompleteProfile> {
                               ),
                             ),
                             const SizedBox(height: 20),
+                            !widget.isRejected
+                                ? const SizedBox.shrink()
+                                : Column(
+                                    children: [
+                                      Text(
+                                        'Maklumat anda telah ditolak. Sila isi maklumat yang baharu',
+                                        style: TextStyle(
+                                          color: Colors.red,
+                                          fontSize: 12.sp,
+                                        ),
+                                      ),
+                                      SizedBox(height: 2.h),
+                                    ],
+                                  ),
                             CustomTextFormField(
                               hintText: 'Kad Pengenalan',
                               focusNode: _icFocus,
