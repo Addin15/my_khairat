@@ -5,6 +5,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:my_khairat/DAO/announcement_dao.dart';
 import 'package:my_khairat/DAO/user_dao.dart';
 import 'package:my_khairat/models/user.dart';
 import 'package:my_khairat/pages/auth/login.dart';
@@ -18,7 +19,10 @@ import 'package:sizer/sizer.dart';
 import '../complete_profile.dart';
 
 class Home extends StatefulWidget {
-  const Home({required this.userDAO, Key? key}) : super(key: key);
+  const Home({
+    required this.userDAO,
+    Key? key,
+  }) : super(key: key);
 
   final UserDAO userDAO;
 
@@ -102,7 +106,7 @@ class _HomeState extends State<Home> {
                           borderRadius: BorderRadius.circular(12.sp),
                         ),
                         child: Text(
-                          'Tidak Aktif',
+                          widget.userDAO.user.status,
                           style: TextStyle(color: Colors.white),
                         ),
                       ),

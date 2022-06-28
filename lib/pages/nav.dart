@@ -2,7 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:my_khairat/DAO/announcement_dao.dart';
 import 'package:my_khairat/DAO/user_dao.dart';
+import 'package:my_khairat/models/announcement.dart';
 import 'package:my_khairat/models/person.dart';
 import 'package:my_khairat/models/user.dart';
 import 'package:my_khairat/pages/auth/login.dart';
@@ -55,7 +57,9 @@ class _NavState extends State<Nav> {
           body: IndexedStack(
             index: indexPage,
             children: [
-              Home(userDAO: userDAO),
+              Home(
+                userDAO: userDAO,
+              ),
               user?.personID != null ? Dependent(userDAO: userDAO) : Text(""),
               Profile(userDAO: userDAO, backToHome: backtoHome),
             ],
