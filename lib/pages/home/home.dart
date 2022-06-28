@@ -103,8 +103,6 @@ class _HomeState extends State<Home> {
           getMosqueAndVillage(mosqueDAO, user.mosqueID!, user.villageID!);
         }
 
-        log(user.id!);
-
         return isGettingData
             ? Container(
                 color: Colors.white,
@@ -116,6 +114,8 @@ class _HomeState extends State<Home> {
                 create: (context) => PaymentDAO(user.id!),
                 child:
                     Consumer<PaymentDAO>(builder: (context, paymentDAO, child) {
+                  DateTime expiry =
+                      DateTime(user.expireYear!, user.expireMonth!);
                   return Scaffold(
                     body: SizedBox(
                       width: 100.w,
@@ -180,9 +180,16 @@ class _HomeState extends State<Home> {
                                     ),
                                     SizedBox(height: 2.w),
                                     Text(
-                                      'RM30.00',
+                                      'RM' +
+                                          calculateFees(
+                                                  expiry, mosque!.monthlyFee!)
+                                              .toStringAsFixed(2),
                                       style: TextStyle(
-                                        color: Colors.red,
+                                        color: calculateFees(expiry,
+                                                    mosque!.monthlyFee!) ==
+                                                0
+                                            ? Colors.green
+                                            : Colors.red,
                                         fontSize: 8.w,
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -238,11 +245,13 @@ class _HomeState extends State<Home> {
                                 label: 'Tuntutan\nWang',
                                 onTap: () {
                                   Navigator.push(
-                                      context,
-                                      CupertinoPageRoute(
-                                          builder: (context) => MoneyClaim(
-                                                userDAO: widget.userDAO,
-                                              )));
+                                    context,
+                                    CupertinoPageRoute(
+                                      builder: (context) => MoneyClaim(
+                                        userDAO: widget.userDAO,
+                                      ),
+                                    ),
+                                  );
                                 },
                               ),
                             ],
@@ -369,6 +378,12 @@ class _HomeState extends State<Home> {
               );
       },
     );
+  }
+
+  double calculateFees(DateTime expiry, double rate) {
+    int lateMonth = (expiry.difference(DateTime.now()).inDays ~/ 30).abs();
+
+    return lateMonth * rate;
   }
 }
 
