@@ -10,6 +10,10 @@ class GuestHome extends StatefulWidget {
 class _GuestHomeState extends State<GuestHome> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+      color: Colors.white,
+      alignment: Alignment.center,
+      child: Text('Guest Home'),
+    );
   }
 }
