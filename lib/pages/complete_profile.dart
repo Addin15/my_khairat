@@ -98,55 +98,67 @@ class _CompleteProfileState extends State<CompleteProfile> {
                               focusNode: _icFocus,
                               controller: _icController,
                               isReadOnly: true,
+                              validator: (value) => value!.isEmpty
+                                  ? 'Sila isi No. k/Pengenalan'
+                                  : null,
                             ),
                             const SizedBox(height: 10),
                             CustomTextFormField(
                               hintText: 'Nama',
                               focusNode: _nameFocus,
                               controller: _nameController,
+                              validator: (value) =>
+                                  value!.isEmpty ? 'Sila isi Nama' : null,
                             ),
                             const SizedBox(height: 10),
                             CustomTextFormField(
                               hintText: 'Alamat',
                               focusNode: _addressFocus,
                               controller: _addressController,
+                              validator: (value) =>
+                                  value!.isEmpty ? 'Sila isi Alamat' : null,
                             ),
                             const SizedBox(height: 10),
                             CustomTextFormField(
                               hintText: 'No Telefon',
                               focusNode: _phoneFocus,
                               controller: _phoneController,
+                              validator: (value) => value!.isEmpty
+                                  ? 'Sila isi No. Telefon'
+                                  : null,
                             ),
                             const SizedBox(height: 10),
                             CustomTextFormField(
                               hintText: 'Pekerjaan',
                               focusNode: _occupationFocus,
                               controller: _occupationController,
+                              validator: (value) =>
+                                  value!.isEmpty ? 'Sila isi Pekerjaan' : null,
                             ),
                             const SizedBox(height: 10),
                             const Text('Masjid'),
                             SizedBox(
                               width: double.infinity,
                               child: DropdownButton(
-                                  hint: Text(selectedMosqueID.isEmpty
-                                      ? '--Pilih Masjid--'
-                                      : mosques
-                                          .where(
-                                              (e) => e.id == selectedMosqueID)
-                                          .first
-                                          .name!),
-                                  items: mosques.map((e) {
-                                    return DropdownMenuItem(
-                                      child: Text(e.name!),
-                                      value: e.id,
-                                    );
-                                  }).toList(),
-                                  onChanged: (String? value) {
-                                    setState(() {
-                                      selectedMosqueID = value!;
-                                      mosqueDAO.getVillages(value);
-                                    });
-                                  }),
+                                hint: Text(selectedMosqueID.isEmpty
+                                    ? '--Pilih Masjid--'
+                                    : mosques
+                                        .where((e) => e.id == selectedMosqueID)
+                                        .first
+                                        .name!),
+                                items: mosques.map((e) {
+                                  return DropdownMenuItem(
+                                    child: Text(e.name!),
+                                    value: e.id,
+                                  );
+                                }).toList(),
+                                onChanged: (String? value) {
+                                  setState(() {
+                                    selectedMosqueID = value!;
+                                    mosqueDAO.getVillages(value);
+                                  });
+                                },
+                              ),
                             ),
                             const SizedBox(height: 10),
                             const Text('Kampung'),
