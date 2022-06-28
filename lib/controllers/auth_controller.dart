@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:http/http.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:my_khairat/config/config.dart';
 import 'package:my_khairat/config/secure_storage.dart';
 import 'package:my_khairat/constants/headers.dart';
@@ -66,17 +67,37 @@ class AuthController {
   }
 
   // Complete profile
-  static Future<bool> complete({required Map<String, dynamic> data}) async {
+  static Future<bool> complete({
+    required Map<String, String> data,
+    XFile? paymentProve,
+    XFile? addressProve,
+  }) async {
     try {
       SecureStorage _secureStorage = SecureStorage();
       String _token = await _secureStorage.read('token');
       String url = '${Config.hostName}/complete';
 
-      var response = await put(
-        Uri.parse(url),
-        body: jsonEncode(data),
-        headers: headerswithToken(_token),
-      );
+      // var response = await put(
+      //   Uri.parse(url),
+      //   body: jsonEncode(data),
+      //   headers: headerswithToken(_token),
+      // );
+
+      var request = MultipartRequest('POST', Uri.parse(url))
+        ..fields.addAll(data)
+        ..headers.addAll({
+          'Content-Type': 'multipart/form-data',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ' + _token,
+        })
+        ..files.add(
+            await MultipartFile.fromPath('paymentProve', paymentProve!.path))
+        ..files.add(
+            await MultipartFile.fromPath('addressProve', addressProve!.path));
+
+      StreamedResponse stream = await request.send();
+
+      var response = await Response.fromStream(stream);
 
       log(response.body);
 

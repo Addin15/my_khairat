@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:my_khairat/config/secure_storage.dart';
 import 'package:my_khairat/controllers/auth_controller.dart';
 import 'package:my_khairat/models/mosque.dart';
@@ -77,8 +78,10 @@ class UserDAO extends ChangeNotifier {
   }
 
   // COMPLETE
-  Future<bool> complete(String userID, Map<String, dynamic> data) async {
-    bool res = await AuthController.complete(data: data);
+  Future<bool> complete(String userID, XFile? paymentProve, XFile? addressProve,
+      Map<String, String> data) async {
+    bool res = await AuthController.complete(
+        data: data, paymentProve: paymentProve, addressProve: addressProve);
 
     if (res) {
       User user = User(

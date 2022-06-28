@@ -1,7 +1,10 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:my_khairat/DAO/mosque_dao.dart';
 import 'package:my_khairat/DAO/user_dao.dart';
 import 'package:my_khairat/models/mosque.dart';
@@ -9,8 +12,10 @@ import 'package:my_khairat/models/person.dart';
 import 'package:my_khairat/models/user.dart';
 import 'package:my_khairat/models/village.dart';
 import 'package:my_khairat/styles/app_color.dart';
+import 'package:my_khairat/styles/custom_text_button.dart';
 import 'package:my_khairat/styles/custom_text_field.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 
 class CompleteProfile extends StatefulWidget {
   const CompleteProfile({required this.userDAO, Key? key}) : super(key: key);
@@ -34,12 +39,17 @@ class _CompleteProfileState extends State<CompleteProfile> {
   final FocusNode _phoneFocus = FocusNode();
   final FocusNode _occupationFocus = FocusNode();
 
-  final GlobalKey<FormState> _formKey = GlobalKey();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   bool isLoading = false;
 
   String selectedMosqueID = '';
   String selectedVillageID = '';
+
+  XFile? paymentProve;
+  XFile? addressProve;
+
+  bool isSaving = false;
 
   @override
   void initState() {
@@ -51,7 +61,6 @@ class _CompleteProfileState extends State<CompleteProfile> {
     _icController.text = (widget.userDAO.user as User).ic!;
     return Consumer<MosqueDAO>(builder: (context, mosqueDAO, child) {
       List<Mosque> mosques = mosqueDAO.mosques;
-      log(mosques.length.toString());
 
       List<Village> villages = mosqueDAO.villages;
 
@@ -61,153 +70,424 @@ class _CompleteProfileState extends State<CompleteProfile> {
           child: GestureDetector(
             onTap: () => FocusScope.of(context).unfocus(),
             child: Scaffold(
-              body: Container(
-                decoration: const BoxDecoration(
-                  // gradient: LinearGradient(
-                  //   begin: Alignment.topLeft,
-                  //   end: Alignment.bottomCenter,
-                  //   colors: [
-                  //     AppColor.secondary,
-                  //     AppColor.primary,
-                  //   ],
-                  // ),
-                  color: Colors.white54,
-                ),
-                padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: Form(
-                  key: _formKey,
-                  child: Center(
-                    child: ListView(
-                      shrinkWrap: true,
-                      children: [
-                        Text(
-                          'MyKhairat',
-                          style: TextStyle(
-                            color: AppColor.primary,
-                            fontSize: 28,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        CustomTextFormField(
-                          hintText: 'Kad Pengenalan',
-                          focusNode: _icFocus,
-                          controller: _icController,
-                          isReadOnly: true,
-                        ),
-                        const SizedBox(height: 10),
-                        CustomTextFormField(
-                          hintText: 'Nama',
-                          focusNode: _nameFocus,
-                          controller: _nameController,
-                        ),
-                        const SizedBox(height: 10),
-                        CustomTextFormField(
-                          hintText: 'Alamat',
-                          focusNode: _addressFocus,
-                          controller: _addressController,
-                        ),
-                        const SizedBox(height: 10),
-                        CustomTextFormField(
-                          hintText: 'No Telefon',
-                          focusNode: _phoneFocus,
-                          controller: _phoneController,
-                        ),
-                        const SizedBox(height: 10),
-                        CustomTextFormField(
-                          hintText: 'Pekerjaan',
-                          focusNode: _occupationFocus,
-                          controller: _occupationController,
-                        ),
-                        const SizedBox(height: 10),
-                        const Text('Masjid'),
-                        SizedBox(
-                          width: double.infinity,
-                          child: DropdownButton(
-                              hint: Text(selectedMosqueID.isEmpty
-                                  ? '--Pilih Masjid--'
-                                  : mosques
-                                      .where((e) => e.id == selectedMosqueID)
-                                      .first
-                                      .name!),
-                              items: mosques.map((e) {
-                                return DropdownMenuItem(
-                                  child: Text(e.name!),
-                                  value: e.id,
-                                );
-                              }).toList(),
-                              onChanged: (String? value) {
-                                setState(() {
-                                  selectedMosqueID = value!;
-                                  mosqueDAO.getVillages(value);
-                                });
-                              }),
-                        ),
-                        const SizedBox(height: 10),
-                        const Text('Kampung'),
-                        SizedBox(
-                          width: double.infinity,
-                          child: DropdownButton(
-                              hint: Text(selectedVillageID.isEmpty
-                                  ? '--Pilih Kampung--'
-                                  : villages
-                                      .where((e) => e.id == selectedVillageID)
-                                      .first
-                                      .name!),
-                              items: villages.map((e) {
-                                return DropdownMenuItem(
-                                  child: Text(e.name!),
-                                  value: e.id,
-                                );
-                              }).toList(),
-                              onChanged: (String? value) {
-                                setState(() {
-                                  selectedVillageID = value!;
-                                });
-                              }),
-                        ),
-                        const SizedBox(height: 15),
-                        TextButton(
-                          style: TextButton.styleFrom(
-                            backgroundColor: AppColor.primary,
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 15,
-                              horizontal: 20,
+              body: Stack(
+                children: [
+                  Container(
+                    decoration: const BoxDecoration(
+                      color: Colors.white54,
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    child: Form(
+                      key: _formKey,
+                      child: Center(
+                        child: ListView(
+                          shrinkWrap: true,
+                          physics: const BouncingScrollPhysics(),
+                          children: [
+                            Text(
+                              'MyKhairat',
+                              style: TextStyle(
+                                color: AppColor.primary,
+                                fontSize: 28,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
+                            const SizedBox(height: 20),
+                            CustomTextFormField(
+                              hintText: 'Kad Pengenalan',
+                              focusNode: _icFocus,
+                              controller: _icController,
+                              isReadOnly: true,
                             ),
-                          ),
-                          onPressed: () async {
-                            User user = widget.userDAO.user;
-                            bool res = await widget.userDAO.complete(user.id!, {
-                              'user_id': user.id,
-                              'person_id': user.personID,
-                              'mosque_id': selectedMosqueID,
-                              'village_id': selectedMosqueID,
-                              'person_name': _nameController.text,
-                              'person_ic': _icController.text,
-                              'person_phone': _phoneController.text,
-                              'person_address': _addressController.text,
-                              'person_occupation': _occupationController.text,
-                              'person_status': 'pending',
-                              'person_details_prove': 'test',
-                              'person_payment_prove': 'test',
-                            });
+                            const SizedBox(height: 10),
+                            CustomTextFormField(
+                              hintText: 'Nama',
+                              focusNode: _nameFocus,
+                              controller: _nameController,
+                            ),
+                            const SizedBox(height: 10),
+                            CustomTextFormField(
+                              hintText: 'Alamat',
+                              focusNode: _addressFocus,
+                              controller: _addressController,
+                            ),
+                            const SizedBox(height: 10),
+                            CustomTextFormField(
+                              hintText: 'No Telefon',
+                              focusNode: _phoneFocus,
+                              controller: _phoneController,
+                            ),
+                            const SizedBox(height: 10),
+                            CustomTextFormField(
+                              hintText: 'Pekerjaan',
+                              focusNode: _occupationFocus,
+                              controller: _occupationController,
+                            ),
+                            const SizedBox(height: 10),
+                            const Text('Masjid'),
+                            SizedBox(
+                              width: double.infinity,
+                              child: DropdownButton(
+                                  hint: Text(selectedMosqueID.isEmpty
+                                      ? '--Pilih Masjid--'
+                                      : mosques
+                                          .where(
+                                              (e) => e.id == selectedMosqueID)
+                                          .first
+                                          .name!),
+                                  items: mosques.map((e) {
+                                    return DropdownMenuItem(
+                                      child: Text(e.name!),
+                                      value: e.id,
+                                    );
+                                  }).toList(),
+                                  onChanged: (String? value) {
+                                    setState(() {
+                                      selectedMosqueID = value!;
+                                      mosqueDAO.getVillages(value);
+                                    });
+                                  }),
+                            ),
+                            const SizedBox(height: 10),
+                            const Text('Kampung'),
+                            SizedBox(
+                              width: double.infinity,
+                              child: DropdownButton(
+                                  hint: Text(selectedVillageID.isEmpty
+                                      ? '--Pilih Kampung--'
+                                      : villages
+                                          .where(
+                                              (e) => e.id == selectedVillageID)
+                                          .first
+                                          .name!),
+                                  items: villages.map((e) {
+                                    return DropdownMenuItem(
+                                      child: Text(e.name!),
+                                      value: e.id,
+                                    );
+                                  }).toList(),
+                                  onChanged: (String? value) {
+                                    setState(() {
+                                      selectedVillageID = value!;
+                                    });
+                                  }),
+                            ),
+                            const SizedBox(height: 10),
+                            selectedMosqueID.isEmpty
+                                ? const SizedBox.shrink()
+                                : Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      border:
+                                          Border.all(color: AppColor.primary),
+                                    ),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 3.w, vertical: 2.h),
+                                    child: Column(
+                                      children: [
+                                        Text('Nama Bank: ' +
+                                            mosques
+                                                .where((e) =>
+                                                    e.id == selectedMosqueID)
+                                                .first
+                                                .bankName!),
+                                        SizedBox(height: 1.h),
+                                        Text('Nama Pemilik Bank: ' +
+                                            mosques
+                                                .where((e) =>
+                                                    e.id == selectedMosqueID)
+                                                .first
+                                                .bankOwnerName!),
+                                        SizedBox(height: 1.h),
+                                        Text('No Akaun Bank: ' +
+                                            mosques
+                                                .where((e) =>
+                                                    e.id == selectedMosqueID)
+                                                .first
+                                                .bankAccountNo!),
+                                        SizedBox(height: 1.h),
+                                        Text('Yuran: RM' +
+                                            mosques
+                                                .where((e) =>
+                                                    e.id == selectedMosqueID)
+                                                .first
+                                                .monthlyFee!
+                                                .toStringAsFixed(2)),
+                                      ],
+                                    ),
+                                  ),
+                            const SizedBox(height: 10),
+                            const Text('Bukti Pembayaran'),
+                            const SizedBox(height: 5),
+                            customTextButton(
+                              label: paymentProve == null
+                                  ? 'Muatnaik Gambar'
+                                  : paymentProve!.name,
+                              onPressed: () async {
+                                ImagePicker imagePicker = ImagePicker();
 
-                            if (res) {
-                              Navigator.pop(context);
-                            }
-                          },
-                          child: const Text(
-                            'Selesai',
-                            style: TextStyle(color: Colors.white),
-                          ),
+                                await showDialog(
+                                  context: context,
+                                  builder: (context) => Dialog(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8.sp),
+                                    ),
+                                    insetPadding: EdgeInsets.symmetric(
+                                      vertical: 10.h,
+                                      horizontal: 10.w,
+                                    ),
+                                    child: SizedBox(
+                                      height: 10.h,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              IconButton(
+                                                onPressed: () async {
+                                                  XFile? file =
+                                                      await imagePicker
+                                                          .pickImage(
+                                                              source:
+                                                                  ImageSource
+                                                                      .camera);
+                                                  Navigator.pop(context);
+
+                                                  if (mounted && file != null) {
+                                                    setState(() {
+                                                      paymentProve = file;
+                                                    });
+                                                  }
+                                                },
+                                                icon: Icon(
+                                                    Ionicons.camera_outline),
+                                              ),
+                                              Text('Kamera'),
+                                            ],
+                                          ),
+                                          SizedBox(width: 2.w),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              IconButton(
+                                                onPressed: () async {
+                                                  XFile? file =
+                                                      await imagePicker
+                                                          .pickImage(
+                                                              source:
+                                                                  ImageSource
+                                                                      .gallery);
+                                                  Navigator.pop(context);
+
+                                                  if (mounted && file != null) {
+                                                    setState(() {
+                                                      paymentProve = file;
+                                                    });
+                                                  }
+                                                },
+                                                icon: Icon(
+                                                    Ionicons.image_outline),
+                                              ),
+                                              Text('Galeri'),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                              backgroundColor: Colors.grey,
+                              borderColor: Colors.grey,
+                            ),
+                            const SizedBox(height: 10),
+                            const Text('Bukti Alamat'),
+                            const SizedBox(height: 5),
+                            customTextButton(
+                              label: addressProve == null
+                                  ? 'Muatnaik Gambar'
+                                  : addressProve!.name,
+                              onPressed: () async {
+                                ImagePicker imagePicker = ImagePicker();
+
+                                await showDialog(
+                                  context: context,
+                                  builder: (context) => Dialog(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8.sp),
+                                    ),
+                                    insetPadding: EdgeInsets.symmetric(
+                                      vertical: 10.h,
+                                      horizontal: 10.w,
+                                    ),
+                                    child: SizedBox(
+                                      height: 10.h,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              IconButton(
+                                                onPressed: () async {
+                                                  XFile? file =
+                                                      await imagePicker
+                                                          .pickImage(
+                                                              source:
+                                                                  ImageSource
+                                                                      .camera);
+                                                  Navigator.pop(context);
+
+                                                  if (mounted && file != null) {
+                                                    setState(() {
+                                                      addressProve = file;
+                                                    });
+                                                  }
+                                                },
+                                                icon: Icon(
+                                                    Ionicons.camera_outline),
+                                              ),
+                                              Text('Kamera'),
+                                            ],
+                                          ),
+                                          SizedBox(width: 2.w),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              IconButton(
+                                                onPressed: () async {
+                                                  XFile? file =
+                                                      await imagePicker
+                                                          .pickImage(
+                                                              source:
+                                                                  ImageSource
+                                                                      .gallery);
+                                                  Navigator.pop(context);
+
+                                                  if (mounted && file != null) {
+                                                    setState(() {
+                                                      addressProve = file;
+                                                    });
+                                                  }
+                                                },
+                                                icon: Icon(
+                                                    Ionicons.image_outline),
+                                              ),
+                                              Text('Galeri'),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                              backgroundColor: Colors.grey,
+                              borderColor: Colors.grey,
+                            ),
+                            const SizedBox(height: 15),
+                            TextButton(
+                              style: TextButton.styleFrom(
+                                backgroundColor: AppColor.primary,
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 15,
+                                  horizontal: 20,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                              ),
+                              onPressed: () async {
+                                setState(() {
+                                  isSaving = true;
+                                });
+
+                                if (_formKey.currentState!.validate() &&
+                                    paymentProve != null &&
+                                    addressProve != null &&
+                                    selectedMosqueID.isNotEmpty &&
+                                    selectedVillageID.isNotEmpty) {
+                                  User user = widget.userDAO.user;
+                                  bool res = await widget.userDAO.complete(
+                                    user.id!,
+                                    paymentProve,
+                                    addressProve,
+                                    {
+                                      'user_id': user.id.toString(),
+                                      'person_id': user.personID.toString(),
+                                      'mosque_id': selectedMosqueID,
+                                      'village_id': selectedMosqueID,
+                                      'person_name': _nameController.text,
+                                      'person_ic': _icController.text,
+                                      'person_phone': _phoneController.text,
+                                      'person_address': _addressController.text,
+                                      'person_occupation':
+                                          _occupationController.text,
+                                      'person_status': 'pending',
+                                      'person_register_date':
+                                          DateFormat('yyyy-MM-dd')
+                                              .format(DateTime.now()),
+                                    },
+                                  );
+
+                                  if (res) {
+                                    Navigator.pop(context);
+                                  }
+                                }
+
+                                setState(() {
+                                  isSaving = false;
+                                });
+                              },
+                              child: const Text(
+                                'Selesai',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                            SizedBox(height: 2.h),
+                            TextButton(
+                              style: TextButton.styleFrom(
+                                backgroundColor: Colors.red,
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 15,
+                                  horizontal: 20,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                              ),
+                              onPressed: () async {
+                                await widget.userDAO.logout();
+                                Navigator.pop(context);
+                              },
+                              child: const Text(
+                                'Log Keluar',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                            SizedBox(height: 2.h),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
+                  !isSaving
+                      ? const SizedBox.shrink()
+                      : Container(
+                          color: Colors.white.withAlpha(200),
+                          alignment: Alignment.center,
+                          child: SpinKitChasingDots(
+                            color: AppColor.primary,
+                          ),
+                        ),
+                ],
               ),
             ),
           ),
