@@ -30,10 +30,13 @@ class _PaymentHistoryState extends State<PaymentHistory> {
     filteredPayments.clear();
     for (var payment in payments) {
       if (DateTime.parse(payment.date!).month == selectedMonth &&
+          DateTime.parse(payment.date!).year == selectedYear &&
           payment.status == 'completed') {
         filteredPayments.add(payment);
       }
     }
+
+    setState(() {});
   }
 
   @override
@@ -45,7 +48,8 @@ class _PaymentHistoryState extends State<PaymentHistory> {
 
   @override
   Widget build(BuildContext context) {
-    log(payments.length.toString());
+    log(widget.paymentDAO.payments.length.toString());
+    log(filteredPayments.length.toString());
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -134,7 +138,10 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                           ],
                           value: selectedMonth,
                           onChanged: (int? month) {
-                            setState(() {});
+                            setState(() {
+                              selectedMonth = month!;
+                              filterPayments();
+                            });
                           },
                         )
                       ],
@@ -159,7 +166,10 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                           ],
                           value: selectedYear,
                           onChanged: (int? year) {
-                            setState(() {});
+                            setState(() {
+                              selectedYear = year!;
+                              filterPayments();
+                            });
                           },
                         )
                       ],

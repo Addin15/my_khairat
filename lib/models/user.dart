@@ -38,6 +38,15 @@ class User extends HiveObject {
   @HiveField(10)
   String? villageID;
 
+  @HiveField(11)
+  int? expireMonth;
+
+  @HiveField(12)
+  int? expireYear;
+
+  @HiveField(13)
+  String? registerDate;
+
   User({
     this.id,
     this.personID,
@@ -50,6 +59,9 @@ class User extends HiveObject {
     this.status,
     this.mosqueID,
     this.villageID,
+    this.expireMonth,
+    this.expireYear,
+    this.registerDate,
   });
 
   factory User.fromMap(Map<String, dynamic> map) => User(
@@ -68,5 +80,8 @@ class User extends HiveObject {
         villageID: map['person']['village_id'] == null
             ? ''
             : map['person']['village_id'].toString(),
+        expireMonth: map['person']['person_expire_month'],
+        expireYear: map['person']['person_expire_year'],
+        registerDate: map['person']['person_register_date'],
       );
 }

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -31,6 +33,9 @@ class _ProfileState extends State<Profile> {
             color: AppColor.primary,
           ));
     } else {
+      DateTime expiry = DateTime(user.expireYear!, user.expireMonth!);
+      DateTime registerDate = DateTime.parse(user.registerDate!);
+
       return Scaffold(
         body: SizedBox(
           width: 100.w,
@@ -88,12 +93,36 @@ class _ProfileState extends State<Profile> {
                         ],
                       ),
                     ),
+                    SizedBox(height: 1.h),
                     Text(
-                      '${user.id}',
+                      'No Ahli: ${user.id}',
                       style: TextStyle(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w300,
                         color: Colors.white,
+                      ),
+                    ),
+                    SizedBox(height: 1.h),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.sp),
+                        color: expiry.difference(DateTime.now()).inDays >= 180
+                            ? Colors.red
+                            : registerDate.difference(DateTime.now()).inDays <
+                                    30
+                                ? Colors.red
+                                : Colors.green,
+                      ),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h),
+                      child: Text(
+                        expiry.difference(DateTime.now()).inDays >= 180
+                            ? 'Tidak Aktif'
+                            : registerDate.difference(DateTime.now()).inDays <
+                                    30
+                                ? 'Tidak Aktif'
+                                : 'Aktif',
+                        style: TextStyle(color: Colors.white, fontSize: 12.sp),
                       ),
                     ),
                   ],

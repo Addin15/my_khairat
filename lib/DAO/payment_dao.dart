@@ -4,7 +4,7 @@ import 'package:my_khairat/controllers/payment_controller.dart';
 import 'package:my_khairat/models/payment.dart';
 
 class PaymentDAO extends ChangeNotifier {
-  final List<Payment> _payments = [];
+  List<Payment> _payments = [];
 
   List<Payment> get payments => _payments;
 
@@ -12,7 +12,12 @@ class PaymentDAO extends ChangeNotifier {
     initData(userID);
   }
 
-  initData(String userID) async {}
+  initData(String userID) async {
+    List<Payment> data = await PaymentController.getPayments(userID);
+
+    _payments = data;
+    notifyListeners();
+  }
 
   Future<bool> makePayment(String userID, String mosqueID, XFile image) async {
     Payment? res = await PaymentController.makePayment(userID, mosqueID, image);

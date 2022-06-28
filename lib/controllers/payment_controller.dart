@@ -9,6 +9,37 @@ import 'package:my_khairat/constants/headers.dart';
 import 'package:my_khairat/models/payment.dart';
 
 class PaymentController {
+  static Future<List<Payment>> getPayments(String userID) async {
+    try {
+      SecureStorage _secureStorage = SecureStorage();
+      String _token = await _secureStorage.read('token');
+      String url = '${Config.hostName}/payment/get';
+
+      var data = {
+        'payer_id': userID,
+      };
+
+      var response = await post(
+        Uri.parse(url),
+        body: jsonEncode(data),
+        headers: headerswithToken(_token),
+      );
+
+      log(response.body);
+
+      if (response.statusCode == 201) {
+        List data = jsonDecode(response.body);
+
+        return data.map((payment) => Payment.fromMap(payment)).toList();
+      }
+
+      return [];
+    } catch (e) {
+      log(e.toString());
+      return [];
+    }
+  }
+
   static Future<Payment?> makePayment(
       String userID, String mosqueID, XFile image) async {
     try {
