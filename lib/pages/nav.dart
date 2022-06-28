@@ -10,6 +10,7 @@ import 'package:my_khairat/models/user.dart';
 import 'package:my_khairat/pages/auth/login.dart';
 import 'package:my_khairat/pages/complete_profile.dart';
 import 'package:my_khairat/pages/dependent/dependent.dart';
+import 'package:my_khairat/pages/home/guest_home.dart';
 import 'package:my_khairat/pages/home/home.dart';
 import 'package:my_khairat/pages/setting/profile.dart';
 import 'package:my_khairat/styles/app_color.dart';
@@ -57,9 +58,7 @@ class _NavState extends State<Nav> {
           body: IndexedStack(
             index: indexPage,
             children: [
-              Home(
-                userDAO: userDAO,
-              ),
+              user == null ? const GuestHome() : Home(userDAO: userDAO),
               user?.personID != null ? Dependent(userDAO: userDAO) : Text(""),
               Profile(userDAO: userDAO, backToHome: backtoHome),
             ],
