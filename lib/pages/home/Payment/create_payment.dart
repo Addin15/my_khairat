@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:my_khairat/models/mosque.dart';
 import 'package:my_khairat/pages/home/Payment/payment_received.dart';
 import 'package:my_khairat/styles/app_color.dart';
 import 'package:my_khairat/styles/custom_text_button.dart';
 import 'package:sizer/sizer.dart';
 
 class CreatePayment extends StatefulWidget {
-  const CreatePayment({Key? key}) : super(key: key);
+  const CreatePayment({required this.mosque, Key? key}) : super(key: key);
+
+  final Mosque mosque;
 
   @override
   State<CreatePayment> createState() => _CreatePaymentState();
 }
 
 class _CreatePaymentState extends State<CreatePayment> {
+  XFile? image;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,7 +59,6 @@ class _CreatePaymentState extends State<CreatePayment> {
                 ),
                 padding: EdgeInsets.symmetric(horizontal: 3.w, vertical: 1.h),
                 width: 90.w,
-                height: 50.h,
                 child: Column(
                   children: [
                     SizedBox(
@@ -72,7 +77,7 @@ class _CreatePaymentState extends State<CreatePayment> {
                       height: 8.h,
                     ),
                     Text(
-                      "RM 5.00/Sebulan",
+                      "RM${widget.mosque.monthlyFee!.toStringAsFixed(2)}/sebulan",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 12.sp,
@@ -83,18 +88,25 @@ class _CreatePaymentState extends State<CreatePayment> {
                       height: 2.h,
                     ),
                     Text(
-                      "No Bank: 10098832730",
+                      "Bank: ${widget.mosque.bankName}",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 12.sp,
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    SizedBox(
-                      height: 2.h,
-                    ),
+                    SizedBox(height: 2.h),
                     Text(
-                      "Bank: Bank Islam",
+                      "Nama Pemilik Bank: ${widget.mosque.bankOwnerName}",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 12.sp,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 2.h),
+                    Text(
+                      "No Bank: ${widget.mosque.bankAccountNo}",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 12.sp,
@@ -140,19 +152,98 @@ class _CreatePaymentState extends State<CreatePayment> {
                           Icons.add_a_photo_outlined,
                           size: 18.sp,
                         ),
-                        onPressed: () {},
+                        onPressed: () async {
+                          ImagePicker imagePicker = ImagePicker();
+
+                          await showDialog(
+                            context: context,
+                            builder: (context) => Dialog(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.sp),
+                              ),
+                              insetPadding: EdgeInsets.symmetric(
+                                vertical: 10.h,
+                                horizontal: 10.w,
+                              ),
+                              child: SizedBox(
+                                height: 10.h,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        IconButton(
+                                          onPressed: () async {
+                                            XFile? file =
+                                                await imagePicker.pickImage(
+                                                    source: ImageSource.camera);
+                                            Navigator.pop(context);
+
+                                            if (mounted && file != null) {
+                                              setState(() {
+                                                image = file;
+                                              });
+                                            }
+                                          },
+                                          icon: Icon(Ionicons.camera_outline),
+                                        ),
+                                        Text('Kamera'),
+                                      ],
+                                    ),
+                                    SizedBox(width: 2.w),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        IconButton(
+                                          onPressed: () async {
+                                            XFile? file =
+                                                await imagePicker.pickImage(
+                                                    source:
+                                                        ImageSource.gallery);
+                                            Navigator.pop(context);
+
+                                            if (mounted && file != null) {
+                                              setState(() {
+                                                image = file;
+                                              });
+                                            }
+                                          },
+                                          icon: Icon(Ionicons.image_outline),
+                                        ),
+                                        Text('Galeri'),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        },
                         label: Text(
                           'Tambah Gambar',
                           style: TextStyle(fontSize: 12.sp),
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: 5.h,
-                    ),
+                    SizedBox(height: 1.h),
+                    image != null
+                        ? Text(
+                            image!.name,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 10.sp,
+                              color: Colors.white,
+                            ),
+                          )
+                        : const SizedBox.shrink(),
+                    SizedBox(height: 5.h),
                     customTextButton(
                         label: 'Muat Naik',
-                        onPressed: () {
+                        onPressed: () async {
                           Navigator.push(
                             context,
                             MaterialPageRoute(

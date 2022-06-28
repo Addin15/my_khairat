@@ -200,10 +200,13 @@ class _HomeState extends State<Home> {
                             label: 'Buat\nPembayaran',
                             onTap: () {
                               Navigator.push(
-                                  context,
-                                  CupertinoPageRoute(
-                                      builder: (context) =>
-                                          const CreatePayment()));
+                                context,
+                                CupertinoPageRoute(
+                                  builder: (context) => CreatePayment(
+                                    mosque: mosque!,
+                                  ),
+                                ),
+                              );
                             },
                           ),
                           MenuBox(

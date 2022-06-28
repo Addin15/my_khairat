@@ -5,6 +5,10 @@ class Mosque {
   String? postcode;
   String? state;
   String? address;
+  double? monthlyFee;
+  String? bankName;
+  String? bankOwnerName;
+  String? bankAccountNo;
 
   Mosque({
     this.id,
@@ -13,6 +17,10 @@ class Mosque {
     this.postcode,
     this.state,
     this.address,
+    this.monthlyFee,
+    this.bankName,
+    this.bankOwnerName,
+    this.bankAccountNo,
   });
 
   factory Mosque.fromMap(Map<String, dynamic> map) => Mosque(
@@ -22,6 +30,10 @@ class Mosque {
         postcode: map['mosque_postcode'],
         state: map['mosque_state'],
         address: map['mosque_address'],
+        monthlyFee: map['mosque_monthly_fee'].toDouble(),
+        bankName: map['mosque_bank_name'],
+        bankOwnerName: map['mosque_bank_owner_name'],
+        bankAccountNo: map['mosque_bank_no'],
       );
 
   Map<String, dynamic> toMap() => {
@@ -31,5 +43,9 @@ class Mosque {
         'mosque_postcode': postcode,
         'mosque_state': state,
         'mosque_address': address,
+        'mosque_monthly_fee': monthlyFee,
+        'mosque_bank_name': bankName,
+        'mosque_bank_owner_name': bankOwnerName,
+        'mosque_bank_no': bankAccountNo,
       };
 }
