@@ -21,39 +21,6 @@ class AnnouncementDAO extends ChangeNotifier {
     notifyListeners();
   }
 
-  addAnnouncement(
-      String mosqueID, Announcement announcement, XFile image) async {
-    dynamic data = await AnnouncementController.addAnnouncement(
-        mosqueID, announcement, image);
-
-    if (data != null) {
-      _announcements.add(data);
-
-      notifyListeners();
-    }
-  }
-
-  editAnnouncement(Announcement announcement) async {
-    dynamic data = await AnnouncementController.editAnnouncement(announcement);
-
-    if (data != null) {
-      int index = _announcements.indexWhere((ann) => ann.id == announcement.id);
-      _announcements[index] = announcement;
-
-      notifyListeners();
-    }
-  }
-
-  deleteAnnouncement(Announcement announcement) async {
-    bool res = await AnnouncementController.deleteAnnouncement(announcement);
-
-    if (res) {
-      _announcements.remove(announcement);
-
-      notifyListeners();
-    }
-  }
-
   // Caught exception purpose
   bool _disposed = false;
 

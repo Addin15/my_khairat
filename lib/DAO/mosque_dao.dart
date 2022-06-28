@@ -34,7 +34,7 @@ class MosqueDAO extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<Map<String, dynamic>> getMosque(
+  Future<Map<String, dynamic>> getMosqueAndVillage(
     String mosqueID,
     String villageID,
   ) async {
