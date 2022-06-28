@@ -60,23 +60,33 @@ class _ProfileState extends State<Profile> {
                       radius: 35.sp,
                     ),
                     SizedBox(height: 1.h),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          '${user.name}',
-                          style: TextStyle(
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                    SizedBox(
+                      width: 100.w,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Flexible(
+                            flex: 4,
+                            child: Text(
+                              '${user.name}',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
-                        ),
-                        SizedBox(width: 2.w),
-                        const Icon(
-                          Ionicons.shield_checkmark_outline,
-                          color: Colors.white,
-                        ),
-                      ],
+                          SizedBox(width: 2.w),
+                          const Flexible(
+                            flex: 1,
+                            child: Icon(
+                              Ionicons.shield_checkmark_outline,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     Text(
                       '${user.id}',

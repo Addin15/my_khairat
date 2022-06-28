@@ -55,7 +55,9 @@ class _Nav2State extends State<Nav2> {
           body: IndexedStack(
             index: indexPage,
             children: [
-              Home(userDAO: userDAO),
+              Home(
+                userDAO: userDAO,
+              ),
               user?.personID != null ? Dependent(userDAO: userDAO) : Text(""),
               Profile(userDAO: userDAO, backToHome: backtoHome),
             ],
