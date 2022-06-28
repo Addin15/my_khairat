@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'dart:async';
 import 'package:flutter/material.dart';
@@ -255,22 +256,21 @@ class _MoneyClaimState extends State<MoneyClaim> {
                                 child: ElevatedButton(
                                   onPressed: () async {
                                     dynamic res = await claimDAO.addClaim(
-                                        user.personID!,
-                                        user.mosqueID!,
-                                        Claim(
-                                          claimername: user.name,
-                                          claimeric: user.ic,
-                                          claimeraddress: user.address,
-                                          claimerrelation:
-                                              _hubunganController.text,
-                                          deaddate: DateTime.utc(date!.year,
-                                                  date!.month, date!.day)
-                                              .toString(),
-                                          deadname: _namaController.text,
-                                          deadreason: _sebabController.text,
-                                          claimerurl: _imageFile?.path,
-                                          status: 'pending',
-                                        ));
+                                      user.personID!,
+                                      user.mosqueID!,
+                                      Claim(
+                                        claimername: user.name,
+                                        claimeric: user.ic,
+                                        claimeraddress: user.address,
+                                        claimerrelation:
+                                            _hubunganController.text,
+                                        deaddate: _dateController.text,
+                                        deadname: _namaController.text,
+                                        deadreason: _sebabController.text,
+                                        status: 'pending',
+                                      ),
+                                      pickedFile!,
+                                    );
 
                                     Navigator.pop(context, res);
                                   },
@@ -313,28 +313,26 @@ class _MoneyClaimState extends State<MoneyClaim> {
 
     setState(() => date = newDate);
     if (date != null) {
-      print(date);
       String formattedDate = DateFormat('yyyy-MM-dd').format(date!);
-      print(formattedDate);
 
       setState(() {
         _dateController.text = formattedDate;
       });
-    } else {
-      print("Date is not selected");
     }
   }
 
   //get from camera
   Future _getFromGallery(BuildContext context) async {
-    pickedFile = await _picker.pickImage(
+    XFile? _pickedFile;
+    _pickedFile = await _picker.pickImage(
       source: ImageSource.gallery,
       maxWidth: 1800,
       maxHeight: 1800,
     );
-    if (pickedFile != null) {
+    if (_pickedFile != null) {
       setState(() {
-        _imageFile = File(pickedFile!.path);
+        _imageFile = File(_pickedFile!.path);
+        pickedFile = _pickedFile;
       });
       Navigator.pop(context, MoneyClaim(userDAO: widget.userDAO));
     }
@@ -342,14 +340,16 @@ class _MoneyClaimState extends State<MoneyClaim> {
 
   /// Get from Camera
   Future _getFromCamera(BuildContext context) async {
-    pickedFile = await _picker.pickImage(
+    XFile? _pickedFile;
+    _pickedFile = await _picker.pickImage(
       source: ImageSource.camera,
       maxWidth: 1800,
       maxHeight: 1800,
     );
-    if (pickedFile != null) {
+    if (_pickedFile != null) {
       setState(() {
-        _imageFile = File(pickedFile!.path);
+        _imageFile = File(_pickedFile!.path);
+        pickedFile = _pickedFile;
       });
       Navigator.pop(context, MoneyClaim(userDAO: widget.userDAO));
     }
