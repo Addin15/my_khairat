@@ -107,8 +107,6 @@ class AuthController {
         headers: headerswithToken(_token),
       );
 
-      log(response.body);
-
       if (response.statusCode == 200) {
         Map<String, dynamic> data = jsonDecode(response.body);
         return data;
