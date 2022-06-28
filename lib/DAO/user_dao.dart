@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:my_khairat/config/secure_storage.dart';
 import 'package:my_khairat/controllers/auth_controller.dart';
+import 'package:my_khairat/models/mosque.dart';
 import 'package:my_khairat/models/person.dart';
 import 'package:my_khairat/models/user.dart';
 
@@ -76,7 +77,7 @@ class UserDAO extends ChangeNotifier {
   }
 
   // COMPLETE
-  complete(String userID, Map<String, dynamic> data) async {
+  Future<bool> complete(String userID, Map<String, dynamic> data) async {
     bool res = await AuthController.complete(data: data);
 
     if (res) {
@@ -104,6 +105,8 @@ class UserDAO extends ChangeNotifier {
         notifyListeners();
       }
     }
+
+    return res;
   }
 
   // LOGOUT

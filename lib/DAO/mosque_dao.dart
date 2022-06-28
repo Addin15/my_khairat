@@ -33,4 +33,17 @@ class MosqueDAO extends ChangeNotifier {
     _villages = data;
     notifyListeners();
   }
+
+  Future<Map<String, dynamic>> getMosque(
+    String mosqueID,
+    String villageID,
+  ) async {
+    Mosque? mosque = await MosqueController.getMosque(mosqueID);
+    Village? village = await MosqueController.getVillage(villageID);
+
+    return {
+      'mosque': mosque,
+      'village': village,
+    };
+  }
 }
