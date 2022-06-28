@@ -209,6 +209,7 @@ class _HomeState extends State<Home> {
                                     CupertinoPageRoute(
                                       builder: (context) => CreatePayment(
                                         userID: user.id!,
+                                        mosqueID: mosque!.id!,
                                         paymentDAO: paymentDAO,
                                         mosque: mosque!,
                                       ),

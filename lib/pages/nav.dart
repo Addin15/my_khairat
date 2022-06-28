@@ -58,7 +58,11 @@ class _NavState extends State<Nav> {
           body: IndexedStack(
             index: indexPage,
             children: [
-              user == null ? const GuestHome() : Home(userDAO: userDAO),
+              user == null
+                  ? const GuestHome()
+                  : user.mosqueID == null
+                      ? const GuestHome()
+                      : Home(userDAO: userDAO),
               user?.personID != null ? Dependent(userDAO: userDAO) : Text(""),
               Profile(userDAO: userDAO, backToHome: backtoHome),
             ],

@@ -9,7 +9,8 @@ import 'package:my_khairat/constants/headers.dart';
 import 'package:my_khairat/models/payment.dart';
 
 class PaymentController {
-  static Future<Payment?> makePayment(String userID, XFile image) async {
+  static Future<Payment?> makePayment(
+      String userID, String mosqueID, XFile image) async {
     try {
       SecureStorage _secureStorage = SecureStorage();
       String _token = await _secureStorage.read('token');
@@ -18,6 +19,7 @@ class PaymentController {
       var request = MultipartRequest('POST', Uri.parse(url))
         ..fields.addAll({
           'payer_id': userID,
+          'mosque_id': mosqueID,
         })
         ..headers.addAll({
           'Content-Type': 'multipart/form-data',

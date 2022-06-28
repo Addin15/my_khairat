@@ -14,8 +14,8 @@ class PaymentDAO extends ChangeNotifier {
 
   initData(String userID) async {}
 
-  Future<bool> makePayment(String userID, XFile image) async {
-    Payment? res = await PaymentController.makePayment(userID, image);
+  Future<bool> makePayment(String userID, String mosqueID, XFile image) async {
+    Payment? res = await PaymentController.makePayment(userID, mosqueID, image);
 
     if (res != null) {
       _payments.add(res);

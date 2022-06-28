@@ -13,12 +13,14 @@ import 'package:sizer/sizer.dart';
 class CreatePayment extends StatefulWidget {
   const CreatePayment({
     required this.userID,
+    required this.mosqueID,
     required this.paymentDAO,
     required this.mosque,
     Key? key,
   }) : super(key: key);
 
   final String userID;
+  final String mosqueID;
   final PaymentDAO paymentDAO;
   final Mosque mosque;
 
@@ -283,8 +285,8 @@ class _CreatePaymentState extends State<CreatePayment> {
                               });
 
                               if (image != null) {
-                                bool res = await widget.paymentDAO
-                                    .makePayment(widget.userID, image!);
+                                bool res = await widget.paymentDAO.makePayment(
+                                    widget.userID, widget.mosqueID, image!);
 
                                 if (res) {
                                   Navigator.push(
