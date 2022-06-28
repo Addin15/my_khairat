@@ -9,10 +9,12 @@ customTextFormField({
   required IconData icon,
   required TextEditingController controller,
   required FocusNode focusNode,
-  required String? Function(String? text) validator,
+  String? Function(String? text)? validator,
+  void Function(String)? onChanged,
   bool isObscured = false,
 }) =>
     TextFormField(
+      onChanged: onChanged,
       decoration: InputDecoration(
         hintText: hintText,
         prefixIcon: Icon(

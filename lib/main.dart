@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:my_khairat/DAO/mosque_dao.dart';
+import 'package:my_khairat/models/mosque.dart';
 import 'package:my_khairat/models/person.dart';
 import 'package:my_khairat/models/user.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +16,8 @@ void main() async {
   Hive
     ..init
     ..registerAdapter(UserAdapter())
-    ..registerAdapter(PersonAdapter());
+    ..registerAdapter(PersonAdapter())
+    ..registerAdapter(MosqueAdapter());
   runApp(const MyApp());
 }
 

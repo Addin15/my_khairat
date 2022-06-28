@@ -7,9 +7,9 @@ class MosqueDAO extends ChangeNotifier {
   List<Mosque> _mosques = [];
   List<Village> _villages = [];
 
-  get mosques => _mosques;
+  List<Mosque> get mosques => _mosques;
 
-  get villages => _villages;
+  List<Village> get villages => _villages;
 
   MosqueDAO() {
     initData();

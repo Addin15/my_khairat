@@ -1,13 +1,37 @@
+import 'package:hive/hive.dart';
+
+part 'mosque.g.dart';
+
+@HiveType(typeId: 3)
 class Mosque {
+  @HiveField(0)
   String? id;
+
+  @HiveField(1)
   String? name;
+
+  @HiveField(2)
   String? phone;
+
+  @HiveField(3)
   String? postcode;
+
+  @HiveField(4)
   String? state;
+
+  @HiveField(5)
   String? address;
+
+  @HiveField(6)
   double? monthlyFee;
+
+  @HiveField(7)
   String? bankName;
+
+  @HiveField(8)
   String? bankOwnerName;
+
+  @HiveField(9)
   String? bankAccountNo;
 
   Mosque({

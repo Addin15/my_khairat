@@ -12,9 +12,6 @@ class AnnouncementController {
   // Get all announcements
   static Future<List<Announcement>> getAnnouncements(String mosqueID) async {
     try {
-      SecureStorage _secureStorage = SecureStorage();
-      String _token = await _secureStorage.read('token');
-
       String url = '${Config.hostName}/committee/announcements/get';
 
       Map<String, dynamic> data = {
@@ -24,7 +21,7 @@ class AnnouncementController {
       var response = await post(
         Uri.parse(url),
         body: jsonEncode(data),
-        headers: headerswithToken(_token),
+        headers: headersWithoutToken(),
       );
 
       if (response.statusCode == 200) {
@@ -38,7 +35,7 @@ class AnnouncementController {
 
       return [];
     } catch (e) {
-      log(e.toString());
+      log('Announcement' + e.toString());
       return [];
     }
   }
