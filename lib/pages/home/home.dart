@@ -221,10 +221,13 @@ class _HomeState extends State<Home> {
                                 label: 'Sejarah\nPembayaran',
                                 onTap: () {
                                   Navigator.push(
-                                      context,
-                                      CupertinoPageRoute(
-                                          builder: (context) =>
-                                              const PaymentHistory()));
+                                    context,
+                                    CupertinoPageRoute(
+                                      builder: (context) => PaymentHistory(
+                                        paymentDAO: paymentDAO,
+                                      ),
+                                    ),
+                                  );
                                 },
                               ),
                               MenuBox(

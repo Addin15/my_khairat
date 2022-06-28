@@ -1,12 +1,17 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:my_khairat/DAO/payment_dao.dart';
 import 'package:my_khairat/models/payment.dart';
 import 'package:my_khairat/styles/app_color.dart';
 import 'package:sizer/sizer.dart';
 
 class PaymentHistory extends StatefulWidget {
-  const PaymentHistory({Key? key}) : super(key: key);
+  const PaymentHistory({required this.paymentDAO, Key? key}) : super(key: key);
+
+  final PaymentDAO paymentDAO;
 
   @override
   State<PaymentHistory> createState() => _PaymentHistoryState();
@@ -32,7 +37,15 @@ class _PaymentHistoryState extends State<PaymentHistory> {
   }
 
   @override
+  void initState() {
+    payments = widget.paymentDAO.payments;
+    filterPayments();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    log(payments.length.toString());
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
