@@ -60,7 +60,7 @@ class _NavState extends State<Nav> {
             children: [
               user == null
                   ? const GuestHome()
-                  : user.mosqueID == null
+                  : user.mosqueID == null || user.mosqueID!.isEmpty
                       ? const GuestHome()
                       : Home(userDAO: userDAO),
               user?.personID != null ? Dependent(userDAO: userDAO) : Text(""),

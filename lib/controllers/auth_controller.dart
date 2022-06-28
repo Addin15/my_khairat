@@ -33,7 +33,7 @@ class AuthController {
 
       return null;
     } catch (e) {
-      log(e.toString());
+      log('register' + e.toString());
       return null;
     }
   }
@@ -60,7 +60,7 @@ class AuthController {
 
       return null;
     } catch (e) {
-      log(e.toString());
+      log('login' + e.toString());
       return null;
     }
   }

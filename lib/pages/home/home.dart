@@ -103,6 +103,8 @@ class _HomeState extends State<Home> {
           getMosqueAndVillage(mosqueDAO, user.mosqueID!, user.villageID!);
         }
 
+        log(user.id!);
+
         return isGettingData
             ? Container(
                 color: Colors.white,
