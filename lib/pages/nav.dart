@@ -8,6 +8,7 @@ import 'package:my_khairat/DAO/user_dao.dart';
 import 'package:my_khairat/models/announcement.dart';
 import 'package:my_khairat/models/person.dart';
 import 'package:my_khairat/models/user.dart';
+import 'package:my_khairat/pages/account_unverified.dart';
 import 'package:my_khairat/pages/auth/login.dart';
 import 'package:my_khairat/pages/complete_profile.dart';
 import 'package:my_khairat/pages/dependent/dependent.dart';
@@ -63,7 +64,9 @@ class _NavState extends State<Nav> {
               children: [
                 user == null
                     ? const GuestHome()
-                    : user.mosqueID == null || user.mosqueID!.isEmpty
+                    : user.mosqueID == null ||
+                            user.mosqueID!.isEmpty ||
+                            user.status == 'pending'
                         ? const GuestHome()
                         : Home(userDAO: userDAO),
                 user?.personID != null ? Dependent(userDAO: userDAO) : Text(""),
@@ -89,6 +92,12 @@ class _NavState extends State<Nav> {
                         MaterialPageRoute(
                             builder: (context) =>
                                 CompleteProfile(userDAO: userDAO)));
+                  } else if (user.status == 'pending') {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                AccountUnverified(userDAO: userDAO)));
                   } else {
                     setState(() {
                       indexPage = index;
