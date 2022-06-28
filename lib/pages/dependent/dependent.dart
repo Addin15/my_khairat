@@ -15,7 +15,6 @@ import '../../styles/custom_text_button.dart';
 import 'add_dependent.dart';
 import 'update_dependent.dart';
 
-
 class Dependent extends StatefulWidget {
   const Dependent({required this.userDAO, Key? key}) : super(key: key);
 
@@ -26,124 +25,137 @@ class Dependent extends StatefulWidget {
 }
 
 class _DependentState extends State<Dependent> {
-
-
   @override
   Widget build(BuildContext context) {
     User user = widget.userDAO.user;
-    return ChangeNotifierProvider<DependentDAO>(
-      create: (context) => DependentDAO(user.personID!),
-      child: Consumer<DependentDAO>(builder: (context, dependentDAO, child) {
-        List<DependentModel> dependents = dependentDAO.dependents;
-        return Scaffold(
-          body: Container(
-            width: 100.w,
-            padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h),
-            child: Column(
-              children: [
-                Text(
-                  'Senarai Tanggungan',
-                  style: TextStyle(
-                    fontSize: 16.sp,
-                    color: Colors.black87,
-                    fontWeight: FontWeight.bold,
-                  ),
+    return Consumer<DependentDAO>(builder: (context, dependentDAO, child) {
+      List<DependentModel> dependents = dependentDAO.dependents;
+      return Scaffold(
+        body: Container(
+          width: 100.w,
+          padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h),
+          child: Column(
+            children: [
+              Text(
+                'Senarai Tanggungan',
+                style: TextStyle(
+                  fontSize: 16.sp,
+                  color: Colors.black87,
+                  fontWeight: FontWeight.bold,
                 ),
-                SizedBox(height: 2.h),
-
-
-                Expanded(
-                  child: ListView.separated(
-                    physics: const BouncingScrollPhysics(),
-                    itemCount: dependents.length,
-                    separatorBuilder: (context, index) => SizedBox(height: 1.h),
-                    itemBuilder: (context, index) {
-                      return Container(
-                        height: 70,
-                        child: GestureDetector(
-                          onTap: () {
-                            dependents[index].death_status==null ? Navigator.push(
-                                context,
-                                CupertinoPageRoute(
-                                    builder: (context) => ViewDependent(dependentDAO: dependentDAO, dependent: dependents[index],))) :
-                            Navigator.push(context,
-                                CupertinoPageRoute(
-                                  builder: (context) => ViewDeadDependent(dependentDAO: dependentDAO, dependent: dependents[index],),
-                                ));
-                          },
-                          child: Card(
-                            color: dependents[index].death_status==null ? Colors.white : Colors.grey,
-                            elevation: 5,
-                            margin: EdgeInsets.symmetric(horizontal: 3.w),
-                            shape: RoundedRectangleBorder(
+              ),
+              SizedBox(height: 2.h),
+              Expanded(
+                child: ListView.separated(
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: dependents.length,
+                  separatorBuilder: (context, index) => SizedBox(height: 1.h),
+                  itemBuilder: (context, index) {
+                    return Container(
+                      height: 70,
+                      child: GestureDetector(
+                        onTap: () {
+                          dependents[index].death_status == null
+                              ? Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                      builder: (context) => ViewDependent(
+                                            dependentDAO: dependentDAO,
+                                            dependent: dependents[index],
+                                          )))
+                              : Navigator.push(
+                                  context,
+                                  CupertinoPageRoute(
+                                    builder: (context) => ViewDeadDependent(
+                                      dependentDAO: dependentDAO,
+                                      dependent: dependents[index],
+                                    ),
+                                  ));
+                        },
+                        child: Card(
+                          color: dependents[index].death_status == null
+                              ? Colors.white
+                              : Colors.grey,
+                          elevation: 5,
+                          margin: EdgeInsets.symmetric(horizontal: 3.w),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12.sp),
+                          ),
+                          child: Container(
+                            decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(12.sp),
-
                             ),
-
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12.sp),
-                              ),
-                              padding: EdgeInsets.only(
-                                left: 5.w,
-                                top: 2.h,
-                                bottom: 2.h,
-                              ),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      dependents[index].dependent_name!,
-                                      style: TextStyle(
-                                        fontSize: 12.sp,
-                                        fontWeight: FontWeight.w400,
-                                      ),
+                            padding: EdgeInsets.only(
+                              left: 5.w,
+                              top: 2.h,
+                              bottom: 2.h,
+                            ),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    dependents[index].dependent_name!,
+                                    style: TextStyle(
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w400,
                                     ),
                                   ),
-                                  (dependents[index].dependent_address == null||dependents[index].dependent_occupation == null||dependents[index].dependent_phone == null) ? new Text(
-                                    "*Data Tidak Lengkap",
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.red,
-
-                                        fontStyle: FontStyle.italic
-                                    ),
-                                  ) : new Text(''),
-                                  SizedBox(width: 10,),
-
-                                  dependents[index].verify==1 ? Icon(Icons.check_circle_outline, color: AppColor.primary,): SizedBox(width: 25,),
-                                  SizedBox(width: 15,),
-
-                                ],
-                              ),
+                                ),
+                                (dependents[index].dependent_address == null ||
+                                        dependents[index]
+                                                .dependent_occupation ==
+                                            null ||
+                                        dependents[index].dependent_phone ==
+                                            null)
+                                    ? new Text(
+                                        "*Data Tidak Lengkap",
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.red,
+                                            fontStyle: FontStyle.italic),
+                                      )
+                                    : new Text(''),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                dependents[index].verify == 1
+                                    ? Icon(
+                                        Icons.check_circle_outline,
+                                        color: AppColor.primary,
+                                      )
+                                    : SizedBox(
+                                        width: 25,
+                                      ),
+                                SizedBox(
+                                  width: 15,
+                                ),
+                              ],
                             ),
                           ),
                         ),
-                      );
-                    },
-                  ),
+                      ),
+                    );
+                  },
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-          floatingActionButton: FloatingActionButton(
-            backgroundColor: AppColor.primary,
-            child: Icon(Icons.add),
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  CupertinoPageRoute(
-                      builder: (context) => AddDependent(
-                        userID: user.personID!,
-                        mosqueID: user.mosqueID!,
-                        dependentDAO: dependentDAO,
-                      )));
-            },
-          ),
-        );
-      }),
-    );
-
-
+        ),
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: AppColor.primary,
+          child: Icon(Icons.add),
+          onPressed: () {
+            Navigator.push(
+                context,
+                CupertinoPageRoute(
+                    builder: (context) => AddDependent(
+                          userID: user.personID!,
+                          mosqueID: user.mosqueID!,
+                          dependentDAO: dependentDAO,
+                        )));
+          },
+        ),
+      );
+    });
   }
 }

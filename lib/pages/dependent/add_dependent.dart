@@ -4,11 +4,15 @@ import 'package:my_khairat/styles/app_color.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:my_khairat/DAO/dependent_dao.dart';
 import 'package:my_khairat/models/dependent.dart';
+import 'package:my_khairat/styles/custom_text_button.dart';
 import 'package:sizer/sizer.dart';
 
 class AddDependent extends StatefulWidget {
   const AddDependent(
-      {required this.userID, required this.mosqueID, required this.dependentDAO, Key? key})
+      {required this.userID,
+      required this.mosqueID,
+      required this.dependentDAO,
+      Key? key})
       : super(key: key);
 
   final String userID;
@@ -37,7 +41,6 @@ class _AddDependentState extends State<AddDependent> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     final name = TextEditingController();
     final relationship = TextEditingController();
@@ -75,28 +78,29 @@ class _AddDependentState extends State<AddDependent> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: PageView(
-        children: [
-          Scaffold(
-              appBar: AppBar(
-                backgroundColor: AppColor.primary,
-              ),
-              body: Column(
-                children: [
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Expanded(child: _listView()),
-                  Row(children: [
-                    Expanded(child: _addTile()),
-                    Expanded(child: _removeTile()),
-                  ]),
-                  _okButton(context),
-                ],
-              ))
-        ],
-      ),
+    return PageView(
+      children: [
+        Scaffold(
+            appBar: customAppBar(
+                context: context,
+                title: Text(
+                  'Tambah Tanggungan',
+                  style: TextStyle(color: AppColor.primary),
+                )),
+            body: Column(
+              children: [
+                SizedBox(
+                  height: 10,
+                ),
+                Expanded(child: _listView()),
+                Row(children: [
+                  Expanded(child: _addTile()),
+                  Expanded(child: _removeTile()),
+                ]),
+                _okButton(context),
+              ],
+            ))
+      ],
     );
   }
 
@@ -111,7 +115,8 @@ class _AddDependentState extends State<AddDependent> {
 
         final nameField = _generateTextField(name, "Nama Tanggungan");
         final relationshipField = _generateTextField(relationship, "Hubungan");
-        final icField = _generateTextField(ic, "No. Kad Pengenalan (tanpa '-')");
+        final icField =
+            _generateTextField(ic, "No. Kad Pengenalan (tanpa '-')");
 
         setState(() {
           _nameControllers.add(name);
@@ -197,8 +202,8 @@ class _AddDependentState extends State<AddDependent> {
           if (_nameControllers[index].text.length == 0 ||
               _relationshipControllers[index].text.length == 0 ||
               _icControllers[index].text.length == 0 ||
-              isNumeric(_icControllers[index].text)==false||
-              _icControllers[index].text.length != 12 ) {
+              isNumeric(_icControllers[index].text) == false ||
+              _icControllers[index].text.length != 12) {
             _validate = true;
           }
         }

@@ -8,7 +8,6 @@ import 'package:my_khairat/models/user.dart';
 import 'package:my_khairat/pages/dependent/dependent.dart';
 import 'package:my_khairat/pages/dependent/update_dependent.dart';
 import 'package:my_khairat/pages/dependent/view_dead_dependent.dart';
-import 'package:my_khairat/pages/nav2.dart';
 import 'package:my_khairat/styles/app_color.dart';
 import 'package:my_khairat/DAO/user_dao.dart';
 import 'package:my_khairat/styles/custom_text_button.dart';
@@ -60,31 +59,19 @@ confirmDeletePopup({
   );
 }
 
-// Custom app bar
-customAppBar2({
-  required BuildContext context,
-  required Widget title,
-}) =>
-    AppBar(
-      leading: IconButton(
-        icon: Icon(
-          Ionicons.chevron_back,
-          color: AppColor.primary,
-        ),
-        onPressed: () => Navigator.of(context)
-            .pushReplacement(MaterialPageRoute(builder: (context) => Nav2())),
-      ),
-      title: title,
-      elevation: 0.0,
-      backgroundColor: Colors.white,
-      centerTitle: true,
-    );
-
 class _ViewDependentState extends State<ViewDependent> {
+  late DependentModel dependent;
+
+  @override
+  void initState() {
+    dependent = widget.dependent;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar2(
+      appBar: customAppBar(
         context: context,
         title: Text(
           'Rekod Tanggungan',
@@ -125,7 +112,7 @@ class _ViewDependentState extends State<ViewDependent> {
                             height: 1.h,
                           ),
                           Text(
-                            widget.dependent.dependent_name!,
+                            dependent.dependent_name!,
                           ),
                           Divider(
                             color: Colors.grey,
@@ -144,7 +131,7 @@ class _ViewDependentState extends State<ViewDependent> {
                             height: 1.h,
                           ),
                           Text(
-                            widget.dependent.dependent_relation!,
+                            dependent.dependent_relation!,
                           ),
                           Divider(
                             color: Colors.grey,
@@ -163,7 +150,7 @@ class _ViewDependentState extends State<ViewDependent> {
                             height: 1.h,
                           ),
                           Text(
-                            widget.dependent.dependent_ic!,
+                            dependent.dependent_ic!,
                           ),
                           Divider(
                             color: Colors.grey,
@@ -182,7 +169,7 @@ class _ViewDependentState extends State<ViewDependent> {
                             height: 1.h,
                           ),
                           Text(
-                            widget.dependent.dependent_phone ?? "N/A",
+                            dependent.dependent_phone ?? "N/A",
                             style: TextStyle(color: Colors.black),
                           ),
                           Divider(
@@ -202,7 +189,7 @@ class _ViewDependentState extends State<ViewDependent> {
                             height: 1.h,
                           ),
                           Text(
-                            widget.dependent.dependent_occupation ?? "N/A",
+                            dependent.dependent_occupation ?? "N/A",
                             style: TextStyle(color: Colors.black),
                           ),
                           Divider(
@@ -222,7 +209,7 @@ class _ViewDependentState extends State<ViewDependent> {
                             height: 1.h,
                           ),
                           Text(
-                            widget.dependent.dependent_address ?? "N/A",
+                            dependent.dependent_address ?? "N/A",
                             style: TextStyle(color: Colors.black),
                           ),
                           Divider(
@@ -246,14 +233,20 @@ class _ViewDependentState extends State<ViewDependent> {
                                 height: 5.5.h, //height of button
                                 width: 20.h,
                                 child: ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.push(
+                                  onPressed: () async {
+                                    DependentModel? data = await Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) => UpdateDependent(
                                               dependentDAO: widget.dependentDAO,
-                                              dependent: widget.dependent),
+                                              dependent: dependent),
                                         ));
+
+                                    if (data != null) {
+                                      setState(() {
+                                        dependent = data;
+                                      });
+                                    }
                                   },
                                   child: Text("Kemaskini"),
                                   style: ButtonStyle(
@@ -282,7 +275,7 @@ class _ViewDependentState extends State<ViewDependent> {
                                         title:
                                             'Anda pasti untuk buang tanggungan ini dari senarai?',
                                         content: Text(
-                                          widget.dependent.dependent_name!,
+                                          dependent.dependent_name!,
                                           textAlign: TextAlign.center,
                                         ),
                                       ),
@@ -291,10 +284,8 @@ class _ViewDependentState extends State<ViewDependent> {
                                     if (res != null) {
                                       if (res) {
                                         await widget.dependentDAO
-                                            .deleteDependent(widget.dependent);
-                                        Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                                builder: (context) => Nav2()));
+                                            .deleteDependent(dependent);
+                                        Navigator.pop(context);
                                       }
                                     }
                                   },
