@@ -1,12 +1,14 @@
 import 'dart:io';
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:my_khairat/DAO/claim_dao.dart';
 import 'package:my_khairat/DAO/user_dao.dart';
 import 'package:my_khairat/models/claim.dart';
 import 'package:my_khairat/models/user.dart';
 import 'package:my_khairat/styles/app_color.dart';
+import 'package:my_khairat/styles/custom_text_button.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:image_picker/image_picker.dart';
@@ -24,10 +26,21 @@ class _MoneyClaimState extends State<MoneyClaim> {
   XFile? pickedFile;
   ImagePicker _picker = ImagePicker();
 
+  final TextEditingController _hubunganController = TextEditingController();
+  final TextEditingController _namaController = TextEditingController();
+  final TextEditingController _sebabController = TextEditingController();
+  final TextEditingController _dateController = TextEditingController();
+
+  final FocusNode _hubunganFocus = FocusNode();
+  final FocusNode _namaFocus = FocusNode();
+  final FocusNode _sebabFocus = FocusNode();
+
+  DateTime? date;
   @override
   void initState() {
     super.initState();
     _picker = new ImagePicker();
+    _dateController.text = "";
   }
 
   @override
@@ -72,6 +85,148 @@ class _MoneyClaimState extends State<MoneyClaim> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              Text(
+                                'Nama Pemohon(Waris Simati)',
+                                style: TextStyle(
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 1.h),
+                              Text(
+                                '${user.name}',
+                                style: const TextStyle(color: Colors.grey),
+                              ),
+                              const Divider(
+                                color: Colors.grey,
+                                thickness: 0.5,
+                              ),
+                              SizedBox(height: 2.h),
+                              Text(
+                                'Alamat',
+                                style: TextStyle(
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 1.h),
+                              Text(
+                                '${user.address}',
+                                style: const TextStyle(color: Colors.grey),
+                              ),
+                              const Divider(
+                                color: Colors.grey,
+                                thickness: 0.5,
+                              ),
+                              SizedBox(height: 2.h),
+                              Text(
+                                'No. K/Pengenalan',
+                                style: TextStyle(
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 1.h),
+                              Text(
+                                '${user.ic}',
+                                style: const TextStyle(color: Colors.grey),
+                              ),
+                              const Divider(
+                                color: Colors.grey,
+                                thickness: 0.5,
+                              ),
+                              SizedBox(height: 2.h),
+                              Text(
+                                'No. Telefon',
+                                style: TextStyle(
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 1.h),
+                              Text(
+                                '${user.phone}',
+                                style: const TextStyle(color: Colors.grey),
+                              ),
+                              const Divider(
+                                color: Colors.grey,
+                                thickness: 0.5,
+                              ),
+                              SizedBox(height: 2.h),
+                              Text(
+                                'Nama Si mati',
+                                style: TextStyle(
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 1.h),
+                              customTextFormField(
+                                hintText: 'Nama si mati',
+                                icon: Ionicons.person,
+                                controller: _namaController,
+                                focusNode: _namaFocus,
+                                validator: (value) => value!.isEmpty
+                                    ? 'Sila isi nama si mati'
+                                    : null,
+                              ),
+                              SizedBox(height: 2.h),
+                              Text(
+                                'Hubungan',
+                                style: TextStyle(
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 1.h),
+                              customTextFormField(
+                                hintText: 'Hubungan',
+                                icon: Ionicons.people_sharp,
+                                controller: _hubunganController,
+                                focusNode: _hubunganFocus,
+                                validator: (value) =>
+                                    value!.isEmpty ? 'Sila isi hubungan' : null,
+                              ),
+                              SizedBox(height: 2.h),
+                              Text(
+                                'Tarikh Meninggal',
+                                style: TextStyle(
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 1.h),
+                              TextFormField(
+                                decoration: const InputDecoration(
+                                  border: UnderlineInputBorder(),
+                                  labelText: 'Date',
+                                  icon: Icon(Icons.event),
+                                ),
+                                controller: _dateController,
+                                onTap: () async => pickDate(context),
+                                validator: (value) => value!.isEmpty
+                                    ? 'Sila isi tarikh meninggal'
+                                    : null,
+                              ),
+                              SizedBox(height: 2.h),
+                              Text(
+                                'Sebab-sebab Meninggal',
+                                style: TextStyle(
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 1.h),
+                              customTextFormField(
+                                hintText: 'Sebab-sebab meninggal',
+                                icon: Ionicons.reader_sharp,
+                                controller: _sebabController,
+                                focusNode: _sebabFocus,
+                                validator: (value) => value!.isEmpty
+                                    ? 'Sila isi sebab-sebab meninggal'
+                                    : null,
+                              ),
+                              SizedBox(height: 2.h),
                               const Text(
                                 "Surat Kematian",
                                 style: TextStyle(color: Colors.grey),
@@ -105,6 +260,14 @@ class _MoneyClaimState extends State<MoneyClaim> {
                                         Claim(
                                           claimername: user.name,
                                           claimeric: user.ic,
+                                          claimeraddress: user.address,
+                                          claimerrelation:
+                                              _hubunganController.text,
+                                          deaddate: DateTime.utc(date!.year,
+                                                  date!.month, date!.day)
+                                              .toString(),
+                                          deadname: _namaController.text,
+                                          deadreason: _sebabController.text,
                                           claimerurl: _imageFile?.path,
                                           status: 'pending',
                                         ));
@@ -134,6 +297,32 @@ class _MoneyClaimState extends State<MoneyClaim> {
         },
       ),
     );
+  }
+
+  //get date
+  Future pickDate(BuildContext context) async {
+    final initialDate = DateTime.now();
+    DateTime? newDate = await showDatePicker(
+      context: context,
+      initialDate: date ?? initialDate,
+      firstDate: DateTime(DateTime.now().year - 5),
+      lastDate: DateTime(DateTime.now().year + 5),
+    );
+
+    if (newDate == null) return;
+
+    setState(() => date = newDate);
+    if (date != null) {
+      print(date);
+      String formattedDate = DateFormat('yyyy-MM-dd').format(date!);
+      print(formattedDate);
+
+      setState(() {
+        _dateController.text = formattedDate;
+      });
+    } else {
+      print("Date is not selected");
+    }
   }
 
   //get from camera

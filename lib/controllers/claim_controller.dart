@@ -44,7 +44,8 @@ class ClaimController {
   }
 
   // Add claim
-  static Future<dynamic> addClaim(String claimID,String mousqueID, Claim claim) async {
+  static Future<dynamic> addClaim(
+      String claimID, String mousqueID, Claim claim) async {
     try {
       SecureStorage _secureStorage = SecureStorage();
       String _token = await _secureStorage.read('token');
@@ -52,10 +53,15 @@ class ClaimController {
       String url = '${Config.hostName}/claims/add';
       log(claimID);
       Map<String, dynamic> data = {
-        'claim_id':claimID,
-        'mosque_id':mousqueID,
+        'claim_id': claimID,
+        'mosque_id': mousqueID,
         'claimer_name': claim.claimername,
         'claimer_ic': claim.claimeric,
+        'claimer_address': claim.claimeraddress,
+        'claimer_relation': claim.claimerrelation,
+        'dead_name': claim.deadname,
+        'dead_date': claim.deaddate,
+        'dead_reason': claim.deadreason,
         'claimer_url': claim.claimerurl,
         'status': claim.status,
       };
@@ -80,6 +86,4 @@ class ClaimController {
       return null;
     }
   }
-
- 
 }
