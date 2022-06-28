@@ -16,6 +16,8 @@ import 'package:my_khairat/models/user.dart';
 import 'package:my_khairat/models/village.dart';
 import 'package:my_khairat/pages/auth/login.dart';
 import 'package:my_khairat/pages/home/Payment/create_payment.dart';
+import 'package:my_khairat/pages/home/announcement/announcement_list.dart';
+import 'package:my_khairat/pages/home/announcement/view_announcement.dart';
 import 'package:my_khairat/pages/home/claim/money_claim.dart';
 import 'package:my_khairat/pages/home/paymenthistory/payment_history.dart';
 import 'package:my_khairat/styles/app_color.dart';
@@ -287,9 +289,19 @@ class _HomeState extends State<Home> {
                                               ),
                                             ),
                                             TextButton(
-                                              onPressed: () {},
+                                              onPressed: () {
+                                                Navigator.push(
+                                                  context,
+                                                  CupertinoPageRoute(
+                                                    builder: (context) =>
+                                                        AnnouncementList(
+                                                            announcements:
+                                                                announcements),
+                                                  ),
+                                                );
+                                              },
                                               child: Text(
-                                                'See All',
+                                                'Lihat Semua',
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.normal,
@@ -302,20 +314,31 @@ class _HomeState extends State<Home> {
                                         ),
                                       ),
                                       SizedBox(height: 1.h),
-                                      GestureDetector(
-                                        onTap: () {},
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 10),
-                                          child: CarouselSlider(
-                                            carouselController:
-                                                _carouselController,
-                                            items: List.generate(
-                                              announcements.length < 3
-                                                  ? announcements.length
-                                                  : 3,
-                                              (index) {
-                                                return AnnouncementBox(
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10),
+                                        child: CarouselSlider(
+                                          carouselController:
+                                              _carouselController,
+                                          items: List.generate(
+                                            announcements.length < 3
+                                                ? announcements.length
+                                                : 3,
+                                            (index) {
+                                              return GestureDetector(
+                                                onTap: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          ViewAnnouncement(
+                                                              announcement:
+                                                                  announcements[
+                                                                      index]),
+                                                    ),
+                                                  );
+                                                },
+                                                child: AnnouncementBox(
                                                   title: announcements[index]
                                                       .title,
                                                   announcement:
@@ -324,27 +347,26 @@ class _HomeState extends State<Home> {
                                                   date: DateTime.parse(
                                                       announcements[index]
                                                           .date!),
-                                                );
-                                              },
-                                            ),
-                                            options: CarouselOptions(
-                                                enableInfiniteScroll: false,
-                                                scrollDirection:
-                                                    Axis.horizontal,
-                                                enlargeCenterPage: true,
-                                                onPageChanged: (index, reason) {
-                                                  setState(() {
-                                                    selectedAnnouncement =
-                                                        index;
-                                                  });
-                                                }),
+                                                ),
+                                              );
+                                            },
                                           ),
+                                          options: CarouselOptions(
+                                              enableInfiniteScroll: false,
+                                              scrollDirection: Axis.horizontal,
+                                              enlargeCenterPage: true,
+                                              onPageChanged: (index, reason) {
+                                                setState(() {
+                                                  selectedAnnouncement = index;
+                                                });
+                                              }),
                                         ),
                                       ),
                                       Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
-                                        children: announcements.map((url) {
+                                        children:
+                                            announcements.take(3).map((url) {
                                           int index =
                                               announcements.indexOf(url);
                                           return Container(

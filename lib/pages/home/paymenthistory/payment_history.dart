@@ -48,8 +48,7 @@ class _PaymentHistoryState extends State<PaymentHistory> {
 
   @override
   Widget build(BuildContext context) {
-    log(widget.paymentDAO.payments.length.toString());
-    log(filteredPayments.length.toString());
+    int lastYear = DateTime.now().year - 1;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -158,12 +157,15 @@ class _PaymentHistoryState extends State<PaymentHistory> {
                         const Text('Tahun'),
                         DropdownButton(
                           isExpanded: true,
-                          items: [
-                            DropdownMenuItem(
-                              child: Text('2022'),
-                              value: 2022,
-                            ),
-                          ],
+                          items: List.generate(
+                            2,
+                            (index) {
+                              return DropdownMenuItem(
+                                child: Text((lastYear + index).toString()),
+                                value: lastYear + index,
+                              );
+                            },
+                          ),
                           value: selectedYear,
                           onChanged: (int? year) {
                             setState(() {

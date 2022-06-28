@@ -27,7 +27,7 @@ class PaymentController {
 
       log(response.body);
 
-      if (response.statusCode == 201) {
+      if (response.statusCode == 200) {
         List data = jsonDecode(response.body);
 
         return data.map((payment) => Payment.fromMap(payment)).toList();
@@ -35,7 +35,7 @@ class PaymentController {
 
       return [];
     } catch (e) {
-      log(e.toString());
+      log('Payment' + e.toString());
       return [];
     }
   }

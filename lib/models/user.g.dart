@@ -30,13 +30,14 @@ class UserAdapter extends TypeAdapter<User> {
       villageID: fields[10] as String?,
       expireMonth: fields[11] as int?,
       expireYear: fields[12] as int?,
+      registerDate: fields[13] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, User obj) {
     writer
-      ..writeByte(13)
+      ..writeByte(14)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -62,7 +63,9 @@ class UserAdapter extends TypeAdapter<User> {
       ..writeByte(11)
       ..write(obj.expireMonth)
       ..writeByte(12)
-      ..write(obj.expireYear);
+      ..write(obj.expireYear)
+      ..writeByte(13)
+      ..write(obj.registerDate);
   }
 
   @override
