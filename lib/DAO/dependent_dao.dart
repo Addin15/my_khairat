@@ -21,8 +21,8 @@ class DependentDAO extends ChangeNotifier {
     notifyListeners();
   }
 
-  addDependent(String userID, DependentModel dependent) async {
-    dynamic data = await DependentController.addDependent(userID, dependent);
+  addDependent(String userID, String mosqueID, DependentModel dependent) async {
+    dynamic data = await DependentController.addDependent(userID, mosqueID, dependent);
 
     if (data != null) {
       _dependents.add(data);

@@ -8,10 +8,11 @@ import 'package:sizer/sizer.dart';
 
 class AddDependent extends StatefulWidget {
   const AddDependent(
-      {required this.userID, required this.dependentDAO, Key? key})
+      {required this.userID, required this.mosqueID, required this.dependentDAO, Key? key})
       : super(key: key);
 
   final String userID;
+  final String mosqueID;
   final DependentDAO dependentDAO;
 
   @override
@@ -228,11 +229,13 @@ class _AddDependentState extends State<AddDependent> {
           for (var index = 0; index < _nameControllers.length; index++) {
             res = await widget.dependentDAO.addDependent(
                 widget.userID,
+                widget.mosqueID,
                 DependentModel(
                   dependent_name: _nameControllers[index].text,
                   dependent_relation: _relationshipControllers[index].text,
                   dependent_ic: _icControllers[index].text,
                   verify: 0,
+                  verify_death: 0,
                 ));
           }
           Navigator.pop(context, res);

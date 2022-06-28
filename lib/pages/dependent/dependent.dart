@@ -135,6 +135,7 @@ class _DependentState extends State<Dependent> {
                   CupertinoPageRoute(
                       builder: (context) => AddDependent(
                         userID: user.personID!,
+                        mosqueID: user.mosqueID!,
                         dependentDAO: dependentDAO,
                       )));
             },

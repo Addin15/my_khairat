@@ -46,7 +46,7 @@ class DependentController {
 
   // Add dependent
   static Future<dynamic> addDependent(
-      String userID, DependentModel dependent) async {
+      String userID, String mosqueID, DependentModel dependent) async {
     try {
       SecureStorage _secureStorage = SecureStorage();
       String _token = await _secureStorage.read('token');
@@ -55,6 +55,7 @@ class DependentController {
 
       Map<String, dynamic> data = {
         'user_id': userID,
+        'mosque_id': mosqueID,
         'dependent_name': dependent.dependent_name,
         'dependent_relation': dependent.dependent_relation,
         'dependent_ic': dependent.dependent_ic,
@@ -64,6 +65,7 @@ class DependentController {
         'death_status': dependent.death_status,
         'death_date': dependent.death_date,
         'verify': dependent.verify,
+        'verify_death': dependent.verify_death,
       };
 
 /*  this.dependent_relation,
