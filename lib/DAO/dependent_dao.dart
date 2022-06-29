@@ -22,7 +22,8 @@ class DependentDAO extends ChangeNotifier {
   }
 
   addDependent(String userID, String mosqueID, DependentModel dependent) async {
-    dynamic data = await DependentController.addDependent(userID, mosqueID, dependent);
+    dynamic data =
+        await DependentController.addDependent(userID, mosqueID, dependent);
 
     if (data != null) {
       _dependents.add(data);
@@ -34,7 +35,7 @@ class DependentDAO extends ChangeNotifier {
     dynamic data = await DependentController.editDependent(dependent);
 
     if (data != null) {
-      int index = _dependents.indexWhere((d) => d.user_id == dependent.user_id);
+      int index = _dependents.indexWhere((d) => d.id == dependent.id);
       _dependents[index] = dependent;
 
       notifyListeners();
