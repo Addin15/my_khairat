@@ -40,7 +40,10 @@ class _AccountUnverifiedState extends State<AccountUnverified> {
               SizedBox(height: 2.h),
               customTextButton(
                 label: 'Log Keluar',
-                onPressed: () {},
+                onPressed: () {
+                  widget.userDAO.logout();
+                  Navigator.pop(context);
+                },
                 backgroundColor: Colors.red,
                 borderColor: Colors.red,
               ),
