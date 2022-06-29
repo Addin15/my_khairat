@@ -275,7 +275,7 @@ class _MoneyClaimState extends State<MoneyClaim> {
                                       child: ElevatedButton(
                                         onPressed: () async {
                                           dynamic res = await claimDAO.addClaim(
-                                            user.personID!,
+                                            user.id!,
                                             user.mosqueID!,
                                             Claim(
                                               claimername: user.name,

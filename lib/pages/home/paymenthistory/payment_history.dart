@@ -49,6 +49,7 @@ class _PaymentHistoryState extends State<PaymentHistory> {
   @override
   Widget build(BuildContext context) {
     int lastYear = DateTime.now().year - 1;
+    log('Payment' + payments.first.status.toString());
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
