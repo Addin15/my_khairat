@@ -50,7 +50,7 @@ class _PaymentReceivedState extends State<PaymentReceived> {
                 ),
                 padding: EdgeInsets.symmetric(horizontal: 3.w, vertical: 1.h),
                 width: 90.w,
-                height: 50.h,
+                height: 55.h,
                 child: Column(
                   children: [
                     SizedBox(
