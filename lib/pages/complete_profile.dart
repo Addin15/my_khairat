@@ -63,7 +63,7 @@ class _CompleteProfileState extends State<CompleteProfile> {
   Widget build(BuildContext context) {
     _icController.text = (widget.userDAO.user as User).ic!;
     return Consumer<MosqueDAO>(builder: (context, mosqueDAO, child) {
-      List<Mosque> mosques = mosqueDAO.mosques;
+      List<Mosque> mosques = mosqueDAO.mosquesAccept;
 
       List<Village> villages = mosqueDAO.villages;
 
@@ -272,58 +272,64 @@ class _CompleteProfileState extends State<CompleteProfile> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
                                         children: [
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              IconButton(
-                                                onPressed: () async {
-                                                  XFile? file =
-                                                      await imagePicker
-                                                          .pickImage(
-                                                              source:
-                                                                  ImageSource
-                                                                      .camera);
-                                                  Navigator.pop(context);
+                                          SingleChildScrollView(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                IconButton(
+                                                  onPressed: () async {
+                                                    XFile? file =
+                                                        await imagePicker
+                                                            .pickImage(
+                                                                source:
+                                                                    ImageSource
+                                                                        .camera);
+                                                    Navigator.pop(context);
 
-                                                  if (mounted && file != null) {
-                                                    setState(() {
-                                                      paymentProve = file;
-                                                    });
-                                                  }
-                                                },
-                                                icon: Icon(
-                                                    Ionicons.camera_outline),
-                                              ),
-                                              Text('Kamera'),
-                                            ],
+                                                    if (mounted &&
+                                                        file != null) {
+                                                      setState(() {
+                                                        paymentProve = file;
+                                                      });
+                                                    }
+                                                  },
+                                                  icon: Icon(
+                                                      Ionicons.camera_outline),
+                                                ),
+                                                Text('Kamera'),
+                                              ],
+                                            ),
                                           ),
                                           SizedBox(width: 2.w),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              IconButton(
-                                                onPressed: () async {
-                                                  XFile? file =
-                                                      await imagePicker
-                                                          .pickImage(
-                                                              source:
-                                                                  ImageSource
-                                                                      .gallery);
-                                                  Navigator.pop(context);
+                                          SingleChildScrollView(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                IconButton(
+                                                  onPressed: () async {
+                                                    XFile? file =
+                                                        await imagePicker
+                                                            .pickImage(
+                                                                source:
+                                                                    ImageSource
+                                                                        .gallery);
+                                                    Navigator.pop(context);
 
-                                                  if (mounted && file != null) {
-                                                    setState(() {
-                                                      paymentProve = file;
-                                                    });
-                                                  }
-                                                },
-                                                icon: Icon(
-                                                    Ionicons.image_outline),
-                                              ),
-                                              Text('Galeri'),
-                                            ],
+                                                    if (mounted &&
+                                                        file != null) {
+                                                      setState(() {
+                                                        paymentProve = file;
+                                                      });
+                                                    }
+                                                  },
+                                                  icon: Icon(
+                                                      Ionicons.image_outline),
+                                                ),
+                                                Text('Galeri'),
+                                              ],
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -360,58 +366,64 @@ class _CompleteProfileState extends State<CompleteProfile> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
                                         children: [
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              IconButton(
-                                                onPressed: () async {
-                                                  XFile? file =
-                                                      await imagePicker
-                                                          .pickImage(
-                                                              source:
-                                                                  ImageSource
-                                                                      .camera);
-                                                  Navigator.pop(context);
+                                          SingleChildScrollView(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                IconButton(
+                                                  onPressed: () async {
+                                                    XFile? file =
+                                                        await imagePicker
+                                                            .pickImage(
+                                                                source:
+                                                                    ImageSource
+                                                                        .camera);
+                                                    Navigator.pop(context);
 
-                                                  if (mounted && file != null) {
-                                                    setState(() {
-                                                      addressProve = file;
-                                                    });
-                                                  }
-                                                },
-                                                icon: Icon(
-                                                    Ionicons.camera_outline),
-                                              ),
-                                              Text('Kamera'),
-                                            ],
+                                                    if (mounted &&
+                                                        file != null) {
+                                                      setState(() {
+                                                        addressProve = file;
+                                                      });
+                                                    }
+                                                  },
+                                                  icon: Icon(
+                                                      Ionicons.camera_outline),
+                                                ),
+                                                Text('Kamera'),
+                                              ],
+                                            ),
                                           ),
                                           SizedBox(width: 2.w),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              IconButton(
-                                                onPressed: () async {
-                                                  XFile? file =
-                                                      await imagePicker
-                                                          .pickImage(
-                                                              source:
-                                                                  ImageSource
-                                                                      .gallery);
-                                                  Navigator.pop(context);
+                                          SingleChildScrollView(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                IconButton(
+                                                  onPressed: () async {
+                                                    XFile? file =
+                                                        await imagePicker
+                                                            .pickImage(
+                                                                source:
+                                                                    ImageSource
+                                                                        .gallery);
+                                                    Navigator.pop(context);
 
-                                                  if (mounted && file != null) {
-                                                    setState(() {
-                                                      addressProve = file;
-                                                    });
-                                                  }
-                                                },
-                                                icon: Icon(
-                                                    Ionicons.image_outline),
-                                              ),
-                                              Text('Galeri'),
-                                            ],
+                                                    if (mounted &&
+                                                        file != null) {
+                                                      setState(() {
+                                                        addressProve = file;
+                                                      });
+                                                    }
+                                                  },
+                                                  icon: Icon(
+                                                      Ionicons.image_outline),
+                                                ),
+                                                Text('Galeri'),
+                                              ],
+                                            ),
                                           ),
                                         ],
                                       ),

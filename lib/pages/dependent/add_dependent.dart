@@ -218,9 +218,9 @@ class _AddDependentState extends State<AddDependent> {
                 content: new Text("1. Tiada ruangan dibiarkan kosong \n\n"
                     "2. No. Kad Pengenalan diisi dengan betul (tanpa '-')"),
                 actions: <Widget>[
-                  new FlatButton(
+                  new TextButton(
                     child: new Text("OK"),
-                    color: AppColor.primary,
+                    style: ButtonStyle(backgroundColor: MaterialStatePropertyAll<Color>(AppColor.primary),),
                     onPressed: () {
                       Navigator.of(context).pop();
                     },

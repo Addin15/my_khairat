@@ -110,7 +110,7 @@ class _CreatePaymentState extends State<CreatePayment> {
                           height: 8.h,
                         ),
                         Text(
-                          "RM${widget.mosque.monthlyFee!.toStringAsFixed(2)}/sebulan",
+                          "RM${widget.mosque.monthlyFee!.toStringAsFixed(2 )}/sebulan",
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 12.sp,
@@ -204,54 +204,62 @@ class _CreatePaymentState extends State<CreatePayment> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            IconButton(
-                                              onPressed: () async {
-                                                XFile? file =
-                                                    await imagePicker.pickImage(
-                                                        source:
-                                                            ImageSource.camera);
-                                                Navigator.pop(context);
+                                        SingleChildScrollView(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              IconButton(
+                                                onPressed: () async {
+                                                  XFile? file =
+                                                      await imagePicker
+                                                          .pickImage(
+                                                              source:
+                                                                  ImageSource
+                                                                      .camera);
+                                                  Navigator.pop(context);
 
-                                                if (mounted && file != null) {
-                                                  setState(() {
-                                                    image = file;
-                                                  });
-                                                }
-                                              },
-                                              icon:
-                                                  Icon(Ionicons.camera_outline),
-                                            ),
-                                            Text('Kamera'),
-                                          ],
+                                                  if (mounted && file != null) {
+                                                    setState(() {
+                                                      image = file;
+                                                    });
+                                                  }
+                                                },
+                                                icon: Icon(
+                                                    Ionicons.camera_outline),
+                                              ),
+                                              Text('Kamera'),
+                                            ],
+                                          ),
                                         ),
                                         SizedBox(width: 2.w),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            IconButton(
-                                              onPressed: () async {
-                                                XFile? file =
-                                                    await imagePicker.pickImage(
-                                                        source: ImageSource
-                                                            .gallery);
-                                                Navigator.pop(context);
+                                        SingleChildScrollView(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              IconButton(
+                                                onPressed: () async {
+                                                  XFile? file =
+                                                      await imagePicker
+                                                          .pickImage(
+                                                              source:
+                                                                  ImageSource
+                                                                      .gallery);
+                                                  Navigator.pop(context);
 
-                                                if (mounted && file != null) {
-                                                  setState(() {
-                                                    image = file;
-                                                  });
-                                                }
-                                              },
-                                              icon:
-                                                  Icon(Ionicons.image_outline),
-                                            ),
-                                            Text('Galeri'),
-                                          ],
+                                                  if (mounted && file != null) {
+                                                    setState(() {
+                                                      image = file;
+                                                    });
+                                                  }
+                                                },
+                                                icon: Icon(
+                                                    Ionicons.image_outline),
+                                              ),
+                                              Text('Galeri'),
+                                            ],
+                                          ),
                                         ),
                                       ],
                                     ),

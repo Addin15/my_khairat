@@ -95,7 +95,7 @@ class _ProfileState extends State<Profile> {
                     ),
                     SizedBox(height: 1.h),
                     Text(
-                      'No Ahli: ${user.id}',
+                      'No Ahli: ${user.person_member_no}',
                       style: TextStyle(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w300,

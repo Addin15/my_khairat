@@ -6,10 +6,13 @@ import 'package:my_khairat/models/village.dart';
 class MosqueDAO extends ChangeNotifier {
   List<Mosque> _mosques = [];
   List<Village> _villages = [];
+  List<Mosque> _mosquesAccept = [];
 
   List<Mosque> get mosques => _mosques;
 
   List<Village> get villages => _villages;
+
+  List<Mosque> get mosquesAccept => _mosquesAccept;
 
   MosqueDAO() {
     initData();
@@ -18,9 +21,16 @@ class MosqueDAO extends ChangeNotifier {
   initData() async {
     List res = await MosqueController.getMosques();
 
+    List res2 = await MosqueController.getAcceptedMosques();
+
     List<Mosque> data = res.map((mosque) => Mosque.fromMap(mosque)).toList();
 
+    List<Mosque> data2 = res2.map((mosque) => Mosque.fromMap(mosque)).toList();
+
     _mosques = data;
+
+    _mosquesAccept = data2;
+    
     notifyListeners();
   }
 

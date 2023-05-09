@@ -42,6 +42,7 @@ class _RegisterState extends State<Register> {
             GestureDetector(
               onTap: () => FocusScope.of(context).unfocus(),
               child: Scaffold(
+                resizeToAvoidBottomInset: false,
                 body: Container(
                   decoration: BoxDecoration(
                     // gradient: LinearGradient(

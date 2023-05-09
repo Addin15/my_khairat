@@ -62,7 +62,7 @@ class _NavState extends State<Nav> {
             body: IndexedStack(
               index: indexPage,
               children: [
-                user == null
+                (user == null || user.expireYear==null)
                     ? const GuestHome()
                     : user.mosqueID == null ||
                             user.mosqueID!.isEmpty ||

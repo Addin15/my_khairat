@@ -25,6 +25,22 @@ class MosqueController {
     }
   }
 
+  static getAcceptedMosques() async {
+    try {
+      String url = '${Config.hostName}/mosque/accepted';
+
+      var response = await get(Uri.parse(url), headers: headersWithoutToken());
+
+      if (response.statusCode == 200) {
+        List data = jsonDecode(response.body);
+        return data;
+      }
+    } catch (e) {
+      log(e.toString());
+      return [];
+    }
+  }
+
   static getVillages(String mosqueID) async {
     try {
       String url = '${Config.hostName}/mosque/$mosqueID/village/all';
